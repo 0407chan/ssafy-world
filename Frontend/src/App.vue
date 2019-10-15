@@ -1,27 +1,6 @@
 <template>
   <v-app>
-<<<<<<< HEAD
     <router-view />
-=======
-    <v-app-bar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        text
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-      </v-btn>
-    </v-app-bar>
- 
-    <v-content>
-      <HelloWorld/>
-    </v-content>
->>>>>>> 7de9ab1ebaa2234e61ffc74169c6202751317134
   </v-app>
 </template>
 
