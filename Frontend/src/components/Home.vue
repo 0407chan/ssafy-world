@@ -1,22 +1,17 @@
 <template>
   <v-app>
-    <router-view />
+    <h1>짜잔</h1>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
-
 export default {
-  name: 'App',
+  name: 'Home',
   components: {
-    HelloWorld,
+    
   },
   data: () => ({
     //
   }),
-  mounted() {
-
-  },
 };
 </script>

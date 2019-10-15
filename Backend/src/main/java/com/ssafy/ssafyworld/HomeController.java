@@ -47,7 +47,6 @@ public class HomeController {
 		for (UserVO userVO : userList) {
 			System.out.println(userVO.getEmail());
 		}
-//        
         model.addAttribute("memberList", userList);
 		
 		return "home";

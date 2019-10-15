@@ -24,7 +24,7 @@ public class UserDAOImpl implements UserDAO {
     	System.out.println(sqlSession);
     	List<UserVO> list=sqlSession.selectList(Namespace+".selectUser");
     	System.out.println(list);
-    	return null;
+    	return list;
 //        return sqlSession.selectList(Namespace+".selectUser");
     }
  
