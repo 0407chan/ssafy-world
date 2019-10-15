@@ -1,17 +1,19 @@
 package com.ssafy.ssafyworld;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.ssafyworld.dto.UserVO;
 import com.ssafy.ssafyworld.service.UserService;
@@ -19,37 +21,29 @@ import com.ssafy.ssafyworld.service.UserService;
 /**
  * Handles requests for the application home page.
  */
-@Controller
-@ContextConfiguration(locations={"file:src/main/webapp/WEB-INF/spring/**/root-context.xml"})
+@RestController
 public class HomeController {
 	
 	@Inject
     private UserService service;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+
 	
 	/**
-	 * Simply selects the home view to render by returning its name.
-	 * @throws Exception 
+	 * 
+	 * 10-15 : 최재형 
+	 * @기능 유저 전체 리스트를 가져옴
+	 * @호출방법 ssafywolrd/user
+	 * @param X
+	 * @return List<UserVO> user 데이터
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) throws Exception {
-		logger.info("Welcome home! The client locale is {}.", locale);
-//		
-//		Date date = new Date();
-//		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-//		
-//		String formattedDate = dateFormat.format(date);
-//		
-//		model.addAttribute("serverTime", formattedDate );
-//		
-		List<UserVO> userList = service.selectUser();
-		for (UserVO userVO : userList) {
-			System.out.println(userVO.getEmail());
-		}
-        model.addAttribute("memberList", userList);
-		
-		return "home";
+	@RequestMapping(value = "/user", method = RequestMethod.GET)
+	@ResponseBody
+	public List<UserVO> home() throws Exception {
+		logger.info("Welcome home! The client locale is {}.");
+		System.out.println("유저 데이터 호출 완료");
+		return service.selectUser();
 	}
 	
 }
