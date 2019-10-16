@@ -1,16 +1,14 @@
 <template>
-  <v-app>
+  <v-app class="app">
     <router-view />
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
-
 export default {
   name: 'App',
   components: {
-    HelloWorld,
+
   },
   data: () => ({
     //
@@ -20,3 +18,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+  .app {
+    width: 100%;
+    height: 100%;
+  }
+</style>
