@@ -1,7 +1,7 @@
 # ssafy_world
 
 심화 프로젝트 ssafy_world 입니다.
-
+ 
 # 기술 스택
 - back : tomcat, spring
 - front : vue.js vuex vuetify
@@ -15,8 +15,8 @@
 
 # 일정
 - 1주 : 환경설정, 백, 프론트 스켈레톤 생성, aws 올리기, DB설계, 웹소켓(?)
-- 2주 : UI layout, REST설계 
-- 3주 : 
+- 2주 : UI layout, REST설계
+- 3주 :
 - 4주 : 피티, 영상
 
 # 깃 commit 메세지 규칙
@@ -48,17 +48,16 @@ getMovie(int index){
 - 현재형으로 쓰고 하나만 가져오는 경우 단수, 여러개는 s를 써서 복수형으로 쓴다.
 ```
 public void getUserController(){
-    
+
 }
 public List[] getUsers(){
-    
+
 }
 public User getUser(int userIdx){
-    
+
 }
 ```
 
 # 기능
 - 기본 = 기본은 그냥 다 db저장, 올 공개, 보안 취약
 - 추가 = 비대칭키로 암호화, db도 30일후 삭제
-
