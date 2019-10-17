@@ -15,6 +15,13 @@ const actions = {
     console.log(resp);
   },
 
+
+  async getRoomByUser({ commit }, params) {
+    console.log("왔냐", params);
+    const resp = await api.getRoomByUser(params)
+    console.log(resp);
+  },
+
   
   async getClustering({commit}, params) {
     const res = await api.getClustering(params);
