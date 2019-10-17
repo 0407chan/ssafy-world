@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-img
-            :src="require('../assets/jaws.jpg')"
+            :src="require('@/assets/jaws.jpg')"
             class="my-3"
             contain
             height="200"
@@ -12,7 +12,7 @@
 
 <script>
 import api from '@/api'
-import { mapState, mapActions} from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
     name: 'Content',
@@ -24,11 +24,11 @@ export default {
 
       }
     },
-    methods:{
+    methods: {
       ...mapActions("data", ['getUser']),
-      test(){
+      test() {
         console.log("해보자")
-        var params={
+        var params = {
           id: 0,
           name: "이찬호",
         }

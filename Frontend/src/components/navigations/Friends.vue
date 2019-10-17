@@ -2,22 +2,10 @@
   <v-card>
     <v-navigation-drawer
       class="navigation"
-      absolute
       permanent
       left
     >
-      <template v-slot:prepend>
-        <v-list-item two-line>
-          <v-list-item-avatar>
-            <img src="https://randomuser.me/api/portraits/women/81.jpg">
-          </v-list-item-avatar>
-
-          <v-list-item-content>
-            <v-list-item-title>Jane Smith</v-list-item-title>
-            <v-list-item-subtitle>Logged In</v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-      </template>
+      <Profile />
 
       <v-divider></v-divider>
 
@@ -41,28 +29,34 @@
 </template>
 
 <script>
-export default {
-  name: 'Navigation',
-  components: {
+import Profile from "./profile/Profile"
 
+export default {
+  name: 'Friends',
+  components: {
+      Profile,
   },
   data () {
       return {
         items: [
-          { title: '친 구 들', route: '/home', icon: 'mdi-account' },
-          { title: '채 팅 방', route: '/hello_world', icon: 'mdi-account-group-outline' },
-          { title: '방 명 록', route: '/hello_world', icon: 'mdi-home-city' },
-          { title: '게 시 판', route: '/hello_world', icon: 'mdi-account-group-outline' },
-          { title: '공 지 글', route: '/hello_world', icon: 'mdi-account-group-outline' },
+          { title: '친 구 들', function: '', icon: 'mdi-account' },
+          { title: '채 팅 방', function: '', icon: 'mdi-account-group-outline' },
+          { title: '방 명 록', function: '', icon: 'mdi-home-city' },
+          { title: '게 시 판', function: '', icon: 'mdi-account-group-outline' },
+          { title: '공 지 글', function: '', icon: 'mdi-account-group-outline' },
         ],
       }
     },
+    methods() {
+        
+    }
 };
 </script>
 
 <style scoped>
   .navigation {
     background: rgba(0, 0, 0, 0);
+    display: inline-block;
   }
   .menu {
     margin-top: 50px;
