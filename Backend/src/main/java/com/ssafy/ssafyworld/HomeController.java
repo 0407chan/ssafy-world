@@ -30,12 +30,13 @@ public class HomeController {
 	
 	/**
 	 * 
-	 * 10-15 : 理쒖옱�삎 
-	 * @湲곕뒫 �쑀�� �쟾泥� 由ъ뒪�듃瑜� 媛��졇�샂
-	 * @�샇異쒕갑踰� ssafywolrd/user
+	 * 10-15 : 최재형 
+	 * @기능 유저 전체 리스트를 가져옴
+	 * @호출방법 ssafywolrd/user
 	 * @param X
-	 * @return List<UserVO> user �뜲�씠�꽣
+	 * @return List<UserVO> user 데이터
 	 */
+
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	@ResponseBody
 	public List<UserVO> home() throws Exception {
