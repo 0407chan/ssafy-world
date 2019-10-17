@@ -1,13 +1,9 @@
 <template>
-    <div>
-        <v-img
-            :src="require('@/assets/jaws.jpg')"
-            class="my-3"
-            contain
-            height="200"
-        ></v-img>
-        <v-btn v-on:click="test"></v-btn>
-    </div>
+    <v-layout>
+      <textarea>
+      </textarea>
+      <input />
+    </v-layout>
 </template>
 
 <script>
@@ -15,7 +11,7 @@ import api from '@/api'
 import { mapState, mapActions } from "vuex";
 
 export default {
-    name: 'Content',
+    name: 'GroupChatRoomPage',
     components: {
 
     },
