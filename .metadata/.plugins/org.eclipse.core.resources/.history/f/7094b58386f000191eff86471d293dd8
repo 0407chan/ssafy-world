@@ -1,0 +1,17 @@
+package com.ssafy.ssafyworld.service;
+
+import org.springframework.stereotype.Service;
+
+import com.ssafy.ssafyworld.dao.RoomDAO;
+import com.ssafy.ssafyworld.dto.RoomDTO;
+
+@Service
+public class RoomServiceImpl implements RoomDAO {
+
+	@Override
+	public RoomDTO selectRoom() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

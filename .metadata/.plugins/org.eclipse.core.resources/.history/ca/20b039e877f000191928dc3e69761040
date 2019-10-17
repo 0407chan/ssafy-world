@@ -1,0 +1,8 @@
+package com.ssafy.ssafyworld.dto;
+
+public class RoomVO {
+	private int rid;
+	private String rname;
+	
+	
+}
