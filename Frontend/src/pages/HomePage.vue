@@ -7,7 +7,9 @@
     </div>
 
     <div xs4>
-      <Content />
+      <BeforeLoginContent v-if="contentPage == 0" />
+      <FriendChatRoom v-else-if="contentPage == 1" />
+      <GroupChatRoom v-else-if="contentPage == 2" />
     </div>
   </div>
 </template>
@@ -17,7 +19,9 @@ import { mapState, mapActions } from "vuex"
 import BeforeLogin from "../components/navigations/BeforeLogin"
 import Menu from "../components/navigations/Menu"
 import Friends from "../components/navigations/Friends"
-import Content from "../components/contents/Content"
+import BeforeLoginContent from "../components/contents/BeforeLoginContent"
+import FriendChatRoom from "../components/contents/FriendChatRoom"
+import GroupChatRoom from "../components/contents/GroupChatRoom"
 
 export default {
   name: 'home',
@@ -25,7 +29,9 @@ export default {
     BeforeLogin,
     Menu,
     Friends,
-    Content,
+    BeforeLoginContent,
+    FriendChatRoom,
+    GroupChatRoom,
   },
   data() {
     return {
@@ -35,6 +41,7 @@ export default {
   computed: {
     ...mapState({
       navigationPage: state => state.data.currentNavigation,
+      contentPage: state => state.data.currentContent,
     }),
   },
   mounted() {

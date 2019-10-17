@@ -2,9 +2,8 @@ import api from '@/api'
 
 // initial state
 const state = {
-
   currentNavigation: 0,
-
+  currentContent: 0,
 }
 
 // actions
