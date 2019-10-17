@@ -167,6 +167,7 @@ org.eclipse.core.runtime.CoreException: Could not load the Tomcat server configu
 !SUBENTRY 1 org.eclipse.jst.server.tomcat.core 2 0 2019-10-17 15:48:57.530
 !MESSAGE Could not load the Tomcat server configuration at \Servers\Tomcat v8.5 Server at localhost-config. The configuration may be corrupt or incomplete.
 
+<<<<<<< HEAD
 !ENTRY org.eclipse.m2e.logback.appender 2 0 2019-10-17 16:39:39.227
 !MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
 
@@ -174,6 +175,15 @@ org.eclipse.core.runtime.CoreException: Could not load the Tomcat server configu
 !MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
 
 !ENTRY org.eclipse.core.jobs 4 2 2019-10-17 16:41:48.561
+=======
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-10-17 16:19:31.128
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-10-17 16:19:31.130
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.core.jobs 4 2 2019-10-17 16:24:31.058
+>>>>>>> 15be3b729f7ee4ab3a4f385c51a57dc36582eb5e
 !MESSAGE An internal error occurred during: "Periodic workspace save.".
 !STACK 0
 java.lang.NumberFormatException: null
@@ -187,8 +197,21 @@ java.lang.NumberFormatException: null
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
+<<<<<<< HEAD
 !ENTRY org.eclipse.m2e.logback.appender 2 0 2019-10-17 16:43:39.593
 !MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
 
 !ENTRY org.eclipse.m2e.logback.appender 2 0 2019-10-17 16:43:39.594
+=======
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-10-17 16:36:48.658
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-10-17 16:36:48.659
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-10-17 16:37:02.360
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-10-17 16:37:02.361
+>>>>>>> 15be3b729f7ee4ab3a4f385c51a57dc36582eb5e
 !MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
