@@ -1,0 +1,14 @@
+package com.ssafy.ssafyworld.service;
+
+import com.ssafy.ssafyworld.dao.RoomDAO;
+import com.ssafy.ssafyworld.dto.RoomDTO;
+
+public class RoomServiceImpl implements RoomDAO {
+
+	@Override
+	public RoomDTO selectRoom() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
