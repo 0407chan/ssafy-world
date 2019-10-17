@@ -1,15 +1,15 @@
 <template>
-  <div>
-    <div xs8>
+  <v-layout>
+    <v-layout xs8>
       <BeforeLogin v-if="navigationPage == 0" />
       <Navigation v-else-if="navigationPage == 1" />
       <FriendList v-else-if="navigationPage == 2" />
-    </div>
+    </v-layout>
 
-    <div xs4>
+    <v-layout xs4>
       <Content />
-    </div>
-  </div>
+    </v-layout>
+  </v-layout>
 </template>
 
 <script>
