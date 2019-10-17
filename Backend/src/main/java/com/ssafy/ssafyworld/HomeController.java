@@ -1,15 +1,12 @@
 package com.ssafy.ssafyworld;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,6 +18,7 @@ import com.ssafy.ssafyworld.service.UserService;
 /**
  * Handles requests for the application home page.
  */
+@CrossOrigin(origins="*")
 @RestController
 public class HomeController {
 	
@@ -38,11 +36,12 @@ public class HomeController {
 	 * @param X
 	 * @return List<UserVO> user 데이터
 	 */
+
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	@ResponseBody
 	public List<UserVO> home() throws Exception {
 		logger.info("Welcome home! The client locale is {}.");
-		System.out.println("유저 데이터 호출 완료");
+		System.out.println("잘왔습니다");
 		return service.selectUser();
 	}
 	
