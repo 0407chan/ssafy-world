@@ -1,13 +1,12 @@
 package com.ssafy.ssafyworld.service;
 
 import java.util.List;
-
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
 import com.ssafy.ssafyworld.dao.UserDAO;
-import com.ssafy.ssafyworld.dto.UserVO;
+import com.ssafy.ssafyworld.dto.UserDTO;
  
 @Service
 public class UserServiceImpl implements UserService {
@@ -16,7 +15,7 @@ public class UserServiceImpl implements UserService {
     private UserDAO dao;
     
     @Override
-    public List<UserVO> selectUser() throws Exception {
+    public List<UserDTO> selectUser() throws Exception {
         return dao.selectUser();
     }
 
