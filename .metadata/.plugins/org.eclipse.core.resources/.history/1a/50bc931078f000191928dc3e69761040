@@ -1,0 +1,11 @@
+package com.ssafy.ssafyworld.dto;
+
+import java.io.Serializable;
+
+public class UserVO implements Serializable{
+	private String uid;
+	private String uname;
+	private String password;
+
+
+}

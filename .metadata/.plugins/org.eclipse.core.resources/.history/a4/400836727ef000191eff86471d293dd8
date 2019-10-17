@@ -1,0 +1,8 @@
+package com.ssafy.ssafyworld.dto;
+
+
+public class MessageDTO {
+	private int mid;
+	private String text;
+	private String sendtime;
+}

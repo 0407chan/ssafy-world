@@ -4,6 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias type="com.ssafy.ssafyworld.dto.UserVO" alias="UserVO" />
+		<typeAlias type="com.ssafy.ssafyworld.dto.UserDTO" alias="UserDTO" />
+		<typeAlias type="com.ssafy.ssafyworld.dto.RoomDTO" alias="RoomDTO" />
 	</typeAliases>
 </configuration>
