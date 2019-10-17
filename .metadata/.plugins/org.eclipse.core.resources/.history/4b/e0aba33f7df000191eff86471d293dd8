@@ -1,0 +1,9 @@
+package com.ssafy.ssafyworld.dto;
+
+import java.util.Date;
+
+public class MessageDTO {
+	private int mid;
+	private String text;
+	private String sendtime;
+}
