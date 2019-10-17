@@ -25,14 +25,16 @@ export default {
       }
     },
     methods: {
-      ...mapActions("data", ['getUser']),
+      ...mapActions("data", ['getUser','getRoomByUser']),
       test() {
         console.log("해보자")
         var params = {
           id: 0,
           name: "이찬호",
         }
+        var param = 1
         this.getUser(params);
+        this.getRoomByUser(param);
       }
     }
 };
