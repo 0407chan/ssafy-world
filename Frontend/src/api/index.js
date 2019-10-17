@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const apiUrl = 'http://localhost:8080/ssafyworld';
+//const apiUrl = '/ssafyworld';
 
 export default {
   // param 없는 경우
