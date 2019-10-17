@@ -2,9 +2,8 @@ import api from '@/api'
 
 // initial state
 const state = {
-
   currentNavigation: 0,
-
+  currentContent: 0,
 }
 
 // actions
@@ -12,6 +11,13 @@ const actions = {
   async getUser({ commit }, params) {
     console.log("왔냐", params);
     const resp = await api.getUser()
+    console.log(resp);
+  },
+
+
+  async getRoomByUser({ commit }, params) {
+    console.log("왔냐", params);
+    const resp = await api.getRoomByUser(params)
     console.log(resp);
   },
 

@@ -32,11 +32,11 @@
 import Profile from "./profile/Profile"
 
 export default {
-  name: 'Friends',
+  name: 'FriendList',
   components: {
       Profile,
   },
-  data () {
+  data() {
       return {
         items: [
           { title: '친 구 들', function: '', icon: 'mdi-account' },
