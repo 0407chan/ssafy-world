@@ -1,5 +1,5 @@
 <template>
-  <v-app class="app">
+  <v-app xs12>
     <router-view />
   </v-app>
 </template>
@@ -18,10 +18,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-  .app {
-    width: 100%;
-    height: 100%;
-  }
-</style>

@@ -4,7 +4,7 @@ const apiUrl = 'http://localhost:8080/ssafyworld';
 
 export default {
   // param 없는 경우
-  getUser(){
+  getUser() {
     return axios.get(`${apiUrl}/user`)
   },
 
