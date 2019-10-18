@@ -1,37 +1,63 @@
 <template>
-  <v-app>
-    <v-app-bar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        text
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-      </v-btn>
-    </v-app-bar>
-
+  <v-app xs12>
+    <!-- <Navigation /> -->
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+      clipped
+    >
+      <v-list dense>
+        <template v-for="(item, i) in items">
+          <v-list-item
+             :key="i"
+             @click="() => {
+               if (item.path) {
+                 goTo(item.path)
+               }
+             }"
+           >
+            <v-list-item-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-action>
+            <v-list-item-title>
+              {{ item.title }}
+            </v-list-item-title>
+          </v-list-item>
+        </template>
+      </v-list>
+    </v-navigation-drawer>
+    <v-btn @click="drawer = !drawer"></v-btn>
     <v-content>
-      <HelloWorld/>
+      <router-view />
     </v-content>
   </v-app>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import { ORIGIN_URL, ROUTE } from '~/router';
 
 export default Vue.extend({
   name: 'App',
   components: {
-    HelloWorld,
   },
   data: () => ({
-    //
+    items: [
+      { title: '로 그 인', icon: 'mdi-account', path:"home"},
+      { title: '회 원 가 입', icon: 'mdi-account-group-outline', path:"register" },
+    ],
+    drawer: true,
   }),
+
+  methods: {
+      // changeNavigation() {
+      //   this.$store.state.currentNavigation = 1;
+      //   console.log(this.$store.state.currentNavigation)
+      // },
+    goTo: function(path:string) {
+      router.push({ name: path });
+    }
+
+  },
 });
 </script>
