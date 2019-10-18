@@ -3,9 +3,15 @@ import axios from 'axios'
 const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
 
 export default {
-  // param 없는 경우
-  getUser() {
-    return axios.get(`${apiUrl}/user`)
+
+  /**
+   * 10. 18. 준범이
+   * 묻고 로그인으로 가!
+   * 
+   */
+  getUser({commit}, param) {
+    return axios.post(`${apiUrl}/user/login`, {param})
+      .then(({data}) => {console.log(param), commit('login', param.email)})
   },
 
   // 10-17 최재형
@@ -61,11 +67,4 @@ export default {
                   })
   }
 
-  /* param 있는 경우
-  getUser(params){
-    return axios.get(`${apiUrl}/user/`, {
-      params,
-    })
-  },
-  */
 }

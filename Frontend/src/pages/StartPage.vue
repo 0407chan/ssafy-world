@@ -13,37 +13,37 @@
       </v-flex>
       <v-flex xs12 text-xs-center mx-5>
         <v-flex xs12 text-xs-center>
-          <v-text-field v-model="credentials.username"
+          <v-text-field v-model="user.email"
                         label="username*"
                         solo
                         hide-details
-                        @keyup.enter="login"
+                        @keyup.enter="loginAction"
                         style="margin: 2% 0; opacity: 0.7">
             <template v-slot:append>
               <v-fade-transition>
-              <template v-if="credentials.username.length >= 4">
+              <template v-if="user.email.length >= 4">
                 <v-icon small color="green darken-2">mdi-check-circle-outline</v-icon>
               </template>
-              <template v-else-if="credentials.username.length > 0 && credentials.username.length <4">
+              <template v-else-if="user.email.length > 0 && user.email.length <4">
                 <v-icon small color="red darken-2">mdi-close-circle-outline</v-icon>
               </template>
               </v-fade-transition>
             </template>
           </v-text-field>
 
-          <v-text-field v-model="credentials.password"
+          <v-text-field v-model="user.password"
             label="Password*"
             type="password"
             solo
             hide-details
-            @keyup.enter="login"
+            @keyup.enter="loginAction"
             style="margin: 2% 0; opacity: 0.7">
             <template v-slot:append>
               <v-fade-transition>
-                <template v-if="credentials.password.length >= 4">
+                <template v-if="user.password.length >= 4">
                   <v-icon small color="green darken-2">mdi-check-circle-outline</v-icon>
                 </template>
-                <template v-else-if="credentials.password.length > 0 && credentials.password.length <4">
+                <template v-else-if="user.password.length > 0 && user.password.length <4">
                   <v-icon small color="red darken-2">mdi-close-circle-outline</v-icon>
                 </template>
               </v-fade-transition>
@@ -53,8 +53,8 @@
       </v-flex>
 
       <v-flex text-sm-center ma-5>
-        <!-- <v-btn rounded block :color="index" @click="login"><span class="btnText">Log in</span></v-btn> -->
-        <v-btn v-if="usernameLen > 0 && passwordLen > 0" rounded block :color="index" @click="login"><span class="btnText">Log in</span></v-btn>
+        <!-- <v-btn rounded block :color="index" @click="loginAction"><span class="btnText">Log in</span></v-btn> -->
+        <v-btn v-if="usernameLen > 0 && passwordLen > 0" rounded block :color="index" @click="loginAction"><span class="btnText">Log in</span></v-btn>
         <v-btn v-else rounded dark disabled block>Log in</v-btn>
       </v-flex>
       <v-flex text-sm-center ma-5>
@@ -74,135 +74,58 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 import api from '@/api'
 import { mapState, mapActions } from "vuex";
-export default {
-  data: () => ({
 
+export default {
+  name: 'StartPage',
+  data: () => ({
     closeCheck:false,
     dialog: false,
     userCheck: false,
-    user: {},
-    // login Data
-    credentials: {
-      username:'',
-      password:'',
+    user: {
+      email: '',
+      password: '',
     },
     validLogin: true,
     validRegister: true,
     loading: false,
-
     index: '',
   }),
   mounted() {
-    this.checkLoggedIn();
-    if(this.userCheck) {
-      this.getUser()
-    }
-    this.setBackground();
+
   },
   computed:{
     usernameLen(){
-      return this.credentials.username.length;
+      return this.user.email.length;
     },
     passwordLen(){
-      return this.credentials.password.length;
+      return this.user.password.length;
     },
-    ...mapState({
-      colors: state => state.data.colors,
-      images: state => state.data.images,
-      colIndex: state => state.data.colIndex
-    }),
-    getColIndex(){
-      this.index = this.colors[this.colIndex[0]];
-      document.getElementById('startBackground').style.backgroundImage=this.images[this.colIndex[0]];
-      return this.$store.state.colIndex;
-    }
   },
 
-  watch:{
-    getColIndex(){
-
-    }
-  },
   methods: {
-    ...mapActions("data", ['matrix']),
-    ...mapActions("data", ['userDetail']),
+    ...mapActions("data", ['login']),
 
-    async login() {
-      if (this.credentials.username && this.credentials.password) {
-        axios.post('http://localhost:8000/auth/', this.credentials).then(async res => {
-          this.$session.start();
-          this.$session.set('token', res.data.token);
-          this.userCheck = true;
-          this.getUser();
-          this.getUserInfo();
-          await this.postMatrix()
-          this.$router.push({name:'main'});
-          const Toast = Swal.mixin({
-              toast: true,
-              position: 'bottom-end',
-              showConfirmButton: false,
-              timer: 3000
-            });
+    /**
+     * 2019. 10. 18. 준범이
+     * 싸늘하다..
+     * 비수가 날아와 가슴에 꽂힌다.
+     * 이메일 한 발...
+     * 비밀번호 한 발...
+     * 그리고 정마담한테 loginAct...?!
+     * 동작 그만!!
+     * 
+     */
+    async loginAction() {
+        var param = {
+          email: this.user.email,
+          password: this.user.password,
+        }
+        console.log(param.email)
 
-            Toast.fire({
-              type: 'success',
-              title: 'Signed in successfully.'
-            })
 
-        }).catch(e => {
-          console.log(e);
-          Swal.fire({
-            title: 'Error!',
-            text: '다시 입력해주세요.',
-            type: 'error',
-            confirmButtonText: 'Ok'
-          })
-        })
-      }
-    },
 
-    async getUserInfo(){
-        const params = {
-          id: this.user.user_id,
-        };
-        let res = await api.userDetail(params);
-
-        this.$store.state.currentUserInfo = res.data[0];
-    },
-    checkLoggedIn() {
-      if (this.$session.has("token")) {
-        this.userCheck = true
-      }
-      else {
-        this.userCheck = false
-      }
-    },
-    getUser() {
-      let token = this.$session.get("token")
-      // parseJwt
-      let base64Url = token.split('.')[1];
-      let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-      }).join(''));
-      this.user = JSON.parse(jsonPayload)
-      this.$store.state.currentUser = this.user
-      // return JSON.parse(jsonPayload);
-    },
-    async postMatrix () {
-          const params= {
-              id: this.$store.state.currentUser.user_id
-          };
-          await this.matrix(params);
-    },
-    setBackground(){
-      var random= Math.floor(Math.random() * this.images.length);
-      this.colIndex.push(random);
-      if(this.colIndex.length > 1){
-        this.colIndex.shift();
-      }
-      this.index = this.colors[this.colIndex[0]];
-      document.getElementById('startBackground').style.backgroundImage=this.images[this.colIndex[0]];
+        let res = await this.login(param);
+        console.log(res);
     },
   }
 };
