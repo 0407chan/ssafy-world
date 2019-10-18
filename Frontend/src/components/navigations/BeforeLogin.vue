@@ -39,7 +39,6 @@ export default {
   methods: {
       changeNavigation() {
         this.$store.state.currentNavigation = 1;
-        console.log(this.$store.state.currentNavigation)
       }
   }
 };
