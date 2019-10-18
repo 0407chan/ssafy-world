@@ -4,30 +4,30 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.ssafyworld.mapper.userMapper">
-	<select id="selectUser" resultType="UserVO">
-		SELECT email,name,password
+	<select id="selectUser" resultType="UserDTO">
+		SELECT uid,uname,password
 		FROM user;
 	</select>
 	
 	<!-- 회원가입 -->
-	<insert id="insertUser" parameterType="UserVO">
+	<insert id="insertUser" parameterType="UserDTO">
 		INSERT
-		INTO user (email, name, password)
-		VALUES (#{email}, #{name}, #{password});
+		INTO user (uid, uname, password)
+		VALUES (#{uid}, #{uname}, #{password});
 	</insert>
 
 	<!-- 이름 수정 -->
-	<update id="updateUserName" parameterType="UserVO">
+	<update id="updateUserName" parameterType="UserDTO">
 		UPDATE user 
-		SET name = #{name} , password = #{password} 
-		WHERE email = #{email};
+		SET name = #{uname} , password = #{password} 
+		WHERE uid = #{uid};
 	</update>
 	
 	<!-- 회원 탈퇴  -->
-	<delete id="deleteUser" parameterType="UserVO">
+	<delete id="deleteUser" parameterType="UserDTO">
 		DELETE 
 		from user 
-		where email = #{email};
+		where uid = #{uid};
 	</delete>
 	
 </mapper>
