@@ -7,7 +7,7 @@ export default {
   getUser() {
     return axios.get(`${apiUrl}/user`)
   },
-  
+
   // 10-17 최재형
   // 로그인
   // 파라미터 : id, password
@@ -38,7 +38,7 @@ export default {
   getRoomByUser(param) {
     return axios.get(`${apiUrl}/room/${param}`)
   },
-  
+
   // 10-17 최재형
   // 방 번호에 있는 메세지 전부 가져오기
   // 파라미터 : 방 번호
@@ -46,7 +46,7 @@ export default {
   getRoomMessage(param){
     return axios.get(`${apiUrl}/message/${param}`)
   },
-  
+
   // 10-17 최재형
   // 메세지 입력
   // 파라미터 : 메세지 테이블에 있는 전 목록(날짜 빼고)

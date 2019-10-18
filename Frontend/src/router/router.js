@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import BeforeLoginPage from "@/pages/BeforeLoginPage.vue"
+import StartPage from "@/pages/StartPage.vue"
 
 Vue.use(Router)
 
@@ -10,7 +11,7 @@ export default new Router({
         {
             path: '/',
             name: 'home',
-            component: BeforeLoginPage
+            component: StartPage
         },
     ]
 })
