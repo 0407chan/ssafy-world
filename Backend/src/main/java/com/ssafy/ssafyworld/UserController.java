@@ -7,17 +7,13 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.ssafyworld.dto.MessageDTO;
-import com.ssafy.ssafyworld.dto.RoomDTO;
 import com.ssafy.ssafyworld.dto.UserDTO;
-import com.ssafy.ssafyworld.service.MessageService;
-import com.ssafy.ssafyworld.service.RoomService;
 import com.ssafy.ssafyworld.service.UserService;
 
 /**
@@ -25,16 +21,12 @@ import com.ssafy.ssafyworld.service.UserService;
  */
 @CrossOrigin(origins="*")
 @RestController
-public class HomeController {
+public class UserController {
 	
 	@Inject
     private UserService uService;
-	@Inject
-	private RoomService rService;
-	@Inject
-	private MessageService mService;
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	
 	/**
@@ -51,32 +43,35 @@ public class HomeController {
 		System.out.println("유저 데이터 호출 완료");
 		return uService.selectUsers();
 	}
+	
 	/**
-	 * 10-17 : 박규빈 
-	 * @기능 해당 방을 가져옴
-	 * @호출방법 ssafywolrd/room/rid
-	 * @param int rid 방번호
-	 * @return RoomDTO room 데이터
+	 * 10-18 : 박규빈 
+	 * @기능 회원가입
+	 * @호출방법 ssafywolrd/user/register
+	 * @param UserDTO User
+	 * @return X
 	 */
-	@RequestMapping(value = "/room/{rid}", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/register", method = RequestMethod.POST)
 	@ResponseBody
-	public RoomDTO selectRoom(@PathVariable("rid") int rid) throws Exception {
-		System.out.println(rid);
-		System.out.println("방 선택 완료!");
-		return rService.selectRoom(rid);
+	public void register(@ModelAttribute UserDTO user) throws Exception {
+		System.out.println("회원가입"+user);
+		uService.register(user);
 	}
 	
 	/**
 	 * 10-18 : 박규빈 
-	 * @기능 메세지 모두 가져옴
-	 * @호출방법 ssafywolrd/message
-	 * @param 
-	 * @return List<MessageDTO> 메세지
+	 * @기능 로그인
+	 * @호출방법 ssafywolrd/user/login
+	 * @param uid, password
+	 * @return int?
 	 */
-	@RequestMapping(value = "/message", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
 	@ResponseBody
-	public List<MessageDTO> selectMessages() throws Exception {
-		System.out.println("메세지 추출 완료!");
-		return mService.selectMessages();
+	public UserDTO login(@ModelAttribute UserDTO user) throws Exception {
+		System.out.println(user);
+		UserDTO resultUser = uService.login(user);
+		System.out.println(resultUser);
+		return resultUser;
 	}
+	
 }

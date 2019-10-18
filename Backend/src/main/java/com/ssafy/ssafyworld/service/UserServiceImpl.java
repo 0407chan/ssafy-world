@@ -19,4 +19,15 @@ public class UserServiceImpl implements UserService {
         return dao.selectUsers();
     }
 
+	@Override
+	public void register(UserDTO user) throws Exception {
+		System.out.println("회원가입 ServiceImpl");
+		dao.register(user);
+	}
+
+	@Override
+	public UserDTO login(UserDTO user) throws Exception {
+		System.out.println("로그인 ServiceImpl");
+		return dao.login(user);
+	}
 }
