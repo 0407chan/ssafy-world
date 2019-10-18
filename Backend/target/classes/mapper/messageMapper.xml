@@ -6,17 +6,4 @@
 
 <!-- 아직 구현 X -->
 <mapper namespace="com.ssafy.ssafyworld.mapper.messageMapper">
-	<select id="selectUser" resultType="UserVO">
-	</select>
-	
-	<insert id="insertUser" parameterType="UserVO">
-	</insert>
-
-	<update id="updateUserName" parameterType="UserVO">
-	</update>
-	
-	<delete id="deleteUser" parameterType="UserVO">
-	
-	</delete>
-	
 </mapper>
