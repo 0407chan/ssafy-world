@@ -19,6 +19,9 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+    <v-btn>
+      안녕
+    </v-btn>
   </v-card>
 </template>
 
@@ -26,7 +29,7 @@
 export default {
   name: 'BeforeLogin',
   components: {
-    
+
   },
   data () {
       return {
