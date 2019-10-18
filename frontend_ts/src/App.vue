@@ -35,7 +35,6 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { ORIGIN_URL, ROUTE } from '~/router';
 
 export default Vue.extend({
   name: 'App',

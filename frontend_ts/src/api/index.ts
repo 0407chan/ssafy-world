@@ -15,7 +15,7 @@ export default {
   */
   login(params) {
     console.log(params);
-    return axios.get(`${apiUrl}/user/login`, {
+    return axios.get(`${apiUrl}/user`, {
       params,
     })
   },
