@@ -20,11 +20,7 @@
 		<property name="driverClassName"
 			value="com.mysql.cj.jdbc.Driver"></property>
 		<property name="url"
-<<<<<<< HEAD
 			value="jdbc:mysql://localhost:3306/ssafyworld?useSSL=false&amp;serverTimezone=UTC">
-=======
-			value="jdbc:mysql://70.12.246.62:3306/ssafyworld?useSSL=false&amp;serverTimezone=UTC">
->>>>>>> 15be3b729f7ee4ab3a4f385c51a57dc36582eb5e
 		</property>
 		<property name="username" value="root"></property>
 		<property name="password" value="root"></property>

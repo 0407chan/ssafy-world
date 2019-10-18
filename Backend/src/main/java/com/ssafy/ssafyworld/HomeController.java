@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.ssafyworld.dto.MessageDTO;
 import com.ssafy.ssafyworld.dto.RoomDTO;
 import com.ssafy.ssafyworld.dto.UserDTO;
+import com.ssafy.ssafyworld.service.MessageService;
 import com.ssafy.ssafyworld.service.RoomService;
 import com.ssafy.ssafyworld.service.UserService;
 
@@ -29,6 +31,8 @@ public class HomeController {
     private UserService uService;
 	@Inject
 	private RoomService rService;
+	@Inject
+	private MessageService mService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
@@ -42,10 +46,10 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	@ResponseBody
-	public List<UserDTO> selectUser() throws Exception {
+	public List<UserDTO> selectUsers() throws Exception {
 		logger.info("Welcome home! The client locale is {}.");
 		System.out.println("유저 데이터 호출 완료");
-		return uService.selectUser();
+		return uService.selectUsers();
 	}
 	/**
 	 * 10-17 : 박규빈 
@@ -60,5 +64,19 @@ public class HomeController {
 		System.out.println(rid);
 		System.out.println("방 선택 완료!");
 		return rService.selectRoom(rid);
+	}
+	
+	/**
+	 * 10-18 : 박규빈 
+	 * @기능 메세지 모두 가져옴
+	 * @호출방법 ssafywolrd/message
+	 * @param 
+	 * @return List<MessageDTO> 메세지
+	 */
+	@RequestMapping(value = "/message", method = RequestMethod.GET)
+	@ResponseBody
+	public List<MessageDTO> selectMessages() throws Exception {
+		System.out.println("메세지 추출 완료!");
+		return mService.selectMessages();
 	}
 }

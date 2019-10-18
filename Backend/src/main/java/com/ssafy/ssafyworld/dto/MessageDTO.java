@@ -1,27 +1,28 @@
 package com.ssafy.ssafyworld.dto;
 
-import java.io.Serializable;
-
-public class MessageDTO implements Serializable{
+public class MessageDTO {
 	private int mid;
+	private int rid;
+	private String uid;
 	private String text;
 	private String sendtime;
-	private String uid;
-	private int rid;
-	
-	
-	public MessageDTO(int mid, String text, String sendtime, String uid, int rid) {
-		this.mid = mid;
-		this.text = text;
-		this.sendtime = sendtime;
-		this.uid = uid;
-		this.rid = rid;
-	}
 	public int getMid() {
 		return mid;
 	}
 	public void setMid(int mid) {
 		this.mid = mid;
+	}
+	public int getRid() {
+		return rid;
+	}
+	public void setRid(int rid) {
+		this.rid = rid;
+	}
+	public String getUid() {
+		return uid;
+	}
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 	public String getText() {
 		return text;
@@ -35,21 +36,10 @@ public class MessageDTO implements Serializable{
 	public void setSendtime(String sendtime) {
 		this.sendtime = sendtime;
 	}
-	public String getUid() {
-		return uid;
-	}
-	public void setUid(String uid) {
-		this.uid = uid;
-	}
-	public int getRid() {
-		return rid;
-	}
-	public void setRid(int rid) {
-		this.rid = rid;
-	}
+	
 	@Override
 	public String toString() {
-		return "MessageDTO [mid=" + mid + ", text=" + text + ", sendtime=" + sendtime + ", uid=" + uid + ", rid=" + rid
+		return "MessageDTO [mid=" + mid + ", rid=" + rid + ", uid=" + uid + ", text=" + text + ", sendtime=" + sendtime
 				+ "]";
 	}
 	@Override
@@ -74,5 +64,4 @@ public class MessageDTO implements Serializable{
 	}
 	
 	
-
 }

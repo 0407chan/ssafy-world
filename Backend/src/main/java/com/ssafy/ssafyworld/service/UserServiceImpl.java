@@ -15,8 +15,8 @@ public class UserServiceImpl implements UserService {
     private UserDAO dao;
     
     @Override
-    public List<UserDTO> selectUser() throws Exception {
-        return dao.selectUser();
+    public List<UserDTO> selectUsers() throws Exception {
+        return dao.selectUsers();
     }
 
 }

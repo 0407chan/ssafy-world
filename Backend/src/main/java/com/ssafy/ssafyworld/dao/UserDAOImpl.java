@@ -20,13 +20,11 @@ public class UserDAOImpl implements UserDAO {
     private static final String Namespace = "com.ssafy.ssafyworld.mapper.userMapper";
     
     @Override
-    public List<UserDTO> selectUser() throws Exception {
+    public List<UserDTO> selectUsers() throws Exception {
     	System.out.println(sqlSession);
-    	
-    	List<UserDTO> list=sqlSession.selectList(Namespace+".selectUser");
+    	List<UserDTO> list=sqlSession.selectList(Namespace+".selectUsers");
     	System.out.println(list);
     	return list;
-//        return sqlSession.selectList(Namespace+".selectUser");
     }
  
 }

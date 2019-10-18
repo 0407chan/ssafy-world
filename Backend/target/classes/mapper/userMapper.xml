@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.ssafyworld.mapper.userMapper">
-	<select id="selectUser" resultType="UserDTO">
+	<select id="selectUsers" resultType="UserDTO">
 		SELECT uid,uname,password
 		FROM user;
 	</select>
