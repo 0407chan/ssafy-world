@@ -20,13 +20,26 @@ public class UserDAOImpl implements UserDAO {
     private static final String Namespace = "com.ssafy.ssafyworld.mapper.userMapper";
     
     @Override
-    public List<UserDTO> selectUser() throws Exception {
+    public List<UserDTO> selectUsers() throws Exception {
     	System.out.println(sqlSession);
-    	
-    	List<UserDTO> list=sqlSession.selectList(Namespace+".selectUser");
+    	List<UserDTO> list=sqlSession.selectList(Namespace+".selectUsers");
     	System.out.println(list);
     	return list;
-//        return sqlSession.selectList(Namespace+".selectUser");
     }
+
+	@Override
+	public void register(UserDTO user) throws Exception {
+		System.out.println("회원가입 DAOImpl");
+		int n =sqlSession.insert(Namespace+".register", user);
+		System.out.println(n);
+	}
+
+	@Override
+	public UserDTO login(UserDTO user) throws Exception {
+		System.out.println("로그인 DAOImpl");
+		UserDTO dto=sqlSession.selectOne(Namespace+".login",user);
+		System.out.println("로그인성공:"+user);
+		return dto;
+	}
  
 }

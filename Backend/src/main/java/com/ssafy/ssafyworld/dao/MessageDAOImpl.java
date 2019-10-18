@@ -1,5 +1,7 @@
 package com.ssafy.ssafyworld.dao;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -10,30 +12,20 @@ import com.ssafy.ssafyworld.dto.MessageDTO;
 
 @Repository
 public class MessageDAOImpl implements MessageDAO {
-	
-	 @Inject
-	 @Autowired
-	 private SqlSession sqlSession;
-	 private static final String Namespace = "com.ssafy.ssafyworld.mapper.messageMapper";
-	
 
-	@Override
-	public MessageDTO select() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	@Inject
+	@Autowired
+	private SqlSession sqlSession;
 
+	private static final String Namespace = "com.ssafy.ssafyworld.mapper.messageMapper";
 
+	  
 	@Override
-	public void send() throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	public MessageDTO delete() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<MessageDTO> selectMessages() throws Exception {
+
+    	List<MessageDTO> list=sqlSession.selectList(Namespace+".selectMessages");
+    	System.out.println(list);
+    	return list;
 	}
 
 }
