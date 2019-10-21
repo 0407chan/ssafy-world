@@ -32,11 +32,33 @@ public class MessageController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MessageController.class);
 
-	
+
+	/**
+	 * 10-21 : 박규빈 
+	 * @기능 전체 메세지
+	 * @호출방법 ssafywolrd/message/
+	 * @param X
+	 * @return List<MessageDTO>
+	 */
 	@RequestMapping(value = "/message", method = RequestMethod.GET)
 	@ResponseBody
 	public List<MessageDTO> selectMessages() throws Exception {
 		System.out.println("메세지 추출 완료!");
 		return mService.selectMessages();
 	}
+	
+	/**
+	 * 10-21 : 박규빈 
+	 * @기능 해당 방의 메세지 모두 가져오기
+	 * @호출방법 ssafywolrd/message/{rid}
+	 * @param rid
+	 * @return List<MessageDTO>
+	 */
+	@RequestMapping(value = "/message/{rid}", method = RequestMethod.GET)
+	@ResponseBody
+	public List<MessageDTO> roomMessages(@PathVariable("rid") int rid) throws Exception {
+		System.out.println(rid+"번 방 메세지 추출 완료!");
+		return mService.roomMessages(rid);
+	}
+	
 }

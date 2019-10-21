@@ -4,8 +4,13 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.ssafy.ssafyworld.mapper.messageMapper">
-	<!-- 방 선택-->
+	<!-- 메세지 출력-->
 	<select id="selectMessages" parameterType="int" resultType="MessageDTO">
 		SELECT * FROM message;
+	</select>
+	
+	<!-- 해당 방 메세지 출력 -->
+	<select id="roomMessages" parameterType="int" resultType="MessageDTO">
+		select * from message where rid=#{rid};	
 	</select>
 </mapper>
