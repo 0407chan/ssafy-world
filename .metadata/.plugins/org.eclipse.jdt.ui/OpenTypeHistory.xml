@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <typeInfoHistroy>
-<typeInfo handle="=Backend/src\/main\/java&lt;com.ssafy.ssafyworld.dao{RoomDAO.java[RoomDAO" modifiers="513" timestamp="1571295020560"/>
+<typeInfo handle="=Backend/src\/main\/java&lt;com.ssafy.ssafyworld.dao{MessageDAO.java[MessageDAO" modifiers="513" timestamp="1571387096466"/>
+<typeInfo handle="=Backend/src\/main\/java&lt;com.ssafy.ssafyworld.service{MessageService.java[MessageService" modifiers="513" timestamp="1571387096473"/>
 </typeInfoHistroy>

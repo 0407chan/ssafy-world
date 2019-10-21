@@ -3,11 +3,13 @@ package com.ssafy.ssafyworld;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,7 +47,7 @@ public class UserController {
 	}
 	
 	/**
-	 * 10-18 : 박규빈 
+	 * 10-18 : 박규빈 -> 추후 params로 로그인 가능해야함
 	 * @기능 회원가입
 	 * @호출방법 ssafywolrd/user/register
 	 * @param UserDTO User
@@ -53,13 +55,13 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/user/register", method = RequestMethod.POST)
 	@ResponseBody
-	public void register(@ModelAttribute UserDTO user) throws Exception {
+	public void register(@RequestBody UserDTO user) throws Exception {
 		System.out.println("회원가입"+user);
 		uService.register(user);
 	}
 	
 	/**
-	 * 10-18 : 박규빈 
+	 * 10-18 : 박규빈  -> 추후 AWT로 토큰 받아와야함
 	 * @기능 로그인
 	 * @호출방법 ssafywolrd/user/login
 	 * @param uid, password
