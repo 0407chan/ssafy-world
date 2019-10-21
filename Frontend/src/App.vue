@@ -1,6 +1,5 @@
 <template>
   <v-app xs12>
-    <!-- <Navigation /> -->
     <v-navigation-drawer
       v-model="drawer"
       app
@@ -44,22 +43,16 @@ export default {
   data () {
     return {
       items: [
-        { title: '로 그 인', icon: 'mdi-account', path:"home"},
+        { title: '로 그 인', icon: 'mdi-account', path:"home" },
         { title: '회 원 가 입', icon: 'mdi-account-group-outline', path:"register" },
       ],
       drawer: true,
-
     }
   },
   methods: {
-      // changeNavigation() {
-      //   this.$store.state.currentNavigation = 1;
-      //   console.log(this.$store.state.currentNavigation)
-      // },
     goTo: function(path) {
       router.push({ name: path });
     }
-
   },
   mounted() {
 

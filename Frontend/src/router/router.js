@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import BeforeLoginPage from "@/pages/BeforeLoginPage.vue"
-import StartPage from "@/pages/StartPage.vue"
+import LoginPage from '@/pages/LoginPage.vue'
+import ChatRoomPage from '@/pages/ChatRoomPage.vue'
 
 Vue.use(Router)
 
@@ -10,8 +10,13 @@ export default new Router({
     routes: [
         {
             path: '/',
-            name: 'home',
-            component: StartPage
+            name: 'login',
+            component: LoginPage
+        },
+        {
+            path: '/room',
+            name: 'room',
+            component: ChatRoomPage
         },
     ]
 })
