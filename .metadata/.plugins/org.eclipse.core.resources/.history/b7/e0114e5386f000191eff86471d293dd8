@@ -1,5 +1,0 @@
-package com.ssafy.ssafyworld.service;
-
-public interface RoomIService {
-
-}

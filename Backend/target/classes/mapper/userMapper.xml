@@ -9,7 +9,6 @@
 		SELECT uid,uname,password
 		FROM user;
 	</select>
-	
 	<!-- 회원가입 -->
 	<insert id="register" parameterType="UserDTO">
 		INSERT
@@ -21,5 +20,6 @@
 	<select id="login" parameterType="UserDTO" resultType="UserDTO">
 		SELECT * FROM user Where uid=#{uid} and password=#{password}; 
 	</select>
+	
 
 </mapper>
