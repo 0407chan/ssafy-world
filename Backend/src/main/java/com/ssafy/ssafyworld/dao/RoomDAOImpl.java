@@ -12,7 +12,6 @@ import com.ssafy.ssafyworld.dto.RoomDTO;
 public class RoomDAOImpl implements RoomDAO {
 
 
-    @Inject
     @Autowired
     private SqlSession sqlSession;
     
