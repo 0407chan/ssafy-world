@@ -10,13 +10,29 @@ export default {
 
   /** 2019.10.18 이찬호
   * 기능 : 로그인
-  * 파라미터 : params { id, password }
+  * 파라미터 : params = uid, password
   * 리턴 : 일치하는 유저 가져오기
   */
   login(params) {
-    console.log(params);
-    return axios.get(`${apiUrl}/user/login`, {
+    console.log("index",params);
+    return axios.post(`${apiUrl}/user/login`, {
       params,
+    })
+  },
+
+  /** 2019.10.18 이찬호
+  * 기능 : 로그인
+  * 파라미터 : params = uid, uname, password
+  * 리턴 : 일치하는 유저 가져오기
+  */
+
+  register(params) {
+    console.log("index",params);
+    return axios.post(`${apiUrl}/user/register`, {
+      // params,
+      uid: params.uid,
+      uname: params.uname,
+      password: params.password,
     })
   },
 
