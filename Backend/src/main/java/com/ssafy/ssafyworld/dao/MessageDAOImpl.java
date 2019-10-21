@@ -35,5 +35,7 @@ public class MessageDAOImpl implements MessageDAO {
     	System.out.println(list);
     	return list;
 	}
+	
+	
 
 }
