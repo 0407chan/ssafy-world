@@ -4,7 +4,6 @@
     <v-navigation-drawer
       v-model="drawer"
       app
-      clipped
     >
       <v-list dense>
         <template v-for="(item, i) in items">
