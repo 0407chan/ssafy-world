@@ -57,12 +57,9 @@ export default {
       //   console.log(this.$store.state.currentNavigation)
       // },
     goTo: function(path) {
-      router.push({ name: path });
+      this.$router.push({ name: path });
     }
 
   },
-  mounted() {
-
-  },
-};
+}
 </script>

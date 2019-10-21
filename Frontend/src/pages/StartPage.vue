@@ -4,7 +4,7 @@
       <v-flex xs12 text-xs-center mx-5>
         <v-row justify="space-between">
           <v-col>
-            <v-flex style="color:white">로그인</v-flex>
+            <v-flex style="color:black">로그인</v-flex>
           </v-col>
           <v-col>
             <!-- <v-flex>비밀번호를 잊어버리셨나요?</v-flex> -->
@@ -54,15 +54,15 @@
 
       <v-flex text-sm-center ma-5>
         <!-- <v-btn rounded block :color="index" @click="login"><span class="btnText">Log in</span></v-btn> -->
-        <v-btn v-if="usernameLen > 0 && passwordLen > 0" rounded block :color="index" @click="loginAction"><span class="btnText">Log in</span></v-btn>
-        <v-btn v-else rounded dark disabled block>Log in</v-btn>
+        <v-btn v-if="usernameLen > 0 && passwordLen > 0" rounded block color="green" @click="loginAction"><span class="btnText">Log in</span></v-btn>
+        <v-btn v-else rounded disabled block>Log in</v-btn>
       </v-flex>
       <v-flex text-sm-center ma-5>
         <v-divider style="background:gray"></v-divider>
       </v-flex>
 
       <v-flex xs12 text-xs-center mx-5>
-        <v-flex my-5 style="color:white">아이디가 없으신가요?</v-flex>
+        <v-flex my-5 style="color:black">아이디가 없으신가요?</v-flex>
         <v-btn rounded block color="primary" :to="{name:'register'}">회원가입</v-btn>
       </v-flex>
     </v-flex>
