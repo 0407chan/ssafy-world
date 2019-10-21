@@ -20,4 +20,9 @@ public class MessageServiceImpl implements MessageService {
 		return dao.selectMessages();
 	}
 
+	@Override
+	public List<MessageDTO> roomMessages(int rid) throws Exception {
+		return dao.roomMessages(rid);
+	}
+
 }

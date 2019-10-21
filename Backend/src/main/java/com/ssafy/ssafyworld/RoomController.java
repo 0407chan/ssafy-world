@@ -41,4 +41,6 @@ public class RoomController {
 		System.out.println("방 선택 완료!");
 		return rService.selectRoom(rid);
 	}
+	
+	
 }
