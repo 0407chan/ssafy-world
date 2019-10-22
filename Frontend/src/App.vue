@@ -4,7 +4,6 @@
     <v-navigation-drawer
       v-model="drawer"
       app
-      clipped
     >
       <v-list dense>
         <template v-for="(item, i) in items">
@@ -57,12 +56,9 @@ export default {
       //   console.log(this.$store.state.currentNavigation)
       // },
     goTo: function(path) {
-      router.push({ name: path });
+      this.$router.push({ name: path });
     }
 
   },
-  mounted() {
-
-  },
-};
+}
 </script>
