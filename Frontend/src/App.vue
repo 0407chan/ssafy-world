@@ -1,10 +1,8 @@
 <template>
   <v-app xs12>
-    <v-navigation-drawer
-      v-model="drawer"
-      app
-      clipped
-    >
+
+    <!-- navigation -->
+    <v-navigation-drawer v-model="drawer" app clipped>
       <v-list dense>
         <template v-for="(item, i) in items">
           <v-list-item
@@ -26,9 +24,14 @@
       </v-list>
     </v-navigation-drawer>
     <v-btn @click="drawer = !drawer"></v-btn>
+
+    <!-- content -->
     <v-content>
-      <router-view />
+      <v-container fluid fill-height aacontainer>
+        <router-view />
+      </v-container>
     </v-content>
+
   </v-app>
 </template>
 
@@ -53,9 +56,6 @@ export default {
     goTo: function(path) {
       router.push({ name: path });
     }
-  },
-  mounted() {
-
   },
 };
 </script>
