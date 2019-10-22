@@ -8,6 +8,19 @@ const state = {
 
 // actions
 const actions = {
+
+  async login({ commit }, params) {
+    console.log("store",params);
+    const resp = await api.login(params);
+    console.log(resp);
+  },
+
+  async register({ commit }, params) {
+    console.log("store",params);
+    const resp = await api.register(params);
+    console.log(resp);
+  },
+
   async getUser({ commit }, params) {
     console.log("왔냐", params);
     const resp = await api.getUser()
@@ -21,7 +34,7 @@ const actions = {
     console.log(resp);
   },
 
-  
+
   async getClustering({commit}, params) {
     const res = await api.getClustering(params);
     console.log(res,'res')
@@ -34,17 +47,17 @@ const actions = {
     }));
     commit('setClusterList', clusters)
   },
-  
+
 
 };
 
 // mutations
 const mutations = {
-  
+
   setClusterList(state, ratings) {
     state.ratingList = ratings.map(m => m)
   }
-  
+
 };
 
 export default {
