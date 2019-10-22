@@ -2,8 +2,15 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-
-<!-- 아직 구현 X -->
+  
 <mapper namespace="com.ssafy.ssafyworld.mapper.messageMapper">
+	<!-- 메세지 출력-->
+	<select id="selectMessages" parameterType="int" resultType="MessageDTO">
+		SELECT * FROM message;
+	</select>
+	
+	<!-- 해당 방 메세지 출력 -->
+	<select id="roomMessages" parameterType="int" resultType="MessageDTO">
+		select * from message where rid=#{rid};	
+	</select>
 </mapper>

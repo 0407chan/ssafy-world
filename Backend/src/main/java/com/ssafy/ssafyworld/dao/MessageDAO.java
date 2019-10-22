@@ -1,14 +1,10 @@
 package com.ssafy.ssafyworld.dao;
 
-import java.util.*;
+import java.util.List;
+
 import com.ssafy.ssafyworld.dto.MessageDTO;
 
 public interface MessageDAO {
-	
-	
-	public MessageDTO select() throws Exception;
-	public void send() throws Exception;
-	public MessageDTO delete() throws Exception;
-	
-	
+	public List<MessageDTO> selectMessages() throws Exception;
+	public List<MessageDTO> roomMessages(int rid) throws Exception;
 }
