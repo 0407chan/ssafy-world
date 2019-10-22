@@ -4,7 +4,6 @@
     <v-navigation-drawer
       v-model="drawer"
       app
-      clipped
     >
       <v-list dense>
         <template v-for="(item, i) in items">
@@ -57,19 +56,9 @@ export default {
       //   console.log(this.$store.state.currentNavigation)
       // },
     goTo: function(path) {
-      router.push({ name: path });
+      this.$router.push({ name: path });
     }
 
   },
-  mounted() {
-    var app = require ( 'express' ) (); 
-    var http = require ( 'http' ) .createServer (app);
-
-    app.get ( '/' , function ( req, res ) { 
-      res.send ( '<H1> Hello world </ h1>' ); 
-    });
-
-    http.listen ( 3000 , function () { console .log ( 'listening on * : 3000' ); });
-  },
-};
+}
 </script>
