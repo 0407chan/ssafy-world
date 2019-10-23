@@ -76,18 +76,10 @@ import api from '@/api'
 import { mapState, mapActions } from "vuex";
 export default {
   data: () => ({
-
-    closeCheck:false,
-    dialog: false,
-    userCheck: false,
     user: {
       id:'',
       pw:'',
     },
-    // login Data
-    validLogin: true,
-    validRegister: true,
-    loading: false,
 
     index: '',
   }),
@@ -117,6 +109,9 @@ export default {
       }
       console.log("loginAction", params);
       await this.login(params);
+      this.$router.push({
+        name: 
+      })
     },
 
     async logins() {

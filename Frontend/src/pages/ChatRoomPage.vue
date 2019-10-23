@@ -7,9 +7,8 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex'
-import MessageList from '@/components/Chat/MessageList.vue'
-import MessageForm from '@/components/Chat/MessageForm.vue'
-import Constant from '@/Constant'
+import MessageList from '@/components/message/MessageList.vue'
+import MessageInput from '@/components/message/MessageInput.vue'
 
 export default {
   name: 'FriendChatRoomPage',
@@ -23,9 +22,7 @@ export default {
     'Message-From': MessageForm,
   },
   computed: {
-    ...mapState({
-      'msgDatas': state => state.socket.msgDatas,
-    }),
+
   },
   created() {
     const $ths = this;
