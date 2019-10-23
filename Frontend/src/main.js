@@ -3,6 +3,7 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import router from './router/router'
 import store from './store'
+import './plugins/socketPlugin';
 
 Vue.config.productionTip = false
 Vue.config.devtools = true
