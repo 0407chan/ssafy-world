@@ -4,4 +4,5 @@ import com.ssafy.ssafyworld.dto.RoomDTO;
 
 public interface RoomService {
 	public RoomDTO selectRoom(int rid) throws Exception;
+	public int createRoom(String rname);
 }
