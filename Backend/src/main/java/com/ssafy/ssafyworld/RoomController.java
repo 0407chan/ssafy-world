@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,5 +43,19 @@ public class RoomController {
 		return rService.selectRoom(rid);
 	}
 	
+	/**
+	 * 10-23 : 이규찬 
+	 * @기능 방생성
+	 * @호출방법 ssafywolrd/room/create
+	 * @param rname
+	 * @return int
+	 */
+	@RequestMapping(value="/room/create", method=RequestMethod.POST)
+	@ResponseBody
+	public int createRoom(@ModelAttribute String rname) {
+		System.out.println("createRoom");
+		return rService.createRoom(rname);
+	
+	}
 	
 }

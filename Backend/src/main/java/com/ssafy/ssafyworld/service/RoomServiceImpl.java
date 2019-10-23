@@ -20,4 +20,11 @@ public class RoomServiceImpl implements RoomService {
 		return dao.selectRoom(rid);
 	}
 
+
+	@Override
+	public int createRoom(String rname) {
+		return dao.createRoom(rname);
+		
+	}
+
 }
