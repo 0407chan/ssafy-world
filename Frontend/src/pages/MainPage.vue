@@ -82,9 +82,6 @@ export default {
       pw:'',
     },
   }),
-  mounted() {
-
-  },
   computed:{
     usernameLen() {
       return this.user.id.length;

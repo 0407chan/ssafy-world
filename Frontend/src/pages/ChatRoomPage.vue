@@ -1,7 +1,6 @@
 <template>
   <v-layout class="inner-wrap" fluid fill-height inner-wrap>
     <MessageList :msgs="msgDatas" class="msg-list" />
-    <v-btn @click="test">짠</v-btn>
     <MessageInput v-on:submitMessage="sendMessage" class="msg-form" />
   </v-layout>
 </template>
@@ -42,7 +41,7 @@ export default {
     sendMessage(msg) {
       this.pushMsgData({
         from: {
-          name: '[니] ',
+          name: this.$store.state.data.userLoginToken + ": ",
         },
         msg,
       });
@@ -51,9 +50,6 @@ export default {
         msg,
       });
     },
-    test() {
-      console.log(this.$store)
-    }
   },
 };
 </script>

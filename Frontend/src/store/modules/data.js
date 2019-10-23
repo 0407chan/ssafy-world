@@ -4,15 +4,16 @@ import api from '@/api'
 const state = {
   currentNavigation: 0,
   currentContent: 0,
-  userLoginToken: [],
+  userLoginToken: '',
 }
 
 // actions
 const actions = {
 
   async login({ commit }, params) {
-    this.userLoginToken = await api.login(params);
-    console.log(this.userLoginToken.config.data)
+    await api.login(params).then(
+      this.state.data.userLoginToken = params.id,
+    );
   },
 
   async register({ commit }, params) {
@@ -34,7 +35,7 @@ const mutations = {
 
   setClusterList(state, ratings) {
     state.ratingList = ratings.map(m => m)
-  }
+  },
 
 };
 
