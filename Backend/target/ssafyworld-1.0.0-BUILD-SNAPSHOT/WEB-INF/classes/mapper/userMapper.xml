@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.ssafyworld.mapper.userMapper">
+	<!-- 유저목록  -->
+	<select id="selectUsers" resultType="UserDTO">
+		SELECT uid,uname,password
+		FROM user;
+	</select>
+	<!-- 회원가입 -->
+	<insert id="register" parameterType="UserDTO">
+		INSERT
+		INTO user (uid, uname, password)
+		VALUES (#{uid}, #{uname}, #{password});
+	</insert>
+
+	<!-- 로그인 -->
+	<select id="login" parameterType="UserDTO" resultType="UserDTO">
+		SELECT * FROM user Where uid=#{uid} and password=#{password}; 
+	</select>
+	
+
+</mapper>

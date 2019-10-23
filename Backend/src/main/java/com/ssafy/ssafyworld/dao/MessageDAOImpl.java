@@ -13,7 +13,6 @@ import com.ssafy.ssafyworld.dto.MessageDTO;
 @Repository
 public class MessageDAOImpl implements MessageDAO {
 
-	@Inject
 	@Autowired
 	private SqlSession sqlSession;
 
