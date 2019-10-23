@@ -10,44 +10,24 @@ const state = {
 const actions = {
 
   async login({ commit }, params) {
-    console.log("store",params);
     const resp = await api.login(params);
-    console.log(resp);
   },
 
   async register({ commit }, params) {
-    console.log("store",params);
     const resp = await api.register(params);
-    console.log(resp);
   },
 
   async getUser({ commit }, params) {
-    console.log("왔냐", params);
     const resp = await api.getUser()
-    console.log(resp);
   },
 
+  async getUser({ commit }, params) {
+    const resp = await api.getUser()
+  },
 
   async getRoomByUser({ commit }, params) {
-    console.log("왔냐", params);
     const resp = await api.getRoomByUser(params)
-    console.log(resp);
   },
-
-
-  async getClustering({commit}, params) {
-    const res = await api.getClustering(params);
-    console.log(res,'res')
-    console.log(params,'params')
-    const clusters = res.data.map(d => ({
-      movie_label: d.movie_label,
-      movie_cluster: d.movie_cluster,
-      user_label: d.user_label,
-      user_cluster: d.user_cluster
-    }));
-    commit('setClusterList', clusters)
-  },
-
 
 };
 
