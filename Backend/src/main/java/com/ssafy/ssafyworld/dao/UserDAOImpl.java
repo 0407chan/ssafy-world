@@ -13,7 +13,6 @@ import com.ssafy.ssafyworld.dto.UserDTO;
 @Repository
 public class UserDAOImpl implements UserDAO {
  
-    @Inject
     @Autowired
     private SqlSession sqlSession;
     

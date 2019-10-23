@@ -1,42 +1,42 @@
-let app = require('express')();
-let http = require('http').Server(app);
-let io = require('socket.io')(http);
-
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html')
+var app = require('express')();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server,{
+  pingTimeout: 1000,
 });
 
-
-http.listen(3000, () => {
-    console.log('Listening on port *: 3000');
+app.all('/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
 });
 
-io.on('connection', (socket) => {
+// localhost:3000서버에 접속하면 클라이언트로 메세지을 전송한다
+app.get('/', function(req, res) {
+  res.sendFile('Hellow Chating App Server');
+});
 
-    socket.emit('connections', Object.keys(io.sockets.connected).length);
+io.on('connection', function(socket){
 
-    socket.on('disconnect', () => {
-        console.log("A user disconnected");
-    });
+  // 클라이언트로부터의 메시지가 수신되면
+  socket.on('chat', function(data) {
+    console.log('Message from %s: %s', data.name, data.msg);
 
-    socket.on('chat-message', (data) => {
-        socket.broadcast.emit('chat-message', (data));
-    });
+    var msg = {
+      from: {
+        name: data.name,
+      },
+      msg: data.msg
+    };
 
-    socket.on('typing', (data) => {
-        socket.broadcast.emit('typing', (data));
-    });
+    // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
+    socket.broadcast.emit('chat', msg);
+  });
 
-    socket.on('stopTyping', () => {
-        socket.broadcast.emit('stopTyping');
-    });
+  socket.on('disconnect', function() {
+    console.log('user disconnected: ' + socket.name);
+  });
 
-    socket.on('joined', (data) => {
-        socket.broadcast.emit('joined', (data));
-    });
-
-    socket.on('leave', (data) => {
-        socket.broadcast.emit('leave', (data));
-    });
 
 });
+
+server.listen(3000);
