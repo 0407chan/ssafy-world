@@ -1,12 +1,13 @@
 <template>
   <v-layout class="inner-wrap" fluid fill-height inner-wrap>
     <MessageList :msgs="msgDatas" class="msg-list" />
+    <v-btn @click="test">짠</v-btn>
     <MessageInput v-on:submitMessage="sendMessage" class="msg-form" />
   </v-layout>
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex'
+import { mapMutations, mapState, mapActions } from 'vuex'
 import Constant from '@/Constant'
 import MessageList from '@/components/message/MessageList.vue'
 import MessageInput from '@/components/message/MessageInput.vue'
@@ -41,7 +42,7 @@ export default {
     sendMessage(msg) {
       this.pushMsgData({
         from: {
-          name: '[나] ',
+          name: '[니] ',
         },
         msg,
       });
@@ -50,6 +51,9 @@ export default {
         msg,
       });
     },
+    test() {
+      console.log(this.$store)
+    }
   },
 };
 </script>

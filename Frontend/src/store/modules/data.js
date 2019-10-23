@@ -4,29 +4,27 @@ import api from '@/api'
 const state = {
   currentNavigation: 0,
   currentContent: 0,
+  userLoginToken: [],
 }
 
 // actions
 const actions = {
 
   async login({ commit }, params) {
-    const resp = await api.login(params);
+    this.userLoginToken = await api.login(params);
+    console.log(this.userLoginToken.config.data)
   },
 
   async register({ commit }, params) {
-    const resp = await api.register(params);
+    await api.register(params);
   },
 
-  async getUser({ commit }, params) {
-    const resp = await api.getUser()
-  },
-
-  async getUser({ commit }, params) {
-    const resp = await api.getUser()
+  async getUser({ commit }) {
+    await api.getUser()
   },
 
   async getRoomByUser({ commit }, params) {
-    const resp = await api.getRoomByUser(params)
+    await api.getRoomByUser(params)
   },
 
 };
