@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
+const apiUrl = 'http://127.0.0.1:8080/ssafyworld';
+// const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
 
 export default {
   // param 없는 경우
@@ -8,12 +9,32 @@ export default {
     return axios.get(`${apiUrl}/user`)
   },
 
-  // 10-17 최재형
-  // 로그인
-  // 파라미터 : id, password
-  // 리턴 : 일치하는 유저 가져오기
-  getUserLogin(id,password) {
-    return axios.get(`${apiUrl}/user/login`,{uid:id, password:password})
+  /** 2019.10.18 이찬호
+  * 기능 : 로그인
+  * 파라미터 : params = uid, password
+  * 리턴 : 일치하는 유저 가져오기
+  */
+  login(params) {
+    console.log("index",params);
+    return axios.post(`${apiUrl}/user/login`, {
+      params,
+    })
+  },
+
+  /** 2019.10.18 이찬호
+  * 기능 : 로그인
+  * 파라미터 : params = uid, uname, password
+  * 리턴 : 일치하는 유저 가져오기
+  */
+
+  register(params) {
+    console.log("index",params);
+    return axios.post(`${apiUrl}/user/register`, {
+      // params,
+      uid: params.uid,
+      uname: params.uname,
+      password: params.password,
+    })
   },
 
 
