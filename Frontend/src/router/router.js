@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import StartPage from "@/pages/StartPage.vue"
+import MainPage from "@/pages/MainPage.vue"
 import RegisterPage from "@/pages/RegisterPage.vue"
 import ChatRoomPage from "@/pages/ChatRoomPage.vue"
 
@@ -12,7 +12,7 @@ export default new Router({
         {
             path: '/',
             name: 'home',
-            component: StartPage
+            component: MainPage
         },
         {
             path: '/register',
