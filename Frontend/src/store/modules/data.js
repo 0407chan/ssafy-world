@@ -12,7 +12,7 @@ const actions = {
 
   async login({ commit }, params) {
     const resp = await api.login(params);
-    // session
+
     return resp;
   },
 

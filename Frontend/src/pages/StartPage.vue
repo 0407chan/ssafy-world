@@ -95,13 +95,54 @@ export default {
   },
   methods: {
     ...mapActions("data", ['login']),
+
+
+    /** 2019.10.21 이찬호
+    * 기능 : 로그인 액션
+    * 로그인 성공 시 페이지 변경
+    * 로그인 실패 시 오류 메세지 출력
+    */
     async loginAction() {
       let params = {
         id: this.user.id,
         pw: this.user.pw,
       }
-      await this.login(params)
-      this.$router.push({ name: 'chatroom' })
+      let res = await this.login(params)
+      console.log("loginAction",res)
+      if(res.data == 'LOGIN SUCCESS'){
+        this.successAlert(res.data);
+        this.$router.push({ name: 'chatroom' })
+      }else{
+        this.errorAlert(res.data);
+      }
+    },
+
+    /** 2019.10.21 이찬호
+    * 기능 : 성공메세지 창, 1초후에 사라진다.
+    * 변수 : 성공메세지로 표시할 내용
+    */
+    successAlert(text){
+      Swal.fire({
+        title: 'Welcome!',
+        text: text,
+        type: 'success',
+        showConfirmButton: false,
+        timer: 1000
+      })
+    },
+
+    /** 2019.10.21 이찬호
+    * 기능 : 에러메세지 창, 1초후에 사라진다.
+    * 변수 : 에러메세지로 표시할 내용
+    */
+    errorAlert(text){
+      Swal.fire({
+        title: 'Error!',
+        text: text,
+        type: 'error',
+        showConfirmButton: false,
+        timer: 1000
+      })
     },
 
     async logins() {
