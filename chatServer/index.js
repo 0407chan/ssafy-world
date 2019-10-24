@@ -1,3 +1,6 @@
+const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
+const axios = require('axios');
+
 var app = require('express')();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server,{
@@ -15,8 +18,13 @@ app.get('/', function(req, res) {
   res.sendFile('Hellow Chating App Server');
 });
 
+async()=>{
+  let data = await axios.get(`${apiUrl}/chat/1`)
+  console.log("test"+data.mid)
+}
 io.on('connection', function(socket){
-
+  
+  
   // 클라이언트로부터의 메시지가 수신되면
   socket.on('chat', function(data) {
     console.log('Message from %s: %s', data.name, data.msg);
