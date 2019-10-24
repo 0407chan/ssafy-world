@@ -8,4 +8,16 @@
 	<select id="selectRoom" parameterType="int" resultType="RoomDTO">
 		SELECT * FROM room where rid=#{rid};
 	</select>
+	
+	<select id="selectRoomName" parameterType="String" resultType="RoomDTO">
+		SELECT * FROM room where rname=#{rname};
+	</select>
+	
+	<insert id="createRoom" parameterType="String">
+		INSERT INTO room (rname) VALUES (#{rname});
+	</insert>
+	
+	<delete id="deleteRoom" parameterType="int">
+		DELETE FROM room WHERE rid = #{rid};
+	</delete>
 </mapper>

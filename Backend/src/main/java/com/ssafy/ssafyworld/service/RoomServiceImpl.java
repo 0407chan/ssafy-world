@@ -20,4 +20,16 @@ public class RoomServiceImpl implements RoomService {
 		return dao.selectRoom(rid);
 	}
 
+
+	@Override
+	public int createRoom(String rname) throws Exception {
+		return dao.createRoom(rname);
+	}
+
+
+	@Override
+	public void deleteRoom(int rid) throws Exception {
+		dao.deleteRoom(rid);
+	}
+
 }
