@@ -42,13 +42,14 @@ public class RoomController {
 	 * @return RoomDTO
 	 */
 
-//	@RequestMapping(value = "/room/{rid}", method = RequestMethod.GET)
-//	@ResponseBody
-//	public ResponseEntity<List<MessageDTO>>selectRoomAllMessage(@PathVariable("rid") int rid) throws Exception {
-//		System.out.println(rid);
-//		System.out.println("방 선택 완료!");
-//		List<MessageDTO> mlist = mService.roomMessages(rid);
-//	}
+	@RequestMapping(value = "/room/{rid}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<Integer>selectRoomAllMessage(@PathVariable("rid") int rid) throws Exception {
+		System.out.println(rid);
+		System.out.println("방 선택 완료!");
+		
+		return  new ResponseEntity<Integer>(rid,HttpStatus.OK);
+	}
 	
 	/**
 	 * 10-23 : 이규찬 
@@ -76,13 +77,15 @@ public class RoomController {
 	@RequestMapping(value="/room/delete", method=RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<String> deleteRoom(@RequestBody RoomDTO roomdto) throws Exception{
-		System.out.println("deleteRoom");
-		System.out.println(roomdto.getRid());
+		RoomDTO roomdto1 = rService.selectRoom(roomdto.getRid());
 		try {
-			rService.deleteRoom(roomdto.getRid());
+			rService.deleteRoom(roomdto1.getRid());
+			System.out.println("deleteRoom");
+			return new ResponseEntity<String>("Room delete!",HttpStatus.OK);
 		} catch (Exception e) {
+			System.out.println("deleteRoom Fail!");
 			return new ResponseEntity<String>("Room delete Fail!",HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<String>("Room delete!",HttpStatus.OK);
+		
 	}
 }
