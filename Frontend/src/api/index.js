@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const apiUrl = 'http://127.0.0.1:8080/ssafyworld';
+const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
 // const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
 
 export default {
@@ -17,7 +17,8 @@ export default {
   login(params) {
     console.log("index",params);
     return axios.post(`${apiUrl}/user/login`, {
-      params,
+      uid:params.id,
+      password:params.pw,
     })
   },
 
@@ -26,7 +27,6 @@ export default {
   * 파라미터 : params = uid, uname, password
   * 리턴 : 일치하는 유저 가져오기
   */
-
   register(params) {
     console.log("index",params);
     return axios.post(`${apiUrl}/user/register`, {

@@ -21,5 +21,10 @@
 		SELECT * FROM user Where uid=#{uid} and password=#{password}; 
 	</select>
 	
+	<!-- getUser -->
+	<select id="getUser" parameterType="String" resultType="UserDTO">
+		SELECT * FROM user Where uid=#{uid}; 
+	</select>
+	
 
 </mapper>

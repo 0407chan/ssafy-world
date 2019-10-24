@@ -45,6 +45,7 @@ export default {
       items: [
         { title: '로 그 인', icon: 'mdi-account', path:"home"},
         { title: '회 원 가 입', icon: 'mdi-account-group-outline', path:"register" },
+        { title: '채팅', icon: 'mdi-account-group-outline', path:"chatroompage" },
       ],
       drawer: true,
     }
