@@ -61,18 +61,24 @@ public class UserController {
 	}
 	
 	/**
-	 * 10-18 : 박규빈  -> 추후 AWT로 토큰 받아와야함
+	 * 2019.10.23 이찬호  -> 추후 AWT로 토큰 받아와야함
 	 * @기능 로그인
 	 * @호출방법 ssafywolrd/user/login
 	 * @param uid, password
 	 * @return int?
+	 * @Test 
+	 * 		- 아이디가 있는 경우엔 어떻게 되는가?
 	 */
 	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
 	@ResponseBody
-	public UserDTO login(@ModelAttribute UserDTO user) throws Exception {
-		System.out.println(user);
-		UserDTO resultUser = uService.login(user);
-		System.out.println(resultUser);
+	public UserDTO login(@RequestBody UserDTO user) throws Exception {
+		System.out.println("UserController, login : uid=["+user.getUid()+"] password=["+user.getPassword()+"]");
+		UserDTO resultUser = uService.getUser(user);
+		
+		if(resultUser == null) {
+			return null;
+		}
+		
 		return resultUser;
 	}
 	
