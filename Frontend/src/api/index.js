@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const apiUrl = 'http://127.0.0.1:8080/ssafyworld';
+const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
 // const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
 
 export default {
@@ -16,7 +16,8 @@ export default {
   */
   login(params) {
     return axios.post(`${apiUrl}/user/login`, {
-      params,
+      uid:params.id,
+      password:params.pw,
     })
   },
 
