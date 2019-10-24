@@ -70,53 +70,38 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+import api from '@/api'
 import axios from 'axios'
 import Swal from 'sweetalert2'
-import api from '@/api'
-import { mapState, mapActions } from "vuex";
+
 export default {
   data: () => ({
-
-    closeCheck:false,
-    dialog: false,
-    userCheck: false,
     user: {
       id:'',
       pw:'',
     },
-    // login Data
-    validLogin: true,
-    validRegister: true,
-    loading: false,
-
-    index: '',
   }),
   mounted() {
 
   },
   computed:{
-    usernameLen(){
+    usernameLen() {
       return this.user.id.length;
     },
-    passwordLen(){
+    passwordLen() {
       return this.user.pw.length;
     },
   },
-
-  watch:{
-    getColIndex(){
-
-    }
-  },
   methods: {
     ...mapActions("data", ['login']),
-    async loginAction(){
-      let params ={
+    async loginAction() {
+      let params = {
         id: this.user.id,
         pw: this.user.pw,
       }
-      console.log("loginAction", params);
-      await this.login(params);
+      await this.login(params)
+      this.$router.push({ name: 'chatroom' })
     },
 
     async logins() {
@@ -151,19 +136,6 @@ export default {
           })
         })
       }
-    },
-
-    getUser() {
-      let token = this.$session.get("token")
-      // parseJwt
-      let base64Url = token.split('.')[1];
-      let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-      }).join(''));
-      this.user = JSON.parse(jsonPayload)
-      this.$store.state.currentUser = this.user
-      // return JSON.parse(jsonPayload);
     },
   }
 };

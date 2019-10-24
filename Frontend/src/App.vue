@@ -33,9 +33,7 @@
 </template>
 
 <script>
-import Navigation from "@/components/Navigation"
-
-
+import Navigation from '@/components/Navigation'
 
 export default {
   name: 'App',
@@ -49,18 +47,12 @@ export default {
         { title: '회 원 가 입', icon: 'mdi-account-group-outline', path:"register" },
       ],
       drawer: true,
-
     }
   },
   methods: {
-      // changeNavigation() {
-      //   this.$store.state.currentNavigation = 1;
-      //   console.log(this.$store.state.currentNavigation)
-      // },
     goTo: function(path) {
       this.$router.push({ name: path });
-    }
-
+    },
   },
 }
 </script>

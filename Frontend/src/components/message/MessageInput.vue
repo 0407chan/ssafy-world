@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: 'MessageForm',
+  name: 'MessageInput',
   data() {
     return {
       msg: '',
