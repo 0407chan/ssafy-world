@@ -15,6 +15,7 @@
         </template>
       </v-list>
       <v-list dense v-show="first == 1">
+        <v-btn @click="logout">로그아웃</v-btn>
         <template v-for="(item, i) in afterLoginItems">
           <v-list-item :key="i" @click="() => { if (item.path) { goTo(item.path) } }">
             <v-list-item-action>
@@ -71,8 +72,13 @@ export default {
     },
   },
   methods: {
-    goTo: function(path) {
+    goTo(path) {
       this.$router.push({ name: path });
+    },
+    logout() {
+      sessionStorage.removeItem('uid');
+      this.$store.state.data.userLoginToken = '';
+      this.$router.push({ name: 'main' });
     },
   },
 }

@@ -102,9 +102,9 @@ export default {
         pw: this.user.pw,
       }
       console.log(await this.login(params))
-      // if (await this.login(params) == 200) {
-      //   this.$router.push({ name: 'chatroom' })
-      // }
+      if (await this.login(params) == 200) {
+        this.$router.push({ name: 'chatroom' })
+      }
     },
 
     async logins() {
