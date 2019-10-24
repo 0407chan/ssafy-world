@@ -25,6 +25,7 @@ export default {
   computed: {
     ...mapState({
       'msgDatas': state => state.socket.msgDatas,
+      //아이디 vuex 링크 잡기
     }),
   },
   created() {
@@ -49,7 +50,12 @@ export default {
         msg,
       });
       this.$sendMessage({
+<<<<<<< HEAD
         name: this.$store.state.data.userLoginToken + ": ",
+=======
+        //가져온 vuex 아이디로 name을 변경하면 됌
+        name: this.$route.params.username,
+>>>>>>> b0836d0a509d573cf37d85befc60bdbaaa6ad577
         msg,
       });
     },
