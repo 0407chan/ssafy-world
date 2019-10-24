@@ -27,7 +27,6 @@ export default {
   * 파라미터 : params = uid, uname, password
   * 리턴 : 일치하는 유저 가져오기
   */
-
   register(params) {
     console.log("index",params);
     return axios.post(`${apiUrl}/user/register`, {
