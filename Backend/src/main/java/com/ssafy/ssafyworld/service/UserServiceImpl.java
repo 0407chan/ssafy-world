@@ -31,4 +31,10 @@ public class UserServiceImpl implements UserService {
 		System.out.println("로그인 ServiceImpl");
 		return dao.login(user);
 	}
+
+	@Override
+	public UserDTO getUser(UserDTO user) throws Exception {
+		System.out.println("유저찾기 ServiceImpl");
+		return dao.getUser(user);
+	}
 }

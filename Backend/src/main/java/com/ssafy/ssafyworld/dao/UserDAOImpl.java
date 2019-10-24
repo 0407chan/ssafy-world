@@ -39,5 +39,18 @@ public class UserDAOImpl implements UserDAO {
 		UserDTO dto=sqlSession.selectOne(Namespace+".login",user);
 		return dto;
 	}
+
+	
+	/** 2019.10.24 이찬호
+	 * 기능 : 해당 유저가 있는지 찾아온다
+	 * 입력 : user
+	 * 리턴 : 유저가 존재하면 해당 user, 없으면 null
+	 * */
+	@Override
+	public UserDTO getUser(UserDTO user) throws Exception {
+		UserDTO dto = sqlSession.selectOne(Namespace+".login",user.getUid());
+		System.out.println("getUser = " + dto);
+		return dto ;
+	}
  
 }

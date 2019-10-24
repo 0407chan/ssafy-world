@@ -32,7 +32,7 @@ public class UserController {
 
 	/**
 	 * 10-24 : 박규빈
-	 * 
+	 *
 	 * @기능 유저 전체 리스트를 가져옴
 	 * @호출방법 ssafywolrd/user
 	 * @param X
@@ -49,7 +49,7 @@ public class UserController {
 
 	/**
 	 * 10-18 : 박규빈
-	 * 
+	 *
 	 * @기능 회원가입
 	 * @호출방법 ssafywolrd/user/register
 	 * @param UserDTO User
@@ -68,12 +68,13 @@ public class UserController {
 	}
 
 	/**
-	 * 10-18 : 박규빈 -> 추후 AWT로 토큰 받아와야함
-	 * 
+	 * 2019.10.23 이찬호  -> 추후 AWT로 토큰 받아와야함
 	 * @기능 로그인
 	 * @호출방법 ssafywolrd/user/login
 	 * @param uid, password
-	 * @return 성공시 200 OK 실패시 400 BAD_REQUEST
+	 * @return int?
+	 * @Test
+	 * 		- 아이디가 있는 경우엔 어떻게 되는가?
 	 */
 	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
 	@ResponseBody
@@ -85,6 +86,14 @@ public class UserController {
 			return new ResponseEntity<String>("LOGIN ERROR!!", HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<String>("LOGIN  SUCCESS!!", HttpStatus.OK);
+		System.out.println("UserController, login : uid=["+user.getUid()+"] password=["+user.getPassword()+"]");
+		UserDTO resultUser = uService.getUser(user);
+
+		if(resultUser == null) {
+			return null;
+		}
+
+		return resultUser;
 	}
 
 }
