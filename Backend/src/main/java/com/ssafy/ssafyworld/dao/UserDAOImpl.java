@@ -27,17 +27,16 @@ public class UserDAOImpl implements UserDAO {
     }
 
 	@Override
-	public void register(UserDTO user) throws Exception {
+	public int register(UserDTO user) throws Exception {
 		System.out.println("회원가입 DAOImpl");
 		int n =sqlSession.insert(Namespace+".register", user);
-		System.out.println(n);
+		return n;
 	}
 
 	@Override
 	public UserDTO login(UserDTO user) throws Exception {
 		System.out.println("로그인 DAOImpl");
 		UserDTO dto=sqlSession.selectOne(Namespace+".login",user);
-		System.out.println("로그인성공:"+user);
 		return dto;
 	}
  

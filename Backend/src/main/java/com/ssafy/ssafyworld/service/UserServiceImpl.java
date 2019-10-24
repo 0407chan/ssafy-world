@@ -20,9 +20,10 @@ public class UserServiceImpl implements UserService {
     }
 
 	@Override
-	public void register(UserDTO user) throws Exception {
+	public int register(UserDTO user) throws Exception {
 		System.out.println("회원가입 ServiceImpl");
-		dao.register(user);
+		int n = dao.register(user);
+		return n;
 	}
 
 	@Override
