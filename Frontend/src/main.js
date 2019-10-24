@@ -5,6 +5,7 @@ import store from '@/store'
 import vuetify from '@/plugins/vuetify'
 import directives from '@/plugins/directives'
 import '@/plugins/socket'
+import '@/assets/_common.scss'
 
 Vue.config.productionTip = false
 Vue.config.devtools = true
