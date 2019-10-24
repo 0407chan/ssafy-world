@@ -28,10 +28,13 @@ export default {
     }),
   },
   created() {
-    const $ths = this;
+    if (this.$store.state.data.userLoginToken === '')
+      this.$router.push({ name: 'main' })
+    
+    const $ths = this
     this.$socket.on('chat', (data) => {
-      this.pushMsgData(data);
-      $ths.datas.push(data);
+      this.pushMsgData(data)
+      $ths.datas.push(data)
     });
   },
   methods: {
@@ -46,7 +49,7 @@ export default {
         msg,
       });
       this.$sendMessage({
-        name: this.$route.params.username,
+        name: this.$store.state.data.userLoginToken + ": ",
         msg,
       });
     },
