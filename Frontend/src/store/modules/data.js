@@ -4,6 +4,7 @@ import api from '@/api'
 const state = {
   currentNavigation: 0,
   currentContent: 0,
+  
 }
 
 // actions
@@ -11,6 +12,8 @@ const actions = {
 
   async login({ commit }, params) {
     const resp = await api.login(params);
+
+    return resp;
   },
 
   async register({ commit }, params) {

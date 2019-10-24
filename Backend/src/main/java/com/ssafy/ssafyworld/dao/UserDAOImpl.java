@@ -48,7 +48,7 @@ public class UserDAOImpl implements UserDAO {
 	 * */
 	@Override
 	public UserDTO getUser(UserDTO user) throws Exception {
-		UserDTO dto = sqlSession.selectOne(Namespace+".login",user.getUid());
+		UserDTO dto = sqlSession.selectOne(Namespace+".getUser",user.getUid());
 		System.out.println("getUser = " + dto);
 		return dto ;
 	}
