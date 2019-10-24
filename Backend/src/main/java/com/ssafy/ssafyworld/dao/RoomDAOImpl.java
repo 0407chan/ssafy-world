@@ -24,4 +24,16 @@ public class RoomDAOImpl implements RoomDAO {
 		return room;
 	}
 
+	@Override
+	public int createRoom(String rname) {
+		sqlSession.insert(Namespace+".createRoom",rname);
+		RoomDTO room=sqlSession.selectOne(Namespace+".selectRoomName",rname);
+		return room.getRid();
+	}
+
+	@Override
+	public void deleteRoom(int rid) throws Exception {
+		sqlSession.delete(Namespace+".deleteRoom",rid);
+	}
+
 }
