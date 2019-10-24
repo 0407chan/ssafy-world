@@ -31,4 +31,9 @@ public class RoomDAOImpl implements RoomDAO {
 		return room.getRid();
 	}
 
+	@Override
+	public void deleteRoom(int rid) throws Exception {
+		sqlSession.delete(Namespace+".deleteRoom",rid);
+	}
+
 }
