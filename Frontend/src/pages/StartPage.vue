@@ -82,9 +82,8 @@ export default {
       pw:'',
     },
   }),
-  created() {
-    if (this.$store.state.data.userLoginToken !== '')
-      this.$router.push({ name: 'chatroom' })
+  mounted() {
+
   },
   computed:{
     usernameLen() {

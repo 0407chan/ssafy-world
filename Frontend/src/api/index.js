@@ -15,10 +15,16 @@ export default {
   * 리턴 : 일치하는 유저 가져오기
   */
   login(params) {
+    console.log("index",params);
     return axios.post(`${apiUrl}/user/login`, {
       uid:params.id,
       password:params.pw,
+    }).then(response => {
+      return response
     })
+    .catch(error => {
+      return error.response
+    });
   },
 
   /** 2019.10.18 이찬호
@@ -27,6 +33,7 @@ export default {
   * 리턴 : 일치하는 유저 가져오기
   */
   register(params) {
+    console.log("index",params);
     return axios.post(`${apiUrl}/user/register`, {
       // params,
       uid: params.uid,
@@ -34,6 +41,7 @@ export default {
       password: params.password,
     })
   },
+
 
   // 10-17 최재형
   // 회원가입
