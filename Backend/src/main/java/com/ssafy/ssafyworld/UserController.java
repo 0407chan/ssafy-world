@@ -85,15 +85,9 @@ public class UserController {
 		if (resultUser == null) {
 			return new ResponseEntity<String>("LOGIN ERROR!!", HttpStatus.BAD_REQUEST);
 		}
+		resultUser = uService.getUser(user);
 		return new ResponseEntity<String>("LOGIN  SUCCESS!!", HttpStatus.OK);
-		System.out.println("UserController, login : uid=["+user.getUid()+"] password=["+user.getPassword()+"]");
-		UserDTO resultUser = uService.getUser(user);
 
-		if(resultUser == null) {
-			return null;
-		}
-
-		return resultUser;
 	}
 
 }
