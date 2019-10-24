@@ -82,6 +82,10 @@ export default {
       pw:'',
     },
   }),
+  created() {
+    if (this.$store.state.data.userLoginToken !== '')
+      this.$router.push({ name: 'chatroom' })
+  },
   computed:{
     usernameLen() {
       return this.user.id.length;
@@ -97,8 +101,10 @@ export default {
         id: this.user.id,
         pw: this.user.pw,
       }
-      await this.login(params)
-      this.$router.push({ name: 'chatroom' })
+      console.log(await this.login(params))
+      // if (await this.login(params) == 200) {
+      //   this.$router.push({ name: 'chatroom' })
+      // }
     },
 
     async logins() {

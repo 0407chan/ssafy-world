@@ -13,6 +13,7 @@ const actions = {
   async login({ commit }, params) {
     await api.login(params).then(
       this.state.data.userLoginToken = params.id,
+      sessionStorage.setItem("uid", params.id),
     );
   },
 

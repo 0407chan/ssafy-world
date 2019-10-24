@@ -1,7 +1,7 @@
 import axios from 'axios'
 
+//const apiUrl = 'http://70.12.246.98:8080/ssafyworld';
 const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
-// const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
 
 export default {
   // param 없는 경우

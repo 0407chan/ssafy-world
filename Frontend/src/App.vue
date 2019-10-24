@@ -59,6 +59,9 @@ export default {
       logincheck: false
     }
   },
+  created() {
+    this.$store.state.data.userLoginToken = sessionStorage.getItem('uid')
+  },
   computed :{  
     first : function() {
       if (this.$store.state.data.userLoginToken === '')
