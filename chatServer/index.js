@@ -1,5 +1,6 @@
 const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
 const axios = require('axios');
+const axios = require('./sql.js');
 
 var app = require('express')();
 var server = require('http').createServer(app);
