@@ -54,7 +54,7 @@ public class UserController {
 	 * @기능 회원가입
 	 * @호출방법 ssafywolrd/user/register
 	 * @param UserDTO User
-	 * @return 성공시 201 CREATED 실패시 400 BAD_REQUEST
+	 * @return 성공시 200 OK 실패시 400 BAD_REQUEST
 	 * @추가 비밀번호 암호화 해서 저장 추가
 	 */
 	@RequestMapping(value = "/user/register", method = RequestMethod.POST)
@@ -79,7 +79,7 @@ public class UserController {
 	 * @기능 로그인
 	 * @호출방법 ssafywolrd/user/login
 	 * @param uid, password
-	 * @return int?
+	 * @return 성공 200 OK , 실패 400 BAD REQUEST
 	 * @Test
 	 * 		- 아이디가 있는 경우엔 어떻게 되는가?
 	 */
