@@ -3,7 +3,14 @@
     <transition-group name="list" >
       <div v-for="(msg,index) in msgs" v-bind:key="index">
         <v-list>
-            <span>{{msg.from.name}}</span>{{msg.msg}}
+            <v-list-item-avatar>
+              <v-img src="https://randomuser.me/api/portraits/women/75.jpg"></v-img>
+            </v-list-item-avatar>
+            <div style="display: inline-block;">
+                {{msg.from.name}}
+                <br>
+                {{msg.msg}}
+            </div>
         </v-list>
       </div>
     </transition-group>
