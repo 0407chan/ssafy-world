@@ -81,7 +81,7 @@ export default {
   methods: {
     ...mapActions('data', ['register']),
 
-    /** 2019.10.21 이찬호
+    /** 2019.10.25 이찬호
     *기능 : 회원가입 버튼을 누르면 회원 정보를 등록하고 로그인 한다.
     *      회원가입이 완료 되면 rating page로 이동해 rating을 준다.
     */
@@ -92,6 +92,27 @@ export default {
         password: this.password,
       };
       let res = await this.register(params);
+      console.log("registerAction",res)
+      if(res.data == 'USER CREATED'){
+        this.successAlert(res.data);
+        this.$router.push({ name: 'chatroom' })
+      }else{
+        this.errorAlert(res.data);
+      }
+    },
+
+    /** 2019.10.21 이찬호
+    * 기능 : 성공메세지 창, 1초후에 사라진다.
+    * 변수 : 성공메세지로 표시할 내용
+    */
+    successAlert(text){
+      Swal.fire({
+        title: 'Welcome!',
+        text: text,
+        type: 'success',
+        showConfirmButton: false,
+        timer: 1000
+      })
     },
 
     /* 2019.10.21 이찬호
@@ -106,7 +127,6 @@ export default {
         showConfirmButton: false,
         timer: 1000
       })
-      this.goto("register");
     },
 
     /* 2019.10.21 이찬호

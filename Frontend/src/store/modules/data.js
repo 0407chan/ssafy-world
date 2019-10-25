@@ -12,12 +12,12 @@ const actions = {
 
   async login({ commit }, params) {
     const resp = await api.login(params);
-
     return resp;
   },
 
   async register({ commit }, params) {
     const resp = await api.register(params);
+    return resp;
   },
 
   async getUser({ commit }, params) {
