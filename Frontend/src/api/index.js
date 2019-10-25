@@ -27,7 +27,7 @@ export default {
     });
   },
 
-  /** 2019.10.18 이찬호
+  /** 2019.10.25 이찬호
   * 기능 : 로그인
   * 파라미터 : params = uid, uname, password
   * 리턴 : 일치하는 유저 가져오기
@@ -39,7 +39,12 @@ export default {
       uid: params.uid,
       uname: params.uname,
       password: params.password,
+    }).then(response => {
+      return response
     })
+    .catch(error => {
+      return error.response
+    });
   },
 
 

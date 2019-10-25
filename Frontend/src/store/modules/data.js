@@ -16,6 +16,7 @@ const actions = {
 
   async register({ commit }, params) {
     const resp = await api.register(params);
+    return resp;
   },
 
   async getUser({ commit }, params) {
