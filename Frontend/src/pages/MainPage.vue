@@ -81,6 +81,12 @@ export default {
       pw:'',
     },
   }),
+  mounted() {
+    console.log("상태확인");
+
+    if (this.$store.state.data.userLoginToken != '' && this.$store.state.data.userLoginToken != null)
+      this.$router.push({ name: 'chatroom' })
+  },
   computed:{
     idLen() {
       return this.user.id.length;
@@ -113,6 +119,14 @@ export default {
       // }else{
       //   this.errorAlert(res.data,'');
       // }
+      if(res.data == 'LOGIN SUCCESS'){
+        this.successAlert(res.data);
+        this.$store.state.checkLogin=1;
+        this.$router.push({ name: 'chatroom' })
+      }
+      else {
+        this.errorAlert(res.data);
+      }
     },
 
     /** 2019.10.21 이찬호
