@@ -60,15 +60,15 @@ export default {
   data () {
     return {
       beforeLoginItems: [
-        { title: '로 그 인', icon: 'mdi-account', path:"home"},
+        { title: '로 그 인', icon: 'mdi-account', path:"main"},
         { title: '회 원 가 입', icon: 'mdi-account-group-outline', path:"register" },
       ],
       afterLoginItems: [
-        { title: '친 구 들', icon: 'mdi-account', path:"home"},
-        { title: '채 팅 방', icon: 'mdi-account-group-outline', path:"register" },
-        { title: '방 명 록', icon: 'mdi-account-group-outline', path:"register" },
-        { title: '게 시 판', icon: 'mdi-account-group-outline', path:"register" },
-        { title: '공 지 사 항', icon: 'mdi-account-group-outline', path:"register" },
+        { title: '친 구 들', icon: 'mdi-account', path:"main"},
+        { title: '채 팅 방', icon: 'mdi-account-group-outline', path:"" },
+        { title: '방 명 록', icon: 'mdi-account-group-outline', path:"" },
+        { title: '게 시 판', icon: 'mdi-account-group-outline', path:"" },
+        { title: '공 지 사 항', icon: 'mdi-account-group-outline', path:"" },
       ],
       drawer: true,
       logincheck: false,
@@ -111,6 +111,7 @@ export default {
   methods: {
     ...mapMutations('data',['setMenu','clearUser']),
     goTo(path) {
+      console.log(path); 
       this.$router.push({ name: path });
     },
     ...mapActions('data',['login']),

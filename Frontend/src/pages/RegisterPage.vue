@@ -22,7 +22,7 @@
               solo hide-details @keyup.enter="registerAction" style="margin: 2% 0; opacity: 0.7">
               <template v-slot:append>
                 <v-fade-transition>
-                  <template v-if="uname.length >= 4">
+                  <template v-if="uname.length >= 2">
                     <v-icon small color="green darken-2">mdi-check-circle-outline</v-icon>
                   </template>
                   <template v-else-if="uname.length > 0 && uname.length <4">
@@ -53,7 +53,7 @@
           </v-flex>
         </v-flex>
         <v-flex text-sm-center ma-5>
-          <v-btn v-if="uid.length >= 4 && uname.length >= 4 && password.length >=4" rounded block color="green" @click="registerAction"><span class="btnText" >회원가입</span></v-btn>
+          <v-btn v-if="uid.length >= 4 && uname.length >= 2 && password.length >=4" rounded block color="green" @click="registerAction"><span class="btnText" >회원가입</span></v-btn>
           <v-btn v-else rounded disabled block>회원가입</v-btn>
         </v-flex>
       </v-flex>
