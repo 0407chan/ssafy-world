@@ -94,10 +94,10 @@ export default {
       let res = await this.register(params);
       console.log("registerAction",res)
       if(res.data == 'USER CREATED'){
-        this.successAlert(res.data);
+        this.successAlert("WELCOME!","User Created successfully");
         this.$router.push({ name: 'chatroom' })
       }else{
-        this.errorAlert(res.data);
+        this.errorAlert(res.data,"Try other name");
       }
     },
 
@@ -105,9 +105,9 @@ export default {
     * 기능 : 성공메세지 창, 1초후에 사라진다.
     * 변수 : 성공메세지로 표시할 내용
     */
-    successAlert(text){
+    successAlert(title,text){
       Swal.fire({
-        title: 'Welcome!',
+        title: title,
         text: text,
         type: 'success',
         showConfirmButton: false,
@@ -119,9 +119,9 @@ export default {
     기능 : 에러메세지 창, 1초후에 사라진다.
     변수 : 에러메세지로 표시할 내용
     */
-    errorAlert(text){
+    errorAlert(title,text){
       Swal.fire({
-        title: 'Error!',
+        title: title,
         text: text,
         type: 'error',
         showConfirmButton: false,
@@ -153,23 +153,3 @@ export default {
   }
 };
 </script>
-
-<style>
-.loginModal_btn {
-  width: 120px;
-}
-.cc-selector input{
-  margin:0;padding:0;
-  -webkit-appearance:none;
-  -moz-appearance:none;
-       appearance:none;
-}
-
-.cc-selector input:active +.imagecard-cc{opacity: .9;}
-.cc-selector input:checked +.imagecard-cc{
-    -webkit-filter: none;
-       -moz-filter: none;
-            filter: none;
-}
-
-</style>

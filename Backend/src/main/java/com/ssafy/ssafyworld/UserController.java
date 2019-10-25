@@ -62,7 +62,7 @@ public class UserController {
 	public ResponseEntity<String> register(@RequestBody UserDTO user) throws Exception {
 		UserDTO resultUser = uService.getUser(user);
 		if (resultUser != null) {
-			return ResponseEntity.badRequest().body("User already Exist");
+			return ResponseEntity.badRequest().body("User Already Exist");
 		}
 		String hashPw = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 		user.setPassword(hashPw);
