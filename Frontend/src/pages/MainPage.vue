@@ -83,7 +83,7 @@ export default {
     },
   }),
   created() {
-    if (this.$store.state.data.userLoginToken !== '')
+    if (this.$store.state.data.userLoginToken != '' && this.$store.state.data.userLoginToken != null)
       this.$router.push({ name: 'chatroom' })
   },
   computed:{
@@ -109,11 +109,15 @@ export default {
         pw: this.user.pw,
       }
       let res = await this.login(params)
-      console.log("loginAction",res)
-      if(res.data == 'LOGIN SUCCESS'){
-        this.successAlert(res.data);
+      console.log("loginAction", res)
+
+      if (res.data == 'LOGIN SUCCESS') {
+        sessionStorage.setItem("uid", params.id)
+        this.$store.state.data.userLoginToken = params.id
+        this.successAlert(res.data)
         this.$router.push({ name: 'chatroom' })
-      }else{
+      }
+      else {
         this.errorAlert(res.data);
       }
     },

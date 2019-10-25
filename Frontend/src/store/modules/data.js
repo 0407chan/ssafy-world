@@ -4,17 +4,14 @@ import api from '@/api'
 const state = {
   currentNavigation: 0,
   currentContent: 0,
-
+  userLoginToken: '',
 }
 
 // actions
 const actions = {
 
   async login({ commit }, params) {
-    await api.login(params).then(
-      this.state.data.userLoginToken = params.id,
-      sessionStorage.setItem("uid", params.id),
-    );
+    return await api.login(params);
   },
 
   async register({ commit }, params) {

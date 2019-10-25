@@ -29,7 +29,7 @@ export default {
     }),
   },
   created() {
-    if (this.$store.state.data.userLoginToken === '')
+    if (this.$store.state.data.userLoginToken == '' || this.$store.state.data.userLoginToken == null)
       this.$router.push({ name: 'main' })
     
     const $ths = this
@@ -45,12 +45,12 @@ export default {
     sendMessage(msg) {
       this.pushMsgData({
         from: {
-          name: this.$store.state.data.userLoginToken + ": ",
+          name: this.$store.state.data.userLoginToken,
         },
         msg,
       });
       this.$sendMessage({
-        name: this.$store.state.data.userLoginToken + ": ",
+        name: this.$store.state.data.userLoginToken,
         msg,
       });
     },

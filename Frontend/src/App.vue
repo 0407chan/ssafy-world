@@ -2,6 +2,7 @@
   <v-app xs12>
     <!-- <Navigation /> -->
     <v-navigation-drawer v-model="drawer" app>
+
       <v-list dense v-show="first == 0">
         <template v-for="(item, i) in beforeLoginItems">
           <v-list-item :key="i" @click="() => { if (item.path) { goTo(item.path) } }">
@@ -14,8 +15,17 @@
           </v-list-item>
         </template>
       </v-list>
+
       <v-list dense v-show="first == 1">
-        <v-btn @click="logout">로그아웃</v-btn>
+        <v-list-item>
+          <v-list-item-avatar>
+            <v-img src="https://randomuser.me/api/portraits/women/75.jpg"></v-img>
+          </v-list-item-avatar>
+          <v-btn @click="logout">로그아웃</v-btn>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
         <template v-for="(item, i) in afterLoginItems">
           <v-list-item :key="i" @click="() => { if (item.path) { goTo(item.path) } }">
             <v-list-item-action>
@@ -27,11 +37,14 @@
           </v-list-item>
         </template>
       </v-list>
+
     </v-navigation-drawer>
+
     <v-btn @click="drawer = !drawer"></v-btn>
     <v-content>
       <router-view />
     </v-content>
+    
   </v-app>
 </template>
 
@@ -60,12 +73,13 @@ export default {
       logincheck: false
     }
   },
-  created() {
+  mounted() {
     this.$store.state.data.userLoginToken = sessionStorage.getItem('uid')
+    console.log(sessionStorage.getItem('uid'))
   },
   computed :{  
     first : function() {
-      if (this.$store.state.data.userLoginToken === '')
+      if (this.$store.state.data.userLoginToken == '' || this.$store.state.data.userLoginToken == null)
         return 0;
       else
         return 1;
