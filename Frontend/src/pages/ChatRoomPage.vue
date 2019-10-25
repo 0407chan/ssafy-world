@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex'
+import { mapMutations, mapState, mapActions } from 'vuex'
 import Constant from '@/Constant'
 import MessageList from '@/components/message/MessageList.vue'
 import MessageInput from '@/components/message/MessageInput.vue'
@@ -29,10 +29,13 @@ export default {
     }),
   },
   created() {
-    const $ths = this;
+    if (this.$store.state.data.userLoginToken === '')
+      this.$router.push({ name: 'main' })
+    
+    const $ths = this
     this.$socket.on('chat', (data) => {
-      this.pushMsgData(data);
-      $ths.datas.push(data);
+      this.pushMsgData(data)
+      $ths.datas.push(data)
     });
   },
   methods: {
@@ -42,13 +45,12 @@ export default {
     sendMessage(msg) {
       this.pushMsgData({
         from: {
-          name: '[나] ',
+          name: this.$store.state.data.userLoginToken + ": ",
         },
         msg,
       });
       this.$sendMessage({
-        //가져온 vuex 아이디로 name을 변경하면 됌
-        name: this.$route.params.username,
+        name: this.$store.state.data.userLoginToken + ": ",
         msg,
       });
     },

@@ -79,15 +79,20 @@ public class UserController {
 	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<String> login(@RequestBody UserDTO user) throws Exception {
-		System.out.println(user);
-		UserDTO resultUser = uService.login(user);
-		System.out.println(resultUser);
-		if (resultUser == null) {
-			return new ResponseEntity<String>("LOGIN ERROR!!", HttpStatus.BAD_REQUEST);
-		}
-		resultUser = uService.getUser(user);
-		return new ResponseEntity<String>("LOGIN  SUCCESS!!", HttpStatus.OK);
 
+		
+		UserDTO resultUser = uService.getUser(user);
+		if (resultUser == null) {
+			return ResponseEntity.badRequest().body("User Not Found");
+		}
+		
+		resultUser = uService.login(user);
+		System.out.println("login "+resultUser);
+		if (resultUser == null) {
+			return ResponseEntity.badRequest().body("Wrong Password");
+		}
+		
+		return ResponseEntity.ok().body("LOGIN SUCCESS");
 	}
 
 }
