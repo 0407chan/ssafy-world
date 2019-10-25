@@ -5700,3 +5700,7 @@ org.eclipse.core.runtime.CoreException: Could not resolve artifact com.fasterxml
 2019-10-25 14:14:45,308 [Worker-4: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
 2019-10-25 14:14:45,347 [Worker-4: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
 2019-10-25 14:14:45,347 [Worker-4: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-10-25 14:34:09,973 [Worker-26: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+2019-10-25 14:34:10,057 [Worker-26: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-10-25 14:34:10,076 [Worker-26: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+2019-10-25 14:34:10,079 [Worker-26: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
