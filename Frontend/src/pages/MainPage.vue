@@ -107,6 +107,8 @@ export default {
       let res = await this.login(params)
       console.log("loginAction",res)
       if(res.data == 'LOGIN SUCCESS'){
+        sessionStorage.setItem("uid",params.id)
+        sessionStorage.setItem("password",params.pw)
         this.successAlert(res.data);
         this.$router.push({ name: 'chatroom' })
       }else{

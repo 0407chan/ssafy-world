@@ -4,7 +4,8 @@ import api from '@/api'
 const state = {
   currentNavigation: 0,
   currentContent: 0,
-
+  userLoginToken:'',
+  userLoginPassword:''
 }
 
 // actions
@@ -12,7 +13,10 @@ const actions = {
 
   async login({ commit }, params) {
     const resp = await api.login(params);
-
+    if(resp.data==='LOGIN SUCCESS'){
+      state.userLoginToken = params.id
+      state.userLoginPassword = params.pw
+    }
     return resp;
   },
 
@@ -40,7 +44,6 @@ const mutations = {
   setClusterList(state, ratings) {
     state.ratingList = ratings.map(m => m)
   }
-
 };
 
 export default {

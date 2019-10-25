@@ -36,6 +36,7 @@
 
 <script>
 import Navigation from '@/components/Navigation'
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'App',
@@ -56,21 +57,37 @@ export default {
         { title: '공 지 사 항', icon: 'mdi-account-group-outline', path:"register" },
       ],
       drawer: true,
-      logincheck: false
+      logincheck: false,
     }
   },
   computed :{  
+    ...mapState('data',['userLoginToken:','userLoginPassword']),
     first : function() {
-      if (this.$store.state.data.userLoginToken === '')
+      if (this.userLoginToken == '' || this.userLoginPassword)
         return 0;
       else
         return 1;
     },
+  },  
+  mounted(){
+    let params = { 
+      'id' : sessionStorage.getItem('uid'),
+      'pw' : sessionStorage.getItem('password')
+    }
+    this.login(params).then(res=>{
+      console.log(res.data);
+      if(res.data==='LOGIN SUCCESS'){
+        this.userLoginToken=params.id
+        this.userLoginPassword = params.pw
+        this.$router.push({name : 'chatroom'})
+      }
+    })
   },
   methods: {
     goTo: function(path) {
       this.$router.push({ name: path });
     },
+    ...mapActions('data',['login'])
   },
 }
 </script>
