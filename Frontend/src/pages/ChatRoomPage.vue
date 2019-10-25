@@ -27,9 +27,13 @@ export default {
       'msgDatas': state => state.socket.msgDatas,
       //아이디 vuex 링크 잡기
     }),
+    ...mapState('data',['userLoginToken' , 'userLoginPassword'])
   },
   created() {
-    if (this.$store.state.data.userLoginToken == '' || this.$store.state.data.userLoginToken == null)
+    console.log(this.userLoginToken);
+    console.log(this.userLoginPassword);
+    
+    if (this.userLoginToken==''||this.userLoginPassword=='')
       this.$router.push({ name: 'main' })
     
     const $ths = this
