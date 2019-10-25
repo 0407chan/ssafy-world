@@ -1,9 +1,9 @@
 const axios = require('axios');
 
 
-// const apiUrl = 'http://127.0.0.1:8080/ssafyworld';
+const apiUrl = 'http://localhost:8080/ssafyworld';
 //const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
-const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
+// const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
 
 
   // param 없는 경우

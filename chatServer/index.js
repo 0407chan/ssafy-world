@@ -7,6 +7,9 @@ var io = require('socket.io')(server,{
   pingTimeout: 1000,
 });
 
+let ipArray = new Set()
+let ipMap = new Map()
+
 app.all('/*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -23,11 +26,47 @@ async()=>{
   console.log("test"+data.mid)
 }
 io.on('connection', function(socket){
+
+  
+  if(ipArray.has(socket.handshake.address)){
+    console.log("already connected");
+    socket.emit('check', {
+      msg: "already connect"
+    });
+    console.log("send msg")
+    
+  }else{
+    console.log("connected");
+    ipArray.add(socket.handshake.address)
+    ipMap.set(socket.handshake.address,socket.id)
+  }
+  
+  // 클라이언트로부터 2번째 클라이언트 수신
+  socket.on('change',(data)=>{
+    if(data.msg==='yes'){
+      //기존에 있는 것을 끊어야 함
+      let tmpid = ipMap.get(socket.handshake.address)
+      ipMap.delete(socket.handshake.address)
+      console.log(tmpid);
+      io.to(tmpid).emit('disc');
+      ipArray.add(socket.handshake.address)
+      ipMap.set(socket.handshake.address,socket.id)
+      console.log(ipMap);
+    }else{
+      //지금 접속한 것을 끊어야 함
+      socket.disconnect();
+      ipArray.add(socket.handshake.address)
+      ipMap.set(socket.handshake.address,socket.id)
+      console.log(ipMap);
+    }
+  })
+
+  //현재 접속자 확인
+  console.log(ipMap);
   
   // 클라이언트로부터의 메시지가 수신되면
   socket.on('chat', function(data) {
     console.log('Message from %s: %s', data.name, data.msg);
-
     var msg = {
       from: {
         name: data.name,
@@ -40,10 +79,10 @@ io.on('connection', function(socket){
   });
 
   socket.on('disconnect', function() {
-    console.log('user disconnected: ' + socket.name);
+    console.log('user disconnected: ' + socket.handshake.address);
+    ipArray.delete(socket.handshake.address)
+    ipMap.delete(socket.handshake.address)
   });
-
-
 });
 
 server.listen(3000);
