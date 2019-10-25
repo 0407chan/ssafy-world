@@ -5,19 +5,25 @@ const state = {
   currentNavigation: 0,
   currentContent: 0,
   userLoginToken:'',
-  userLoginPassword:''
+  userLoginPassword:'',
+  checkLogin:0,
 }
 
 // actions
 const actions = {
 
   async login({ commit }, params) {
-    const resp = await api.login(params);
-    if(resp.data==='LOGIN SUCCESS'){
-      state.userLoginToken = params.id
-      state.userLoginPassword = params.pw
-    }
-    return resp;
+    return api.login(params).then(res =>{
+      console.log(res)
+      if(res.data==='LOGIN SUCCESS'){
+        state.userLoginToken = params.id
+        state.userLoginPassword = params.pw
+        state.checkLogin=1
+        sessionStorage.setItem('id',params.id)
+        sessionStorage.setItem('pw',params.pw)
+      }
+      return res
+    });
   },
 
   async register({ commit }, params) {
@@ -44,6 +50,15 @@ const mutations = {
 
   setClusterList(state, ratings) {
     state.ratingList = ratings.map(m => m)
+  },
+  //
+  setMenu(state, value) {
+    state.checkLogin = value;
+  },
+
+  clearUser(state){
+    state.userLoginPassword=''
+    state.userLoginToken=''
   }
 };
 
