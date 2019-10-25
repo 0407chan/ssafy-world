@@ -52,5 +52,14 @@ public class UserDAOImpl implements UserDAO {
 		System.out.println("getUser = " + dto);
 		return dto ;
 	}
+
+	@Override
+	public String getSaltById(String id) throws Exception {
+		String salt= sqlSession.selectOne(Namespace+".getSaltById",id);
+		System.out.println(salt);
+		return salt;
+	}
+	
+	
  
 }

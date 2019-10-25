@@ -1,5 +1,6 @@
 package com.ssafy.ssafyworld;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -44,7 +45,7 @@ public class UserController {
 		logger.info("Welcome home! The client locale is {}.");
 		System.out.println("유저 데이터 호출 완료");
 		List<UserDTO> list = uService.selectUsers();
-		return new ResponseEntity<List<UserDTO>>(list, HttpStatus.OK);
+		return ResponseEntity.ok().body(list);
 	}
 
 	/**
@@ -61,9 +62,9 @@ public class UserController {
 		System.out.println("회원가입" + user);
 		int n = uService.register(user);
 		if (n > 0) {
-			return new ResponseEntity<String>("USER CREATED!!", HttpStatus.CREATED);
+			return ResponseEntity.ok().body("USER CREATED!!");
 		} else {
-			return new ResponseEntity<String>("UNIQUE ERROR!!", HttpStatus.BAD_REQUEST);
+			return ResponseEntity.badRequest().body("UNIQUE ERROR!!");
 		}
 	}
 
@@ -79,8 +80,8 @@ public class UserController {
 	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<String> login(@RequestBody UserDTO user) throws Exception {
-
 		
+		System.out.println(user);
 		UserDTO resultUser = uService.getUser(user);
 		if (resultUser == null) {
 			return ResponseEntity.badRequest().body("User Not Found");
@@ -91,7 +92,6 @@ public class UserController {
 		if (resultUser == null) {
 			return ResponseEntity.badRequest().body("Wrong Password");
 		}
-		
 		return ResponseEntity.ok().body("LOGIN SUCCESS");
 	}
 

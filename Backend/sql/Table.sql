@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `ssafyworld`.`user` (
   `uid` VARCHAR(50) NOT NULL,
   `uname` VARCHAR(10) NOT NULL,
   `password` VARCHAR(20) NOT NULL,
+  `salt` VARCHAR(100),
   PRIMARY KEY (`uid`));
 -- -----------------------------------------------------
 -- Table `ssafyworld`.`room`

@@ -12,8 +12,8 @@
 	<!-- 회원가입 -->
 	<insert id="register" parameterType="UserDTO">
 		INSERT
-		INTO user (uid, uname, password)
-		VALUES (#{uid}, #{uname}, #{password});
+		INTO user (uid, uname, password,salt)
+		VALUES (#{uid}, #{uname}, #{password},#{salt});
 	</insert>
 
 	<!-- 로그인 -->
@@ -26,5 +26,8 @@
 		SELECT * FROM user Where uid=#{uid}; 
 	</select>
 	
-
+	<!-- getSaltById -->
+	<select id="getSaltById" parameterType="String" resultType="String">
+		SELECT salt FROM user WHERE uid = #{uid};
+	</select>
 </mapper>

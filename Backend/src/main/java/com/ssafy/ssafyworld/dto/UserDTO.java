@@ -6,7 +6,11 @@ public class UserDTO implements Serializable{
 	private String uid;
 	private String uname;
 	private String password;
+	private String salt;
 	
+	public String getSalt() {
+		return salt;
+	}
 	public String getUid() {
 		return uid;
 	}
@@ -25,20 +29,23 @@ public class UserDTO implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
 	public UserDTO() {
 		super();
 	}
 	
-	public UserDTO(String uid, String uname, String password) {
+	public UserDTO(String uid, String uname, String password,String salt) {
 		super();
 		this.setUid(uid);
 		this.setUname(uname);
 		this.setPassword(password);
+		this.setSalt(salt);
 	}
 	@Override
 	public String toString() {
-		return "UserDTO [uid=" + uid + ", uname=" + uname + ", password=" + password + "]";
+		return "UserDTO [uid=" + uid + ", uname=" + uname + ", password=" + password + ", salt=" + salt + "]";
 	}
 	@Override
 	public int hashCode() {
@@ -63,6 +70,5 @@ public class UserDTO implements Serializable{
 			return false;
 		return true;
 	}
-	
 	
 }

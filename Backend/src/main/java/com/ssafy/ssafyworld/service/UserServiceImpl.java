@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.ssafyworld.dao.UserDAO;
 import com.ssafy.ssafyworld.dto.UserDTO;
+import com.ssafy.ssafyworld.util.SHA256Util;
  
 @Service
 public class UserServiceImpl implements UserService {
@@ -21,14 +22,26 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int register(UserDTO user) throws Exception {
+		String salt = SHA256Util.generateSalt();
+		user.setSalt(salt);
+		String password = user.getPassword();
+		password = SHA256Util.getEncrypt(password, salt);
+		
+		user.setPassword(password);
 		System.out.println("회원가입 ServiceImpl");
-		int n = dao.register(user);
-		return n;
+		return dao.register(user);
 	}
 
 	@Override
 	public UserDTO login(UserDTO user) throws Exception {
 		System.out.println("로그인 ServiceImpl");
+		
+		String salt = dao.getSaltById(user.getUid());
+		String password = user.getPassword();
+		
+		password = SHA256Util.getEncrypt(password, salt);
+		user.setPassword(password);
+		
 		return dao.login(user);
 	}
 
@@ -37,4 +50,5 @@ public class UserServiceImpl implements UserService {
 		System.out.println("유저찾기 ServiceImpl");
 		return dao.getUser(user);
 	}
+
 }

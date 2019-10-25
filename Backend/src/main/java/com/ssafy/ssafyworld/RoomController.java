@@ -48,7 +48,8 @@ public class RoomController {
 		System.out.println(rid);
 		System.out.println("방 선택 완료!");
 		
-		return  new ResponseEntity<Integer>(rid,HttpStatus.OK);
+//		return  new ResponseEntity<Integer>(rid,HttpStatus.OK);
+		return ResponseEntity.ok().body(rid);
 	}
 	
 	/**
@@ -64,14 +65,14 @@ public class RoomController {
 	public ResponseEntity<Integer> createRoom(@RequestBody RoomDTO roomdto) throws Exception {
 		System.out.println("createRoom");
 		System.out.println(roomdto.getRname());
-		return new ResponseEntity<Integer>(rService.createRoom(roomdto.getRname()),HttpStatus.OK);
+		return ResponseEntity.ok().body(rService.createRoom(roomdto.getRname()));
 	}
 	/**
 	 * 10-24 : 이규찬 
 	 * @기능 방삭제
 	 * @호출방법 ssafywolrd/room/delete
 	 * @param rid
-	 * @return Integer
+	 * @return 성공시 200 OK / 실패시 400 BAD REQUEST
 	 * @throws Exception 
 	 */
 	@RequestMapping(value="/room/delete", method=RequestMethod.POST)
@@ -81,11 +82,10 @@ public class RoomController {
 		try {
 			rService.deleteRoom(roomdto1.getRid());
 			System.out.println("deleteRoom");
-			return new ResponseEntity<String>("Room delete!",HttpStatus.OK);
+			return ResponseEntity.ok().body("ROOM DELETE");
 		} catch (Exception e) {
 			System.out.println("deleteRoom Fail!");
-			return new ResponseEntity<String>("Room delete Fail!",HttpStatus.BAD_REQUEST);
+			return ResponseEntity.badRequest().body("ROOM DELETE FAIL");
 		}
-		
 	}
 }

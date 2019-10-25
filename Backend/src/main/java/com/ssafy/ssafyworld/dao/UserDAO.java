@@ -8,6 +8,6 @@ public interface UserDAO {
    public List<UserDTO> selectUsers() throws Exception;
    public int register(UserDTO user) throws Exception;
    public UserDTO login(UserDTO user) throws Exception;
-   
    public UserDTO getUser(UserDTO user) throws Exception;
+   public String getSaltById(String id) throws Exception;
 }
