@@ -17,12 +17,18 @@
       </v-list>
 
       <v-list dense v-show="checkLogin == 1">
-        <v-list-item>
-          <v-list-item-avatar>
-            <v-img src="https://randomuser.me/api/portraits/women/75.jpg"></v-img>
-          </v-list-item-avatar>
+        <v-img :aspect-ratio="16/9" src="https://cdn.vuetifyjs.com/images/parallax/material.jpg">
+          <v-list-item>
+            <v-row align="end" class="lightbox white--text pa-2 fill-height">
+              <v-col>
+                <v-list-item-avatar @click="goTo('mypage')">
+                  <v-img src="https://randomuser.me/api/portraits/women/75.jpg"></v-img>
+                </v-list-item-avatar>
+              </v-col>
+            </v-row>
           <v-btn @click="logout">로그아웃</v-btn>
         </v-list-item>
+      </v-img>
 
         <v-divider></v-divider>
 
@@ -114,6 +120,7 @@ export default {
       console.log(path); 
       this.$router.push({ name: path });
     },
+
     ...mapActions('data',['login']),
     logout() {
       this.clearUser()
