@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -48,22 +49,28 @@ public class UserController {
 	}
 
 	/**
-	 * 10-18 : 박규빈
+	 * 2019.10.25 이찬호
 	 *
 	 * @기능 회원가입
 	 * @호출방법 ssafywolrd/user/register
 	 * @param UserDTO User
 	 * @return 성공시 201 CREATED 실패시 400 BAD_REQUEST
+	 * @추가 비밀번호 암호화 해서 저장 추가
 	 */
 	@RequestMapping(value = "/user/register", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<String> register(@RequestBody UserDTO user) throws Exception {
-		System.out.println("회원가입" + user);
+		UserDTO resultUser = uService.getUser(user);
+		if (resultUser != null) {
+			return ResponseEntity.badRequest().body("User already Exist");
+		}
+		String hashPw = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+		user.setPassword(hashPw);
 		int n = uService.register(user);
 		if (n > 0) {
-			return new ResponseEntity<String>("USER CREATED!!", HttpStatus.CREATED);
+			return ResponseEntity.ok().body("USER CREATED");
 		} else {
-			return new ResponseEntity<String>("UNIQUE ERROR!!", HttpStatus.BAD_REQUEST);
+			return ResponseEntity.badRequest().body("User already Exist");
 		}
 	}
 
@@ -80,18 +87,13 @@ public class UserController {
 	@ResponseBody
 	public ResponseEntity<String> login(@RequestBody UserDTO user) throws Exception {
 
-		
 		UserDTO resultUser = uService.getUser(user);
 		if (resultUser == null) {
 			return ResponseEntity.badRequest().body("User Not Found");
 		}
-		
-		resultUser = uService.login(user);
-		System.out.println("login "+resultUser);
-		if (resultUser == null) {
+		if(!BCrypt.checkpw(user.getPassword(), resultUser.getPassword())) {
 			return ResponseEntity.badRequest().body("Wrong Password");
 		}
-		
 		return ResponseEntity.ok().body("LOGIN SUCCESS");
 	}
 

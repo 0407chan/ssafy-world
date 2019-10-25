@@ -1,9 +1,7 @@
 import axios from 'axios'
 
-
-const apiUrl = 'http://127.0.0.1:8080/ssafyworld';
+const apiUrl = 'http://70.12.246.98:8080/ssafyworld';
 //const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
-// const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
 
 export default {
   // param 없는 경우
@@ -29,7 +27,7 @@ export default {
     });
   },
 
-  /** 2019.10.18 이찬호
+  /** 2019.10.25 이찬호
   * 기능 : 로그인
   * 파라미터 : params = uid, uname, password
   * 리턴 : 일치하는 유저 가져오기
@@ -41,7 +39,12 @@ export default {
       uid: params.uid,
       uname: params.uname,
       password: params.password,
+    }).then(response => {
+      return response
     })
+    .catch(error => {
+      return error.response
+    });
   },
 
 
