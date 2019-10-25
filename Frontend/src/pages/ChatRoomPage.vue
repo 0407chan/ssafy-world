@@ -29,7 +29,7 @@ export default {
     }),
     ...mapState('data',['userLoginToken' , 'userLoginPassword'])
   },
-  created() {
+  mounted() {
     console.log(this.userLoginToken);
     console.log(this.userLoginPassword);
     
@@ -39,7 +39,7 @@ export default {
     const $ths = this
     this.$socket.on('chat', (data) => {
       this.pushMsgData(data)
-      $ths.datas.push(data)
+      // $ths.datas.push(data)
     });
   },
   methods: {

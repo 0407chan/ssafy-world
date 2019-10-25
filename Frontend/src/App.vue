@@ -76,8 +76,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.state.data.userLoginToken = sessionStorage.getItem('uid')
-    console.log(sessionStorage.getItem('uid'))
+    console.log(sessionStorage.getItem('id'))
   },
   computed :{  
     ...mapState('data',['userLoginToken:','userLoginPassword','checkLogin']),
