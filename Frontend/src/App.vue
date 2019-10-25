@@ -3,7 +3,7 @@
     <!-- <Navigation /> -->
     <v-navigation-drawer v-model="drawer" app>
 
-      <v-list dense v-show="first == 0">
+      <v-list dense v-show="checkLogin == 0">
         <template v-for="(item, i) in beforeLoginItems">
           <v-list-item :key="i" @click="() => { if (item.path) { goTo(item.path) } }">
             <v-list-item-action>
@@ -16,7 +16,7 @@
         </template>
       </v-list>
 
-      <v-list dense v-show="first == 1">
+      <v-list dense v-show="checkLogin == 1">
         <v-list-item>
           <v-list-item-avatar>
             <v-img src="https://randomuser.me/api/portraits/women/75.jpg"></v-img>
@@ -50,6 +50,7 @@
 
 <script>
 import Navigation from '@/components/Navigation'
+import { mapActions, mapState, mapMutations } from 'vuex';
 
 export default {
   name: 'App',
@@ -59,18 +60,19 @@ export default {
   data () {
     return {
       beforeLoginItems: [
-        { title: '로 그 인', icon: 'mdi-account', path:"home"},
+        { title: '로 그 인', icon: 'mdi-account', path:"main"},
         { title: '회 원 가 입', icon: 'mdi-account-group-outline', path:"register" },
       ],
       afterLoginItems: [
-        { title: '친 구 들', icon: 'mdi-account', path:"home"},
-        { title: '채 팅 방', icon: 'mdi-account-group-outline', path:"register" },
-        { title: '방 명 록', icon: 'mdi-account-group-outline', path:"register" },
-        { title: '게 시 판', icon: 'mdi-account-group-outline', path:"register" },
-        { title: '공 지 사 항', icon: 'mdi-account-group-outline', path:"register" },
+        { title: '친 구 들', icon: 'mdi-account', path:"main"},
+        { title: '채 팅 방', icon: 'mdi-account-group-outline', path:"" },
+        { title: '방 명 록', icon: 'mdi-account-group-outline', path:"" },
+        { title: '게 시 판', icon: 'mdi-account-group-outline', path:"" },
+        { title: '공 지 사 항', icon: 'mdi-account-group-outline', path:"" },
       ],
       drawer: true,
-      logincheck: false
+      logincheck: false,
+      first : 0
     }
   },
   mounted() {
@@ -78,20 +80,49 @@ export default {
     console.log(sessionStorage.getItem('uid'))
   },
   computed :{  
-    first : function() {
-      if (this.$store.state.data.userLoginToken == '' || this.$store.state.data.userLoginToken == null)
-        return 0;
-      else
-        return 1;
-    },
+    ...mapState('data',['userLoginToken:','userLoginPassword','checkLogin']),
+    // first : function() {
+    //   if (this.userLoginToken == '' || this.userLoginPassword==null)
+    //     return 0;
+    //   else
+    //     return 1;
+    // },
+  },  
+  mounted(){
+    let params = { 
+      'id' : sessionStorage.getItem('id'),
+      'pw' : sessionStorage.getItem('pw')
+    }
+    console.log(params);
+    
+    this.login(params).then(res=>{
+      console.log(res.data);
+      if(res.data==='LOGIN SUCCESS'){
+        this.$router.push({name : 'chatroom'})
+      }
+    })
+
+    //로그인 여부 확인
+    if (this.userLoginToken == '' || this.userLoginPassword=='')
+      this.first= 0;
+    else
+      this.first= 1;
   },
   methods: {
+    ...mapMutations('data',['setMenu','clearUser']),
     goTo(path) {
+      console.log(path); 
       this.$router.push({ name: path });
     },
+    ...mapActions('data',['login']),
     logout() {
-      sessionStorage.removeItem('uid');
-      this.$store.state.data.userLoginToken = '';
+      this.clearUser()
+      this.setMenu(0);
+      sessionStorage.removeItem('id')
+      sessionStorage.removeItem('pw')
+      console.log("check");
+      
+      
       this.$router.push({ name: 'main' });
     },
   },

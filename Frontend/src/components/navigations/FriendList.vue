@@ -2,9 +2,10 @@
   <v-card>
     <v-navigation-drawer
       class="navigation"
+      absolute
       permanent
-      left
-    >
+      left>
+      
       <Profile />
 
       <v-divider></v-divider>
