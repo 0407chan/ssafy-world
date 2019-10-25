@@ -17,7 +17,7 @@
       </v-list>
 
       <v-list dense v-show="checkLogin == 1">
-        <v-list-item>
+        <v-list-item @click="() => {goTo('userDetail')}">
           <v-list-item-avatar>
             <v-img src="https://randomuser.me/api/portraits/women/75.jpg"></v-img>
           </v-list-item-avatar>
@@ -44,7 +44,7 @@
     <v-content>
       <router-view />
     </v-content>
-    
+
   </v-app>
 </template>
 
@@ -79,7 +79,7 @@ export default {
     this.$store.state.data.userLoginToken = sessionStorage.getItem('uid')
     console.log(sessionStorage.getItem('uid'))
   },
-  computed :{  
+  computed :{
     ...mapState('data',['userLoginToken:','userLoginPassword','checkLogin']),
     // first : function() {
     //   if (this.userLoginToken == '' || this.userLoginPassword==null)
@@ -87,14 +87,14 @@ export default {
     //   else
     //     return 1;
     // },
-  },  
+  },
   mounted(){
-    let params = { 
+    let params = {
       'id' : sessionStorage.getItem('id'),
       'pw' : sessionStorage.getItem('pw')
     }
     console.log(params);
-    
+
     this.login(params).then(res=>{
       console.log(res.data);
       if(res.data==='LOGIN SUCCESS'){
@@ -111,7 +111,7 @@ export default {
   methods: {
     ...mapMutations('data',['setMenu','clearUser']),
     goTo(path) {
-      console.log(path); 
+      console.log(path);
       this.$router.push({ name: path });
     },
     ...mapActions('data',['login']),
@@ -121,8 +121,8 @@ export default {
       sessionStorage.removeItem('id')
       sessionStorage.removeItem('pw')
       console.log("check");
-      
-      
+
+
       this.$router.push({ name: 'main' });
     },
   },
