@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `ssafyworld`.`user` (
   `uid` VARCHAR(50) NOT NULL,
   `uname` VARCHAR(10) NOT NULL,
   `password` VARCHAR(500) NOT NULL,
+  `img` VARCHAR(100) , 
   PRIMARY KEY (`uid`));
 -- -----------------------------------------------------
 -- Table `ssafyworld`.`room`
@@ -34,6 +35,17 @@ FOREIGN KEY (`rid`)
 REFERENCES `ssafyworld`.`room` (`rid`)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION);
+-- -----------------------------------------------------
+-- Table `ssafyworld`.`friend`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ssafyworld`.`friend` (
+  `fid` INT AUTO_INCREMENT,
+  `uid` VARCHAR(50) NOT NULL,
+  `uid_friend` VARCHAR(50) NOT NULL,
+  `img` VARCHAR(100) , 
+  PRIMARY KEY (`uid`));
+
+
 -- -----------------------------------------------------
 -- Table `ssafyworld`.`room_has_user`
 -- -----------------------------------------------------
