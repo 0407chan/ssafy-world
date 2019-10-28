@@ -119,7 +119,7 @@ export default {
       // }else{
       //   this.errorAlert(res.data,'');
       // }
-      if(res.data == 'LOGIN SUCCESS'){
+      if(res.res == 200){
         this.successAlert(res.data);
         this.$store.state.checkLogin=1;
         this.$router.push({ name: 'chatroom' })

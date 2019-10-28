@@ -94,7 +94,9 @@ public class UserController {
 		if(!BCrypt.checkpw(user.getPassword(), resultUser.getPassword())) {
 			return ResponseEntity.badRequest().body("Wrong Password");
 		}
-		return ResponseEntity.ok().body("LOGIN SUCCESS");
+		
+		return ResponseEntity.ok().header("currUser", "foo").
+		        body("LOGIN SUCCESS");
 	}
 
 }
