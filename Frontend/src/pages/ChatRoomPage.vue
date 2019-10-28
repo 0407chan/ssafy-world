@@ -1,8 +1,7 @@
 <template>
-  <v-layout class="inner-wrap" fluid fill-height inner-wrap>
-    <MessageList :msgs="msgDatas" class="msg-list" />
-    <MessageInput v-on:submitMessage="sendMessage" class="msg-form" />
-  </v-layout>
+  <v-container fill-height fluid>
+    <MessageList :msgs="msgDatas" v-on:submitMessage="sendMessage"/>
+  </v-container>
 </template>
 
 <script>
@@ -32,10 +31,10 @@ export default {
   mounted() {
     console.log(this.userLoginToken);
     console.log(this.userLoginPassword);
-    
+
     if (this.userLoginToken==''||this.userLoginPassword=='')
       this.$router.push({ name: 'main' })
-    
+
     const $ths = this
     console.log(window.location.pathname);
     
@@ -48,17 +47,21 @@ export default {
     ...mapMutations({
       'pushMsgData': Constant.PUSH_MSG_DATA,
     }),
+
     sendMessage(msg) {
+      var today = new Date();
       this.pushMsgData({
         from: {
           name: this.$store.state.data.userLoginToken,
         },
         msg,
+        time:today,
       });
       this.$sendMessage({
         rid:window.location.pathname,
         name: this.$store.state.data.userLoginToken,
         msg,
+        time:today,
       });
     },
   },
@@ -71,13 +74,5 @@ export default {
   position: absolute;
   left: 0;
   right: 0;
-}
-.msg-list {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 60px;
-  overflow-x: scroll;
 }
 </style>

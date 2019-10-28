@@ -4,6 +4,7 @@ import router from '@/router/router'
 import store from '@/store'
 import vuetify from '@/plugins/vuetify'
 import directives from '@/plugins/directives'
+import VueSession from 'vue-session'
 import '@/plugins/socket'
 import '@/assets/_common.scss'
 
@@ -17,6 +18,7 @@ new Vue({
   router,
   store,
   vuetify,
+  VueSession,
   render: h => h(App),
   components: { App },
   template: '<App />'

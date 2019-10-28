@@ -7,6 +7,8 @@ const state = {
   userLoginToken:'',
   userLoginPassword:'',
   checkLogin:0,
+
+  currUser:[],
 }
 
 // actions
@@ -15,12 +17,14 @@ const actions = {
   async login({ commit }, params) {
     return api.login(params).then(res =>{
       console.log(res)
-      if(res.data==='LOGIN SUCCESS'){
+      if(res.data==='Login Success'){
         state.userLoginToken = params.id
         state.userLoginPassword = params.pw
         state.checkLogin=1
         sessionStorage.setItem('id',params.id)
         sessionStorage.setItem('pw',params.pw)
+        state.currUser.id = params.id
+        state.currUser.name= params.name
       }
       return res
     });
