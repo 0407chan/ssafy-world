@@ -1,5 +1,7 @@
 package com.ssafy.ssafyworld;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -10,17 +12,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.ssafyworld.dto.MessageDTO;
-import com.ssafy.ssafyworld.dto.RoomDTO;
-import com.ssafy.ssafyworld.dto.UserDTO;
 import com.ssafy.ssafyworld.service.MessageService;
-import com.ssafy.ssafyworld.service.RoomService;
-import com.ssafy.ssafyworld.service.UserService;
 
 /**
  * Handles requests for the application home page.
@@ -63,4 +62,23 @@ public class MessageController {
 		return new ResponseEntity<List<MessageDTO>>(mService.roomMessages(rid),HttpStatus.OK);
 	}
 	
+	/**
+	 * 10-28 : 박규빈 
+	 * @기능 해당 방의 메세지 모두 가져오기
+	 * @호출방법 ssafywolrd/message/{rid}
+	 * @param rid
+	 * @return List<MessageDTO>
+	 */
+	@RequestMapping(value = "/message", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<String> insertMessage(@RequestBody MessageDTO message) throws Exception {
+		long time = System.currentTimeMillis(); 
+		SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String curTime = dayTime.format(new Date(time));
+		message.setSendtime(curTime);
+		
+		mService.insertMessage(message);
+		
+		return new ResponseEntity<String>("Message Insert Success",HttpStatus.OK);
+	}
 }
