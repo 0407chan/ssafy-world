@@ -37,7 +37,9 @@ export default {
       this.$router.push({ name: 'main' })
     
     const $ths = this
-    this.$socket.on('chat', (data) => {
+    console.log(window.location.pathname);
+    
+    this.$socket.on('chatroom', (data) => {
       this.pushMsgData(data)
       // $ths.datas.push(data)
     });
@@ -54,6 +56,7 @@ export default {
         msg,
       });
       this.$sendMessage({
+        rid:this.$route.query.page,
         name: this.$store.state.data.userLoginToken,
         msg,
       });

@@ -75,10 +75,6 @@ export default {
       first : 0
     }
   },
-  mounted() {
-    
-    console.log(sessionStorage.getItem('id'))
-  },
   computed :{  
     ...mapState('data',['userLoginToken:','userLoginPassword','checkLogin']),
   },  
