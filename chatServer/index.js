@@ -17,7 +17,7 @@ api.getRoom().then(res=>{
   console.log(room);
 })
 
-setInterval(intervalFuction, 10000);
+setInterval(intervalFuction, 300000);
 
 async function intervalFuction(){
   console.log(message);
@@ -113,7 +113,8 @@ io.on('connection', function(socket){
       from: {
         name: data.name,
       },
-      msg: data.msg
+      msg: data.msg,
+      time : data.time
     };
     console.log(msg);
     
@@ -121,7 +122,8 @@ io.on('connection', function(socket){
     message.push({
       text:data.msg, 
       uid:data.name,
-      rid : 1
+      rid : 1,
+      time : data.time
     })
 
     // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
@@ -135,13 +137,15 @@ io.on('connection', function(socket){
         from: {
           name: data.name,
         },
-        msg: data.msg
+        msg: data.msg,
+        time : data.time
       };
 
       message.push({
         text:data.msg, 
         uid:data.name,
-        rid:room[i].rid
+        rid:room[i].rid,
+        time : data.time
       })
   
       // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다

@@ -85,9 +85,6 @@ export default {
   mounted() {
     console.log("상태확인");
     console.log(this.$store.state.data.userLoginToken);
-    
-    if (this.$store.state.data.userLoginToken != '' && this.$store.state.data.userLoginToken != null)
-      this.$router.push({ name: 'chatroom' })
   },
   computed:{
     idLen() {
@@ -114,7 +111,7 @@ export default {
       }
       let res = await this.login(params)
       console.log("loginAction",res)
-      if(res.data == 'Login Success'){
+      if(res.status == 200){
         this.successAlert(res.data);
         this.$router.push({ name: 'chatroom' })
       }
