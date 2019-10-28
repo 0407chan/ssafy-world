@@ -67,13 +67,13 @@ public class UserController {
 		user.setPassword(hashPw);
 		uService.register(user);
 		logger.info("유저 생성 완료");
-		
+
 		return ResponseEntity.ok().body("User Created");
 	}
 
 	/**
 	 * 2019.10.23 이찬호 -> 추후 AWT로 토큰 받아와야함
-	 * 
+	 *
 	 * @기능 로그인
 	 * @호출방법 ssafywolrd/user/login
 	 * @param uid, password

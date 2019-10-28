@@ -17,7 +17,7 @@
       </v-list>
 
       <v-list dense v-show="checkLogin == 1">
-        <v-list-item>
+        <v-list-item @click="() => {goTo('userDetail')}">
           <v-list-item-avatar>
             <v-img src="https://randomuser.me/api/portraits/women/75.jpg"></v-img>
           </v-list-item-avatar>
@@ -44,7 +44,7 @@
     <v-content>
       <router-view />
     </v-content>
-    
+
   </v-app>
 </template>
 
@@ -75,11 +75,11 @@ export default {
       first : 0
     }
   },
-  computed :{  
+  computed :{
     ...mapState('data',['userLoginToken:','userLoginPassword','checkLogin']),
-  },  
+  },
   mounted(){
-    let params = { 
+    let params = {
       'id' : sessionStorage.getItem('id'),
       'pw' : sessionStorage.getItem('pw')
     }
@@ -103,7 +103,7 @@ export default {
     this.$socket.on('disc',(data)=>{
       this.$socket.disconnect()
     })
-    
+
     if(params.id !=null && params.pw != null)
       this.login(params).then(res=>{
         if(res.data==='LOGIN SUCCESS'){
@@ -120,7 +120,7 @@ export default {
   methods: {
     ...mapMutations('data',['setMenu','clearUser']),
     goTo(path) {
-      console.log(path); 
+      console.log(path);
       this.$router.push({ name: path });
     },
     ...mapActions('data',['login']),
@@ -130,8 +130,8 @@ export default {
       sessionStorage.removeItem('id')
       sessionStorage.removeItem('pw')
       console.log("check");
-      
-      
+
+
       this.$router.push({ name: 'main' });
     },
   },

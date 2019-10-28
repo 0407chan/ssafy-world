@@ -71,7 +71,6 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import api from '@/api'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 
@@ -84,8 +83,7 @@ export default {
   }),
   mounted() {
     console.log("상태확인");
-    console.log(this.$store.state.data.userLoginToken);
-    
+
     if (this.$store.state.data.userLoginToken != '' && this.$store.state.data.userLoginToken != null)
       this.$router.push({ name: 'chatroom' })
   },
@@ -101,7 +99,6 @@ export default {
   methods: {
     ...mapActions("data", ['login']),
 
-
     /** 2019.10.21 이찬호
     * 기능 : 로그인 액션
     * 로그인 성공 시 페이지 변경
@@ -114,8 +111,18 @@ export default {
       }
       let res = await this.login(params)
       console.log("loginAction",res)
-      if(res.data == 'Login Success'){
+      // this.$session.start();
+      // this.$session.set('token', res.data.token);
+      //
+      // if(res.data == 'LOGIN SUCCESS'){
+      //   this.successAlert('WELCOME!',res.data);
+      //   this.$router.push({ name: 'chatroom' })
+      // }else{
+      //   this.errorAlert(res.data,'');
+      // }
+      if(res.status == 200){
         this.successAlert(res.data);
+        this.$store.state.checkLogin=1;
         this.$router.push({ name: 'chatroom' })
       }
       else {
@@ -127,9 +134,9 @@ export default {
     * 기능 : 성공메세지 창, 1초후에 사라진다.
     * 변수 : 성공메세지로 표시할 내용
     */
-    successAlert(text){
+    successAlert(title,text){
       Swal.fire({
-        title: 'Welcome!',
+        title: title,
         text: text,
         type: 'success',
         showConfirmButton: false,
@@ -137,13 +144,13 @@ export default {
       })
     },
 
-    /** 2019.10.21 이찬호
-    * 기능 : 에러메세지 창, 1초후에 사라진다.
-    * 변수 : 에러메세지로 표시할 내용
+    /* 2019.10.21 이찬호
+    기능 : 에러메세지 창, 1초후에 사라진다.
+    변수 : 에러메세지로 표시할 내용
     */
-    errorAlert(text){
+    errorAlert(title,text){
       Swal.fire({
-        title: 'Error!',
+        title: title,
         text: text,
         type: 'error',
         showConfirmButton: false,
