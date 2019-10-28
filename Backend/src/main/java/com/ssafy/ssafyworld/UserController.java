@@ -42,15 +42,8 @@ public class UserController {
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<List<UserDTO>> selectUsers() throws Exception {
-<<<<<<< HEAD
-		logger.info("Welcome home! The client locale is {}.");
-		System.out.println("유저 데이터 호출 완료");
-		List<UserDTO> list = uService.selectUsers();
-		return ResponseEntity.ok().body(list);
-=======
 		logger.info("전체 유저 출력");
 		return new ResponseEntity<List<UserDTO>>(uService.selectUsers(), HttpStatus.OK);
->>>>>>> feature/gb04
 	}
 
 	/**
