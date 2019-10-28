@@ -75,18 +75,8 @@ export default {
       first : 0
     }
   },
-  mounted() {
-    this.$store.state.data.userLoginToken = sessionStorage.getItem('uid')
-    console.log(sessionStorage.getItem('uid'))
-  },
   computed :{  
     ...mapState('data',['userLoginToken:','userLoginPassword','checkLogin']),
-    // first : function() {
-    //   if (this.userLoginToken == '' || this.userLoginPassword==null)
-    //     return 0;
-    //   else
-    //     return 1;
-    // },
   },  
   mounted(){
     let params = { 
@@ -94,13 +84,32 @@ export default {
       'pw' : sessionStorage.getItem('pw')
     }
     console.log(params);
-    
-    this.login(params).then(res=>{
-      console.log(res.data);
-      if(res.data==='LOGIN SUCCESS'){
-        this.$router.push({name : 'chatroom'})
+
+    //이미 접속한 이력이 있을 경우
+    this.$socket.on('check',(data)=>{
+      console.log(data.msg)
+      if(data.msg==='already connect'){
+        if(confirm("이미 접속한 브라우져가 존재합니다. \n 지금 브라우져를 사용하시겠습니까?")){
+          this.$socket.emit('change',{
+            msg : 'yes'
+          })
+        }else{
+          this.$socket.emit('change',{
+            msg : 'no'
+          })
+        }
       }
     })
+    this.$socket.on('disc',(data)=>{
+      this.$socket.disconnect()
+    })
+    
+    if(params.id !=null && params.pw != null)
+      this.login(params).then(res=>{
+        if(res.data==='LOGIN SUCCESS'){
+          this.$router.push({name : 'chatroom'})
+        }
+      })
 
     //로그인 여부 확인
     if (this.userLoginToken == '' || this.userLoginPassword=='')

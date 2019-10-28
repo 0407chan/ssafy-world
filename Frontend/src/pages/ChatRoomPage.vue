@@ -29,7 +29,7 @@ export default {
     }),
     ...mapState('data',['userLoginToken' , 'userLoginPassword'])
   },
-  created() {
+  mounted() {
     console.log(this.userLoginToken);
     console.log(this.userLoginPassword);
     
@@ -37,9 +37,11 @@ export default {
       this.$router.push({ name: 'main' })
     
     const $ths = this
-    this.$socket.on('chat', (data) => {
+    console.log(window.location.pathname);
+    
+    this.$socket.on('/chatroom', (data) => {
       this.pushMsgData(data)
-      $ths.datas.push(data)
+      // $ths.datas.push(data)
     });
   },
   methods: {
@@ -54,6 +56,7 @@ export default {
         msg,
       });
       this.$sendMessage({
+        rid:window.location.pathname,
         name: this.$store.state.data.userLoginToken,
         msg,
       });
