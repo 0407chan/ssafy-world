@@ -20,22 +20,18 @@ public class UserDAOImpl implements UserDAO {
     
     @Override
     public List<UserDTO> selectUsers() throws Exception {
-    	System.out.println(sqlSession);
     	List<UserDTO> list=sqlSession.selectList(Namespace+".selectUsers");
-    	System.out.println(list);
     	return list;
     }
 
 	@Override
 	public int register(UserDTO user) throws Exception {
-		System.out.println("회원가입 DAOImpl");
 		int n =sqlSession.insert(Namespace+".register", user);
 		return n;
 	}
 
 	@Override
 	public UserDTO login(UserDTO user) throws Exception {
-		System.out.println("로그인 DAOImpl");
 		UserDTO dto=sqlSession.selectOne(Namespace+".login",user);
 		return dto;
 	}
@@ -49,7 +45,6 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public UserDTO getUser(UserDTO user) throws Exception {
 		UserDTO dto = sqlSession.selectOne(Namespace+".getUser",user.getUid());
-		System.out.println("getUser = " + dto);
 		return dto ;
 	}
  

@@ -114,9 +114,8 @@ export default {
       }
       let res = await this.login(params)
       console.log("loginAction",res)
-      if(res.data == 'LOGIN SUCCESS'){
+      if(res.data == 'Login Success'){
         this.successAlert(res.data);
-        this.checkLogin=1;
         this.$router.push({ name: 'chatroom' })
       }
       else {

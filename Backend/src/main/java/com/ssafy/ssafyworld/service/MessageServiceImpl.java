@@ -25,4 +25,9 @@ public class MessageServiceImpl implements MessageService {
 		return dao.roomMessages(rid);
 	}
 
+	@Override
+	public int insertMessage(MessageDTO message) throws Exception {
+		return dao.insertMessage(message);
+	}
+
 }

@@ -17,10 +17,12 @@ api.getRoom().then(res=>{
   console.log(room);
 })
 
-setInterval(intervalFuction, 300000);
+setInterval(intervalFuction, 10000);
 
 async function intervalFuction(){
+  console.log(message);
   await api.postMessage(message)
+  message = []
   console.log('interval OK')
 }
 

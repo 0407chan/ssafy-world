@@ -9,6 +9,11 @@
 		SELECT * FROM room where rid=#{rid};
 	</select>
 	
+	<!-- 방 전체 선택 -->
+	<select id="selectRooms" resultType="RoomDTO">
+		SELECT * FROM room ;
+	</select>
+	
 	<select id="selectRoomName" parameterType="String" resultType="RoomDTO">
 		SELECT * FROM room where rname=#{rname};
 	</select>

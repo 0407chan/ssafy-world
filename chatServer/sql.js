@@ -1,7 +1,6 @@
 const axios = require('axios');
-
-const apiUrl = 'http://localhost:8080/ssafyworld';
-//const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
+// const apiUrl = 'http://localhost:8080/ssafyworld';
+const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
 // const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
 
 // 10-28 최재형
@@ -19,12 +18,14 @@ module.exports.getRoom=() =>{
 // 파라미터 : 메세지 테이블에 있는 전 목록(날짜 빼고)
 // 리턴 : 성공() 실패
 module.exports.postMessage=(object)=>{
-  for(let i=0;i<object.lenght;i++){
+  for(let i=0;i<object.length;i++){
     axios.post(`${apiUrl}/message`,{ 
-      text:object[i].text, 
-      uid:object[i].uid,
-      rid:object[i].rid })
+      "text":object[i].text, 
+      "uid":object[i].uid,
+      "rid":object[i].rid })
   }            
+  console.log("OK");
+  
 }
 
 
