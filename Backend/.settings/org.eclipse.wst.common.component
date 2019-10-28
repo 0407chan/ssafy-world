@@ -10,7 +10,10 @@
         		
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-sources/annotations"/>
+<<<<<<< HEAD
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-test-sources/test-annotations"/>
+=======
+>>>>>>> feature/gb04
         		
         <property name="java-output-path" value="target/classes"/>
                 

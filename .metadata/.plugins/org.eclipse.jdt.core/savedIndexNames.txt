@@ -1,7 +1,12 @@
 INDEX VERSION 1.131+C:\Users\multicampus\Desktop\project\SSAFY_WORLD\.metadata\.plugins\org.eclipse.jdt.core
 674681624.index
+<<<<<<< HEAD
 2211613093.index
 2450557183.index
+=======
+37593605.index
+1093400342.index
+>>>>>>> feature/gb04
 22878815.index
 1996077357.index
 2341290066.index
@@ -45,6 +50,7 @@ INDEX VERSION 1.131+C:\Users\multicampus\Desktop\project\SSAFY_WORLD\.metadata\.
 1388285740.index
 3697950171.index
 3981215296.index
+1721226388.index
 3130988147.index
 76469905.index
 2983897002.index
@@ -72,5 +78,10 @@ INDEX VERSION 1.131+C:\Users\multicampus\Desktop\project\SSAFY_WORLD\.metadata\.
 1284149889.index
 2631385974.index
 2834957658.index
+<<<<<<< HEAD
 37593605.index
 1093400342.index
+=======
+2211613093.index
+2450557183.index
+>>>>>>> feature/gb04
