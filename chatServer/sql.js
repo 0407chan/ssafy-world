@@ -8,7 +8,7 @@ const apiUrl = 'http://localhost:8080/ssafyworld';
 // 디비에 있는 모든 방 갯수 세기
 // 파라미터 : X
 // 리턴 : 방 목록 전체
-module.exports.getRoom=(param) =>{
+module.exports.getRoom=() =>{
   return axios.get(`${apiUrl}/room`).then(response=>{
     return response
   })
