@@ -58,9 +58,9 @@ public class RoomController {
 
 	@RequestMapping(value = "/room/{rid}", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<Integer>selectRoomAllMessage(@PathVariable("rid") int rid) throws Exception {
+	public ResponseEntity<RoomDTO>selectRoom(@PathVariable("rid") int rid) throws Exception {
 		logger.info(rid+"방 선택 완료");
-		return new ResponseEntity<Integer>(rid,HttpStatus.OK);
+		return new ResponseEntity<RoomDTO>(rService.selectRoom(rid),HttpStatus.OK);
 	}
 	
 	/**
@@ -77,6 +77,7 @@ public class RoomController {
 		logger.info(room.getRname()+" 방 생성");
 		return new ResponseEntity<Integer>(rService.createRoom(room.getRname()),HttpStatus.OK);
 	}
+	
 	/**
 	 * 10-24 : 이규찬 
 	 * @기능 방삭제
@@ -96,6 +97,5 @@ public class RoomController {
 			logger.error("방 삭제 실패");
 			return new ResponseEntity<String>("Room Delete Fail",HttpStatus.BAD_REQUEST);
 		}
-		
 	}
 }
