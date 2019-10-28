@@ -45,7 +45,7 @@ public class UserController {
 		logger.info("Welcome home! The client locale is {}.");
 		System.out.println("유저 데이터 호출 완료");
 		List<UserDTO> list = uService.selectUsers();
-		return new ResponseEntity<List<UserDTO>>(list, HttpStatus.OK);
+		return ResponseEntity.ok().body(list);
 	}
 
 	/**
