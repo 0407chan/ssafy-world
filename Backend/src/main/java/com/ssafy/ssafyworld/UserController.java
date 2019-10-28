@@ -82,19 +82,21 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<String> login(@RequestBody UserDTO user) throws Exception {
+	public void login(@RequestBody UserDTO user) throws Exception {
 
 		UserDTO resultUser = uService.getUser(user);
 		if (resultUser == null) {
 			logger.error("없는 유저");
-			return ResponseEntity.badRequest().body("User Not Found");
+			ResponseEntity.badRequest();
 		}
 		if (!BCrypt.checkpw(user.getPassword(), resultUser.getPassword())) {
 			logger.error("로그인 실패");
-			return ResponseEntity.badRequest().body("Wrong Password");
+			ResponseEntity.badRequest();
 		}
 		logger.info("로그인 성공");
-		return ResponseEntity.ok().body("Login Success");
+		ResponseEntity.ok().body(uService.getUser(user));
+		
 	}
-
+		
+	// user/{uid} GET -> 해당 방번호랑 , 방이름
 }
