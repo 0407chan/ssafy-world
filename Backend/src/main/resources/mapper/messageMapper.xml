@@ -5,7 +5,7 @@
   
 <mapper namespace="com.ssafy.ssafyworld.mapper.messageMapper">
 	<!-- 메세지 출력-->
-	<select id="selectMessages" parameterType="int" resultType="MessageDTO">
+	<select id="selectMessages" resultType="MessageDTO">
 		SELECT * FROM message;
 	</select>
 	
@@ -13,4 +13,8 @@
 	<select id="roomMessages" parameterType="int" resultType="MessageDTO">
 		select * from message where rid=#{rid};	
 	</select>
+	
+	<insert id="insertMessage" parameterType="MessageDTO">
+		INSERT INTO message (rid,text,sendtime,uid) VALUES (#{rid},#{text},#{sendtime},#{uid});
+	</insert>
 </mapper>

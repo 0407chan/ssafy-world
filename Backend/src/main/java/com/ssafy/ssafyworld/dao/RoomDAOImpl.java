@@ -1,5 +1,7 @@
 package com.ssafy.ssafyworld.dao;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -20,7 +22,6 @@ public class RoomDAOImpl implements RoomDAO {
 	@Override
 	public RoomDTO selectRoom(int rid) throws Exception {
     	RoomDTO room=sqlSession.selectOne(Namespace+".selectRoom",rid);
-    	System.out.println(room);
 		return room;
 	}
 
@@ -34,6 +35,12 @@ public class RoomDAOImpl implements RoomDAO {
 	@Override
 	public void deleteRoom(int rid) throws Exception {
 		sqlSession.delete(Namespace+".deleteRoom",rid);
+	}
+
+	@Override
+	public List<RoomDTO> selectRooms() throws Exception {
+		List<RoomDTO> rooms = sqlSession.selectList(Namespace+".selectRooms");
+		return rooms;
 	}
 
 }

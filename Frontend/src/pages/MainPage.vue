@@ -84,6 +84,7 @@ export default {
   }),
   mounted() {
     console.log("상태확인");
+    console.log(this.$store.state.data.userLoginToken);
     
     if (this.$store.state.data.userLoginToken != '' && this.$store.state.data.userLoginToken != null)
       this.$router.push({ name: 'chatroom' })
@@ -95,7 +96,7 @@ export default {
     passwordLen() {
       return this.user.pw.length;
     },
-    ...mapState("data", ['checkLogin']),
+    ...mapState("data", ['checkLogin','userLoginToken']),
   },
   methods: {
     ...mapActions("data", ['login']),
@@ -113,9 +114,8 @@ export default {
       }
       let res = await this.login(params)
       console.log("loginAction",res)
-      if(res.data == 'LOGIN SUCCESS'){
+      if(res.data == 'Login Success'){
         this.successAlert(res.data);
-        this.checkLogin=1;
         this.$router.push({ name: 'chatroom' })
       }
       else {
