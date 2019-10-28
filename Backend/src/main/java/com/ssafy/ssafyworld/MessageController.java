@@ -6,6 +6,8 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,9 +44,9 @@ public class MessageController {
 	 */
 	@RequestMapping(value = "/message", method = RequestMethod.GET)
 	@ResponseBody
-	public List<MessageDTO> selectMessages() throws Exception {
-		System.out.println("메세지 추출 완료!");
-		return mService.selectMessages();
+	public ResponseEntity<List<MessageDTO>> selectMessages() throws Exception {
+		logger.info("전체 메세지 출력");
+		return new ResponseEntity<List<MessageDTO>>(mService.selectMessages(),HttpStatus.OK);
 	}
 	
 	/**
@@ -56,9 +58,9 @@ public class MessageController {
 	 */
 	@RequestMapping(value = "/message/{rid}", method = RequestMethod.GET)
 	@ResponseBody
-	public List<MessageDTO> roomMessages(@PathVariable("rid") int rid) throws Exception {
-		System.out.println(rid+"번 방 메세지 추출 완료!");
-		return mService.roomMessages(rid);
+	public ResponseEntity<List<MessageDTO>> roomMessages(@PathVariable("rid") int rid) throws Exception {
+		logger.info(rid+"번 방 메세지 추출 완료");
+		return new ResponseEntity<List<MessageDTO>>(mService.roomMessages(rid),HttpStatus.OK);
 	}
 	
 }

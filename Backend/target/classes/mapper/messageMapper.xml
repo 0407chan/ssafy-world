@@ -5,7 +5,7 @@
   
 <mapper namespace="com.ssafy.ssafyworld.mapper.messageMapper">
 	<!-- 메세지 출력-->
-	<select id="selectMessages" parameterType="int" resultType="MessageDTO">
+	<select id="selectMessages" resultType="MessageDTO">
 		SELECT * FROM message;
 	</select>
 	

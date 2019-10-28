@@ -42,10 +42,8 @@ public class UserController {
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<List<UserDTO>> selectUsers() throws Exception {
-		logger.info("Welcome home! The client locale is {}.");
-		System.out.println("유저 데이터 호출 완료");
-		List<UserDTO> list = uService.selectUsers();
-		return new ResponseEntity<List<UserDTO>>(list, HttpStatus.OK);
+		logger.info("전체 유저 출력");
+		return new ResponseEntity<List<UserDTO>>(uService.selectUsers(), HttpStatus.OK);
 	}
 
 	/**
@@ -62,26 +60,25 @@ public class UserController {
 	public ResponseEntity<String> register(@RequestBody UserDTO user) throws Exception {
 		UserDTO resultUser = uService.getUser(user);
 		if (resultUser != null) {
+			logger.error("이미 존재하는 유저");
 			return ResponseEntity.badRequest().body("User already Exist");
 		}
 		String hashPw = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 		user.setPassword(hashPw);
-		int n = uService.register(user);
-		if (n > 0) {
-			return ResponseEntity.ok().body("USER CREATED");
-		} else {
-			return ResponseEntity.badRequest().body("User already Exist");
-		}
+		uService.register(user);
+		logger.info("유저 생성 완료");
+		
+		return ResponseEntity.ok().body("User Created");
 	}
 
 	/**
-	 * 2019.10.23 이찬호  -> 추후 AWT로 토큰 받아와야함
+	 * 2019.10.23 이찬호 -> 추후 AWT로 토큰 받아와야함
+	 * 
 	 * @기능 로그인
 	 * @호출방법 ssafywolrd/user/login
 	 * @param uid, password
 	 * @return 성공 200 OK , 실패 400 BAD REQUEST
-	 * @Test
-	 * 		- 아이디가 있는 경우엔 어떻게 되는가?
+	 * @Test - 아이디가 있는 경우엔 어떻게 되는가?
 	 */
 	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
 	@ResponseBody
@@ -89,12 +86,15 @@ public class UserController {
 
 		UserDTO resultUser = uService.getUser(user);
 		if (resultUser == null) {
+			logger.error("없는 유저");
 			return ResponseEntity.badRequest().body("User Not Found");
 		}
-		if(!BCrypt.checkpw(user.getPassword(), resultUser.getPassword())) {
+		if (!BCrypt.checkpw(user.getPassword(), resultUser.getPassword())) {
+			logger.error("로그인 실패");
 			return ResponseEntity.badRequest().body("Wrong Password");
 		}
-		return ResponseEntity.ok().body("LOGIN SUCCESS");
+		logger.info("로그인 성공");
+		return ResponseEntity.ok().body("Login Success");
 	}
 
 }
