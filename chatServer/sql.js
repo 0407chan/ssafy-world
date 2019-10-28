@@ -1,72 +1,17 @@
 const axios = require('axios');
 
 
-const apiUrl = 'http://localhost:8080/ssafyworld';
+// const apiUrl = 'http://localhost:8080/ssafyworld';
 //const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
-// const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
+const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
 
-
-  // param 없는 경우
-module.exports.getUser=() => {
-  return axios.get(`${apiUrl}/user`).then(res=>{
-    return res.data
-  }).catch(error=>{
-    return error.response
-  })
-}
-
-/** 2019.10.18 이찬호
-* 기능 : 로그인
-* 파라미터 : params = uid, password
-* 리턴 : 일치하는 유저 가져오기
-*/
-module.exports.login=(params) =>{
-  console.log("index",params);
-  return axios.post(`${apiUrl}/user/login`, {
-    uid:params.id,
-    password:params.pw,
-  }).then(response => {
+// 10-28 최재형
+// 디비에 있는 모든 방 갯수 세기
+// 파라미터 : X
+// 리턴 : 방 목록 전체
+module.exports.getRoom=(param) =>{
+  return axios.get(`${apiUrl}/room`).then(response=>{
     return response
-  })
-  .catch(error => {
-    return error.response
-  });
-}
-
-/** 2019.10.18 이찬호
-* 기능 : 로그인
-* 파라미터 : params = uid, uname, password
-* 리턴 : 일치하는 유저 가져오기
-*/
-module.exports.register = (params) =>{
-  console.log("index",params);
-  return axios.post(`${apiUrl}/user/register`, {
-    // params,
-    uid: params.uid,
-    uname: params.uname,
-    password: params.password,
-  })
-}
-
-// 10-17 최재형
-// 사용자가 가지고 있는 방 번호 가져오기
-// 파라미터 : 방 번호
-// 리턴 : 방 번호에 해당되는 리스트 (json)
-module.exports.getRoomByUser=(param) =>{
-  return axios.get(`${apiUrl}/room/${param}`).then(response=>{
-    return response
-  })
-}
-
-// 10-25 최재형
-// 방 번호에 있는 메세지 전부 가져오기
-// 파라미터 : 방 번호
-// 리턴 : 방 번호에 해당되는 리스트 (json)
-module.exports.getRoomMessage=(param)=>{
-  return axios.get(`${apiUrl}/message/${param}`).then(response=>{
-    return response
-  }).catch(error=>{
-    return error.response
   })
 }
 
@@ -76,8 +21,18 @@ module.exports.getRoomMessage=(param)=>{
 // 리턴 : 성공() 실패
 module.exports.postMessage=(object)=>{
   for(let i=0;i<object.lenght;i++){
-    axios.post('/message',{ mid:object[i].mid, text:object[i].text, uid:object[i].uid,rid:object[i].rid })
-  }
-              
+    axios.post(`${apiUrl}/message`,{ 
+      text:object[i].text, 
+      uid:object[i].uid,
+      rid:object[i].rid })
+  }            
 }
 
+
+module.exports.createRoom=(name)=>{
+  return axios.post(`${apiUrl}/room/create`,{
+                rname : name
+              }).then(response=>{
+                return response
+              })
+}
