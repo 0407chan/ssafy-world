@@ -9,6 +9,8 @@ const state = {
   checkLogin:0,
   friend : false,
   chatlist : false,
+
+  currUser:[],
 }
 
 // actions
@@ -23,6 +25,8 @@ const actions = {
         state.checkLogin=1
         sessionStorage.setItem('id',params.id)
         sessionStorage.setItem('pw',params.pw)
+        state.currUser.id = params.id
+        state.currUser.name= params.name
       }
       return res
     });

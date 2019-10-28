@@ -71,7 +71,6 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import api from '@/api'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 
@@ -84,7 +83,13 @@ export default {
   }),
   mounted() {
     console.log("상태확인");
+<<<<<<< HEAD
     console.log(this.$store.state.data.userLoginToken);
+=======
+
+    if (this.$store.state.data.userLoginToken != '' && this.$store.state.data.userLoginToken != null)
+      this.$router.push({ name: 'chatroom' })
+>>>>>>> 488e0ab5cb22859942017a71fb964c00f525a467
   },
   computed:{
     idLen() {
@@ -97,7 +102,6 @@ export default {
   },
   methods: {
     ...mapActions("data", ['login']),
-
 
     /** 2019.10.21 이찬호
     * 기능 : 로그인 액션
@@ -113,6 +117,7 @@ export default {
       console.log("loginAction",res)
       if(res.status == 200){
         this.successAlert(res.data);
+        this.$store.state.checkLogin=1;
         this.$router.push({ name: 'chatroom' })
       }
       else {
@@ -124,9 +129,9 @@ export default {
     * 기능 : 성공메세지 창, 1초후에 사라진다.
     * 변수 : 성공메세지로 표시할 내용
     */
-    successAlert(text){
+    successAlert(title,text){
       Swal.fire({
-        title: 'Welcome!',
+        title: title,
         text: text,
         type: 'success',
         showConfirmButton: false,
@@ -134,13 +139,13 @@ export default {
       })
     },
 
-    /** 2019.10.21 이찬호
-    * 기능 : 에러메세지 창, 1초후에 사라진다.
-    * 변수 : 에러메세지로 표시할 내용
+    /* 2019.10.21 이찬호
+    기능 : 에러메세지 창, 1초후에 사라진다.
+    변수 : 에러메세지로 표시할 내용
     */
-    errorAlert(text){
+    errorAlert(title,text){
       Swal.fire({
-        title: 'Error!',
+        title: title,
         text: text,
         type: 'error',
         showConfirmButton: false,
