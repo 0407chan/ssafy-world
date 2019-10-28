@@ -10,7 +10,8 @@ const SocketPlugin = {
     });
 
     vue.prototype.$sendMessage = ($payload) => {
-      socket.emit('chatroom/'+$payload.rid, {
+      // socket.emit('/chatroom'+$payload.rid, {
+      socket.emit($payload.rid, {
         msg: $payload.msg,
         name: $payload.name,
       });

@@ -1,9 +1,9 @@
 const axios = require('axios');
 
 
-// const apiUrl = 'http://localhost:8080/ssafyworld';
+const apiUrl = 'http://localhost:8080/ssafyworld';
 //const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
-const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
+// const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
 
 // 10-28 최재형
 // 디비에 있는 모든 방 갯수 세기

@@ -1,4 +1,4 @@
-const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
+const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
 const api = require('./sql.js');
 
 var app = require('express')();
@@ -13,15 +13,15 @@ let room =[];
 let message = []
 
 
-api.getRoom().then(res=>{
-  room=res.data;
-  console.log(room);
-})
+// api.getRoom().then(res=>{
+//   room=res.data;
+//   console.log(room);
+// })
 
 setInterval(intervalFuction, 300000);
 
 async function intervalFuction(){
-  await api.postMessage(message)
+  // await api.postMessage(message)
   console.log('interval OK')
 }
 
@@ -78,68 +78,74 @@ io.on('connection', function(socket){
   // 해야 할 것 :   방을 하나 열어주고, 
   //              방에 해당되는 소켓을 뚫어줍니다. 
   //              그리고 룸 리스트에 추가해 줍니다.
-  socket.on('create',(data)=>{
-    api.createRoom(data.name).then(res=>{
-      //많이 반복되는 구분
-      socket.on('chatroom/'+res, function(data) {
-        console.log('Message from %s: %s', data.name, data.msg);
-        var msg = {
-          from: {
-            name: data.name,
-          },
-          msg: data.msg
-        };
+  // socket.on('create',(data)=>{
+  //   api.createRoom(data.name).then(res=>{
+  //     //많이 반복되는 구분
+  //     socket.on('/chatroom/'+res, function(data) {
+  //       console.log('Message from %s: %s', data.name, data.msg);
+  //       var msg = {
+  //         from: {
+  //           name: data.name,
+  //         },
+  //         msg: data.msg
+  //       };
   
-        message.push({
-          text:data.msg, 
-          uid:data.name,
-          rid:res
-        })
+  //       message.push({
+  //         text:data.msg, 
+  //         uid:data.name,
+  //         rid:res
+  //       })
 
-        // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
-        socket.broadcast.emit('chatroom'/+res, msg);
-      })  
-    });
-  })
+  //       // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
+  //       socket.broadcast.emit('/chatroom/'+res, msg);
+  //     })  
+  //   });
+  // })
 
   //현재 접속자 확인
   console.log(ipMap);
 
   
   // 클라이언트로부터의 메시지가 수신되면
-  // socket.on('chat', function(data) {
-  //   console.log('Message from %s: %s', data.name, data.msg);
-  //   var msg = {
-  //     from: {
-  //       name: data.name,
-  //     },
-  //     msg: data.msg
-  //   };
+  socket.on('/chatroom', function(data) {
+    var msg = {
+      from: {
+        name: data.name,
+      },
+      msg: data.msg
+    };
+    console.log(msg);
+    
 
-  //   // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
-  //   socket.broadcast.emit('chat', msg);
-  // });
+    message.push({
+      text:data.msg, 
+      uid:data.name,
+    })
 
-  for(let i =0;i<room.length;i++){
-    socket.on('chat/'+room[i].rid, function(data) {
-      console.log('Message from %s: %s', data.name, data.msg);
-      var msg = {
-        from: {
-          name: data.name,
-        },
-        msg: data.msg
-      };
+    // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
+    socket.broadcast.emit('/chatroom', msg);
+  })  
 
-      message.push({
-        text:data.msg, 
-        uid:data.name,
-        rid:room[i].rid
-      })
+  // for(let i =0;i<room.length;i++){
+  //   socket.on('/chatroom/'+room[i].rid, function(data) {
+  //     console.log('Message from %s: %s', data.name, data.msg);
+  //     var msg = {
+  //       from: {
+  //         name: data.name,
+  //       },
+  //       msg: data.msg
+  //     };
+
+  //     message.push({
+  //       text:data.msg, 
+  //       uid:data.name,
+  //       rid:room[i].rid
+  //     })
   
-      // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
-      socket.broadcast.emit('chat'/+room[i].rid, msg);
-    });
-  }
+  //     // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
+  //     socket.broadcast.emit('/chatroom'/+room[i].rid, msg);
+  //   });
+  // }
 
   socket.on('disconnect', function() {
     console.log('user disconnected: ' + socket.handshake.address);
