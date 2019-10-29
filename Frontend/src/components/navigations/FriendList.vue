@@ -44,17 +44,17 @@ export default {
         });
       }
       console.log(res);
-      
+
     }).catch(error=>{
       console.log("test");
-      
+
     });
-    
+
   },
   methods :{
     addFriend(){
       console.log("친구 추가 구현해야함");
-      
+
     }
 
   }

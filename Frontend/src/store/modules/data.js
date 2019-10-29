@@ -43,27 +43,12 @@ const actions = {
 
 // mutations
 const mutations = {
-
-
   reverse(state,string){
     if(string=='friend')
       state.friend=!state.friend
     else
       state.chatlist=!state.chatlist
   },
-
-  setClusterList(state, ratings) {
-    state.ratingList = ratings.map(m => m)
-  },
-  //
-  setMenu(state, value) {
-    state.checkLogin = value;
-  },
-
-  clearUser(state){
-    state.userLoginPassword=''
-    state.userLoginToken=''
-  }
 };
 
 export default {
