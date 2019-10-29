@@ -17,7 +17,7 @@ const actions = {
   async login({ commit }, params) {
     return api.login(params).then(res =>{
       console.log(res)
-      if(res.data==='Login Success'){
+      if (res.status == '200') {
         state.userLoginToken = params.id
         state.userLoginPassword = params.pw
         state.checkLogin=1

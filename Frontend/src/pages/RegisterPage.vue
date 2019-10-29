@@ -93,10 +93,11 @@ export default {
       };
       let res = await this.register(params);
       console.log("registerAction",res)
-      if(res.data == 'USER CREATED'){
+      if (res.status == '200') {
         this.successAlert("WELCOME!","User Created successfully");
         this.$router.push({ name: 'chatroom' })
-      }else{
+      }
+      else {
         this.errorAlert(res.data,"Try other name");
       }
     },

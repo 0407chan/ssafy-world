@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4c1e0460-1c63-4602-9856-e77103ea81e7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/Frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/router/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/router/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/api/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,6 +43,7 @@
       <updated>1571817186698</updated>
       <workItem from="1571817189603" duration="561000" />
       <workItem from="1571991608385" duration="6000" />
+      <workItem from="1572307980441" duration="20000" />
     </task>
     <servers />
   </component>

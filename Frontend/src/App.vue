@@ -17,25 +17,12 @@
       </v-list>
 
       <v-list dense v-show="checkLogin == 1">
-<<<<<<< HEAD
-        <v-img :aspect-ratio="16/9" src="https://cdn.vuetifyjs.com/images/parallax/material.jpg">
-          <v-list-item>
-            <v-row align="end" class="lightbox white--text pa-2 fill-height">
-              <v-col>
-                <v-list-item-avatar @click="goTo('mypage')">
-                  <v-img src="https://randomuser.me/api/portraits/women/75.jpg"></v-img>
-                </v-list-item-avatar>
-              </v-col>
-            </v-row>
-=======
         <v-list-item @click="() => {goTo('userDetail')}">
           <v-list-item-avatar>
             <v-img src="https://randomuser.me/api/portraits/women/75.jpg"></v-img>
           </v-list-item-avatar>
->>>>>>> 488e0ab5cb22859942017a71fb964c00f525a467
           <v-btn @click="logout">로그아웃</v-btn>
         </v-list-item>
-      </v-img>
 
         <v-divider></v-divider>
 
@@ -119,7 +106,7 @@ export default {
 
     if(params.id !=null && params.pw != null)
       this.login(params).then(res=>{
-        if(res.data==='LOGIN SUCCESS'){
+        if (res.status==='200') {
           this.$router.push({name : 'chatroom'})
         }
       })
