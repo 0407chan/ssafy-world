@@ -43,6 +43,8 @@ const actions = {
 
   async getUserInfo({ commit }, params) {
     const resp = await api.getUserInfo(params)
+    console.log("test: " + resp)
+    return await api.getUserInfo(params)
   },
 
   async getUser({ commit }, params) {

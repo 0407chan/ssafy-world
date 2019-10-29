@@ -25,6 +25,15 @@
 	<select id="getUser" parameterType="String" resultType="UserDTO">
 		SELECT * FROM user Where uid=#{uid}; 
 	</select>
-	
-
+	<!-- 유저의 방정보 출력 -->
+	<select id="selectUserRooms" parameterType="String" resultType="RoomDTO">
+		SELECT R.rid, R.rname
+		FROM room R, room_has_user H
+		WHERE H.uid = #{uid} AND R.rid = H.rid;
+	</select>
+	<select id="getUserInfo" parameterType="String" resultType="UserDTO">
+		SELECT uid, uname, password
+		FROM user
+		WHERE uid = #{uid}; 
+	</select>
 </mapper>

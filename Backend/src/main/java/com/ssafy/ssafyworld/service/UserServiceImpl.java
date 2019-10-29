@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.ssafyworld.dao.UserDAO;
+import com.ssafy.ssafyworld.dto.RoomDTO;
 import com.ssafy.ssafyworld.dto.UserDTO;
  
 @Service
@@ -33,5 +34,15 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDTO getUser(UserDTO user) throws Exception {
 		return dao.getUser(user);
+	}
+
+	@Override
+	public List<RoomDTO> selectUserRooms(String uid) throws Exception {
+		return dao.selectUserRooms(uid);
+	}
+
+	@Override
+	public UserDTO getUserInfo(String uid) throws Exception {
+		return dao.getUserInfo(uid);
 	}
 }

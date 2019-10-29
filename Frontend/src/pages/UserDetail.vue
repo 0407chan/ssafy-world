@@ -47,7 +47,7 @@
         <v-col cols="12">
           <v-flex>
             <v-row justify="center" align="center">
-              <v-btn rounded :color="index" @click="goBack">
+              <v-btn rounded @click="goBack">
                 <span class="btnStyle">BACK
                 </span>
               </v-btn>
@@ -126,7 +126,7 @@ export default {
       }
       let user = await this.getUserInfo(this.userLoginToken);
 
-      console.log("규빈" + user);
+      console.log(user);
       // var user = await this.getUserInfo(userLoginToken);
       // this.desserts[0].value = user.uid;
     },

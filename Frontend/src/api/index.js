@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 const apiUrl = 'http://localhost:8080/ssafyworld';
-//const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
-//const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
+// const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
+// const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
 
 export default {
   // param 없는 경우
@@ -10,14 +10,25 @@ export default {
     return axios.get(`${apiUrl}/user`)
   },
 
+
+  /**
+   * 
+   * 2019.10.29 준범이
+   * 자소서도 안돼
+   * 면접도 안돼
+   * 이 안에 배신자가 있다
+   * 이게 내 결론이다
+   *  
+   */
   getUserInfo(params) {
     return axios.post(`${apiUrl}/user/info`, {
       uid: params.id,
     }).then(response => {
+      console.log(response)
       return response
     })
     .catch(error => {
-      console.log(error);
+      console.log(error)
       return error.response
     });
   },
