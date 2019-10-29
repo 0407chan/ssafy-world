@@ -51,9 +51,6 @@
 <script>
 import { mapMutations, mapState, mapActions } from 'vuex'
 import Constant from '@/Constant'
-import MessageList from '@/components/message/MessageList.vue'
-import MessageInput from '@/components/message/MessageInput.vue'
-
 export default {
   name: 'ChatRoomPage',
   data() {
@@ -61,10 +58,6 @@ export default {
       datas: [],
       msg:'',
     };
-  },
-  components: {
-    MessageList,
-    MessageInput,
   },
   computed: {
     ...mapState({
@@ -120,9 +113,7 @@ export default {
 
     scrollToBottom(){
       var messageBody = document.getElementById('messageBody');
-      console.log(messageBody.scrollTop)
       messageBody.scrollTop = messageBody.scrollHeight;
-      console.log(messageBody.scrollTop)
     },
 
     getTime(time){
