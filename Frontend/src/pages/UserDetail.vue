@@ -112,9 +112,7 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-
-    }),
+    ...mapState('data', ['userLoginToken']),
   },
   mounted() {
     this.getUserInfoAction()
@@ -123,10 +121,14 @@ export default {
 
     ...mapActions("data", ['getUserInfo']),
     async getUserInfoAction() {
+      let params = {
+        id: this.$store,
+      }
+      let user = await this.getUserInfo(this.userLoginToken);
 
-      console.log("규빈" + this.getUserInfo(this.$store));
-      var user = await this.getUserInfo(userLoginToken);
-      this.desserts[0].value = user.uid;
+      console.log("규빈" + user);
+      // var user = await this.getUserInfo(userLoginToken);
+      // this.desserts[0].value = user.uid;
     },
 
     /* 2019.10.08 이찬호

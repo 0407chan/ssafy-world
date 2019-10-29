@@ -144,11 +144,8 @@ export default {
       console.log(path);
       this.$router.push({ name: path });
     },
-<<<<<<< HEAD
 
     ...mapActions('data',['login']),
-=======
->>>>>>> b2d8330246f665ea22336549d8abaaed80e2cb97
     logout() {
       this.clearUser()
       this.setMenu(0);

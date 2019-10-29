@@ -108,7 +108,7 @@ export default {
       }
       let res = await this.login(params)
       console.log("loginAction",res)
-      if(res.status == 200){
+      if (res.status == 200) {
         this.successAlert(res.data);
         this.$store.state.checkLogin=1;
         this.$router.push({ name: 'chatroom' })
