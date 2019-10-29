@@ -12,6 +12,7 @@ const SocketPlugin = {
       socket.emit('chatroom', {
         msg: $payload.msg,
         name: $payload.name,
+        time: $payload.time,
       });
     };
 
