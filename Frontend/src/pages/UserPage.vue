@@ -1,69 +1,62 @@
 <template>
-  <v-container fluid my-12>
-    <div class="detailContents">
-      <v-row >
-        <v-col cols="12">
-          <v-row justify="center">
-            <v-card width="300px" color="rgba(255, 255, 255, 0.8)" style="margin: 0 1%">
-              <v-row justify="center">
+    <v-container fluid my-12>
+        <div class="detailContents">
+            <v-row>
                 <v-col cols="12">
-                  <v-row justify="center">
-                    <v-img :src="modiImage" aspect-ratio="1.8" contain></v-img>
-                  </v-row>
-                  <v-row justify="center" style="width:290px; margin: auto">
-                    <v-text-field
-                      label="Select Image"
-                      @click="pickFile"
-                      v-model="imageName"
-                      prepend-icon="mdi-paperclip"
-                    ></v-text-field>
-
-                    <input
-                      type="file"
-                      style="display: none"
-                      ref="image"
-                      accept="image/*"
-                      @change="onFilePicked"
-                    />
-                  </v-row>
+                    <v-row justify="center">
+                        <v-card width="300px" color="rgba(255, 255, 255, 0.8)" style="margin: 0 1%">
+                            <v-row justify="center">
+                                <v-col cols="12">
+                                    <v-row justify="center">
+                                        <v-img :src="modiImage" aspect-ratio="1.8" contain></v-img>
+                                    </v-row>
+                                    <v-row justify="center" style="width:290px; margin: auto">
+                                        <v-text-field label="Select Image" @click="pickFile" v-model="imageName" prepend-icon="mdi-paperclip">
+                                        </v-text-field>
+                                        <input type="file" style="display: none" ref="image" accept="image/*" @change="onFilePicked" />
+                                    </v-row>
+                                </v-col>
+                            </v-row>
+                        </v-card>
+                        <v-card style="width: 35%;">
+                            <v-card-title style="margin: 20px;">회 원 정 보</v-card-title>
+                            <v-data-table :headers="headers" :items="desserts" hide-default-header hide-default-footer />
+                        </v-card>
+                    </v-row>
                 </v-col>
-              </v-row>
-            </v-card>
-            <v-card style="width: 35%;">
-              <v-card-title style="margin: 20px;">
-                회 원 정 보
-              </v-card-title>
-                <v-data-table
-    :headers="headers"
-    :items="desserts"
-    hide-default-header
-    hide-default-footer
-    class="elevation-1"
-  />
-            </v-card>
-          </v-row>
-        </v-col>
-
-        <v-col cols="12">
-          <v-flex>
-            <v-row justify="center" align="center">
-              <v-btn rounded @click="goBack">
-                <span class="btnStyle">BACK
-                </span>
-              </v-btn>
+                <v-col cols="12" justify="center" align="center">
+                    <v-flex>
+                        <v-row style="width: 40%">
+                            <v-col justify="center" align="center">
+                                <v-dialog v-model="dialog" persistent max-width="600px">
+                                    <template v-slot:activator="{ on }">
+                                        <v-btn color="green" dark v-on="on">배경설정</v-btn>
+                                    </template>
+                                </v-dialog>
+                            </v-col>
+                            <v-col>
+                                <UpdateInfo :user="[desserts[2].value, desserts[1].value]" />
+                            </v-col>
+                            <v-col>
+                                <v-dialog v-model="dialog" persistent max-width="600px">
+                                    <template v-slot:activator="{ on }">
+                                        <v-btn color="red" dark v-on="on">회원탈퇴</v-btn>
+                                    </template>
+                                </v-dialog>
+                            </v-col>
+                        </v-row>
+                    </v-flex>
+                </v-col>
             </v-row>
-          </v-flex>
-        </v-col>
-
-      </v-row>
-    </div>
-  </v-container>
+        </div>
+    </v-container>
 </template>
 
 <script>
 import {mapState,mapActions} from "vuex";
 import axios from "axios";
 import Swal from 'sweetalert2'
+import UpdateInfo from '@/components/mypage/UpdateInfo'
 
 export default {
   props: {
@@ -89,27 +82,29 @@ export default {
             align: 'center',
             value: 'name',
           },
-          { value: 'context' },
+          {
+            align: 'center',
+            value: 'value',
+          },
         ],
         desserts: [
           {
-            name: '이름',
-            value: '',
+            name: '등급',
+            value: '초보',
           },
           {
-            name: '등급',
+            name: '이름',
             value: '',
           },
           {
             name: '아이디',
             value: '',
           },
-          {
-            name: '비밀번호',
-            value: '',
-          },
         ],
     }
+  },
+  components: {
+    UpdateInfo,
   },
   computed: {
     ...mapState('data', ['userLoginToken']),
@@ -122,11 +117,16 @@ export default {
     ...mapActions("data", ['getUserInfo']),
     async getUserInfoAction() {
       let params = {
-        id: this.$store,
+        id: sessionStorage.getItem('id')
       }
-      let user = await this.getUserInfo(this.userLoginToken);
 
-      console.log(user);
+      let user = await this.getUserInfo(params);
+      console.log(user.data.staff)
+
+      this.desserts[0].value = user.data.staff;
+      this.desserts[1].value = user.data.uname;
+      this.desserts[2].value = user.data.uid;
+
       // var user = await this.getUserInfo(userLoginToken);
       // this.desserts[0].value = user.uid;
     },

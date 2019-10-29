@@ -21,9 +21,11 @@ export default {
    *  
    */
   getUserInfo(params) {
+    console.log(params.id)
     return axios.post(`${apiUrl}/user/info`, {
       uid: params.id,
     }).then(response => {
+      console.log("규빈")
       console.log(response)
       return response
     })

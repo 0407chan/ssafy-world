@@ -22,7 +22,7 @@ import { mapActions, mapState, mapMutations } from 'vuex';
 import api from '@/api'
 
 export default {
-  name: 'ChatroomList',
+  name: 'ChatRoomList',
   components: {
 
   },
