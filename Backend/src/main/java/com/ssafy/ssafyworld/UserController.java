@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -53,12 +54,12 @@ public class UserController {
 	 * @param uid
 	 * @return UserDTO
 	 */
-	@RequestMapping(value = "/user/info", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/info/{uidx}", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<UserDTO> getUserInfo(@RequestBody UserDTO user) throws Exception{
+	public ResponseEntity<UserDTO> getUserInfo(@PathVariable("uidx") int uidx) throws Exception{
 		try {
 			logger.info("유저 정보 출력");
-			return ResponseEntity.ok().body(uService.getUserInfo(user.getUid()));
+			return ResponseEntity.ok().body(uService.getUserInfo(uidx));
 		}
 		catch (Exception e) {
 			logger.info("유저 정보 출력 에러");

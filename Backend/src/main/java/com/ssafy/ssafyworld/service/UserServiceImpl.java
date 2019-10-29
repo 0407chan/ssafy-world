@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDTO getUserInfo(String uid) throws Exception {
-		return dao.getUserInfo(uid);
+	public UserDTO getUserInfo(int uidx) throws Exception {
+		return dao.getUserInfo(uidx);
 	}
 }

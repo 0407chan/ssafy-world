@@ -56,8 +56,8 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public UserDTO getUserInfo(String uid) throws Exception {
-		UserDTO dto = sqlSession.selectOne(Namespace+".getUserInfo", uid);
+	public UserDTO getUserInfo(int uidx) throws Exception {
+		UserDTO dto = sqlSession.selectOne(Namespace+".getUserInfo", uidx);
 		return dto;
 	}
  
