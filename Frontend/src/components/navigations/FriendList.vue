@@ -1,6 +1,6 @@
 <template>
   <div v-show="friend">
-    <v-list v-for="i in items">
+    <v-list v-for="i in friendList">
       <v-list-item @click="goTo(i.path)">
         <v-list-item-title >
           {{ i.uid }}
@@ -10,7 +10,7 @@
     <v-list>
       <v-list-item @click="addFriend">
         <v-list-item-title>
-          추가 하기
+          친구 추가
         </v-list-item-title>
       </v-list-item>
     </v-list>
@@ -33,23 +33,9 @@ export default {
   },
   computed:{
     //userLogintoken 부분 수정 해야함
-    ...mapState('data',['userLoginToken' , 'userLoginPassword','friend'])
+    ...mapState('data',['userLoginToken' , 'userLoginPassword','friend','friendList'])
   },
   mounted(){
-    api.postFriend(sessionStorage.getItem('id')).then(res=>{
-
-      for(let i=0;i<res.data.length;i++){
-        this.items.push({
-          'uid' : res.data[i],
-        });
-      }
-      console.log(res);
-      
-    }).catch(error=>{
-      console.log("test");
-      
-    });
-    
   },
   methods :{
     addFriend(){

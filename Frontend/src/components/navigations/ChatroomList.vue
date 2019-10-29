@@ -1,6 +1,6 @@
 <template>
   <div v-show="chatlist">
-    <v-list v-for="i in items">
+    <v-list v-for="i in chatroomList">
       <v-list-item @click="goTo(i.path)">
         <v-list-item-title>
           {{ i.name }}
@@ -10,7 +10,7 @@
     <v-list>
       <v-list-item @click="addChatroom">
         <v-list-item-title>
-          추가 하기
+          채팅방 만들기
         </v-list-item-title>
       </v-list-item>
     </v-list>
@@ -26,23 +26,13 @@ export default {
   components: {
 
   },
-  data () {
-    return {
-      items: [],
-    }
-  },
   computed:{
     //userLogintoken 부분 수정 해야함
-    ...mapState('data',['userLoginToken' , 'userLoginPassword','chatlist'])
+    ...mapState('data',['userLoginToken' , 'userLoginPassword','chatlist',"chatroomList"]),
+    ...mapState('socket',['msgDatas'])
   },
   mounted(){
-    // this.api.getUserByRoom(this.userLoginToken).then(res=>{
-    //   items.push(res.data);
-    // })
-    // this.items.push({
-    //   'name': 'test',
-    //   'path': '/chatroom/1'
-    // })
+   
   },
   methods :{
     addChatroom(){
@@ -50,7 +40,7 @@ export default {
     },
     goTo(rid){
       console.log(rid);
-      
+      this.msgDatas=[]
       this.$router.push(rid)
     }
   }

@@ -11,6 +11,8 @@ const state = {
   chatlist : false,
 
   currUser:[],
+  friendList : [],
+  chatroomList : [],
 }
 
 // actions
@@ -25,11 +27,23 @@ const actions = {
         state.checkLogin=1
         sessionStorage.setItem('id',params.id)
         sessionStorage.setItem('pw',params.pw)
+        actions.registFriend()
+        actions.registChatroom()
         state.currUser.id = params.id
         state.currUser.name= params.name
       }
       return res
     });
+  },
+  registFriend(){
+    api.postFriend(state.userLoginToken).then(res=>{
+      state.friendList=res;
+    })
+  },
+  registChatroom(){
+    api.getUserByRoom(state.userLoginToken).then(res=>{
+      state.chatroomList=res;
+    })
   },
 
   async register({ commit }, params) {
@@ -73,6 +87,8 @@ const mutations = {
   clearUser(state){
     state.userLoginPassword=''
     state.userLoginToken=''
+    state.chatroomList=[]
+    state.friendList=[]
   }
 };
 
