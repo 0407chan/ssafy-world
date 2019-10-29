@@ -21,7 +21,7 @@ const actions = {
         state.currUser = res.data;
         state.checkLogin = 1;
         console.log(state.currUser);
-        
+
         actions.registFriend()
         actions.registChatroom()
       }
@@ -62,8 +62,6 @@ const actions = {
 
 // mutations
 const mutations = {
-
-
   reverse(state,string){
     if(string=='friend')
       state.friend=!state.friend

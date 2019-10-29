@@ -40,6 +40,7 @@ export default {
   methods :{
     addFriend(){
       console.log("친구 추가 구현해야함");
+
     }
   }
 };

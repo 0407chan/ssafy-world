@@ -91,13 +91,11 @@ public class UserController {
 	}
 
 	/**
-	 * 2019.10.23 이찬호 -> 추후 AWT로 토큰 받아와야함
-	 *
+	 * 2019.10.29 이찬호 
 	 * @기능 로그인
 	 * @호출방법 ssafywolrd/user/login
 	 * @param uid, password
-	 * @return 성공 200 OK , 실패 400 BAD REQUEST
-	 * @Test - 아이디가 있는 경우엔 어떻게 되는가?
+	 * @return 성공 200 OK , 실패 400 BAD REQUEST, UserDTO JSON형태로 보냄
 	 */
 	@RequestMapping(value = "/user/login", method = RequestMethod.POST , produces="application/json; charset=utf8")
 	@ResponseBody
