@@ -21,6 +21,10 @@ public class FriendServiceImpl implements FriendService {
 	}
 
 	@Override
+	public List<String> selectFriend(String uid) throws Exception {
+		return dao.selectFriend(uid);
+	}
+	@Override
 	public FriendDTO getFriend(FriendDTO friend) throws Exception {
 		return dao.getFriend(friend);
 	}
@@ -34,5 +38,7 @@ public class FriendServiceImpl implements FriendService {
 	public void deleteFriend(FriendDTO friend) throws Exception {
 		dao.deleteFriend(friend);
 	}
+
+	
 
 }

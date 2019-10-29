@@ -72,11 +72,6 @@ public class MessageController {
 	@RequestMapping(value = "/message", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<String> insertMessage(@RequestBody MessageDTO message) throws Exception {
-		long time = System.currentTimeMillis(); 
-		SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		String curTime = dayTime.format(new Date(time));
-		message.setSendtime(curTime);
-		
 		mService.insertMessage(message);
 		
 		return new ResponseEntity<String>("Message Insert Success",HttpStatus.OK);
