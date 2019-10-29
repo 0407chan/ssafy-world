@@ -17,7 +17,7 @@
       </v-list>
 
       <v-list dense v-show="checkLogin == 1">
-        <v-list-item>
+        <v-list-item @click="() => {goTo('userDetail')}">
           <v-list-item-avatar>
             <v-img src="https://randomuser.me/api/portraits/women/75.jpg"></v-img>
           </v-list-item-avatar>
@@ -80,7 +80,7 @@
     <v-content>
       <router-view />
     </v-content>
-    
+
   </v-app>
 </template>
 
@@ -137,7 +137,7 @@ export default {
     this.$socket.on('disc',(data)=>{
       this.$socket.disconnect()
     })
-    
+
     if(params.id !=null && params.pw != null)
       this.login(params).then(res=>{
         if(res.data==='Login Success'){
@@ -155,7 +155,7 @@ export default {
     ...mapMutations('data',['setMenu','clearUser','reverse']),
       ...mapActions('data',['login']),
     goTo(path) {
-      console.log(path); 
+      console.log(path);
       this.$router.push({ name: path });
     },
     logout() {
@@ -164,8 +164,8 @@ export default {
       sessionStorage.removeItem('id')
       sessionStorage.removeItem('pw')
       console.log("check");
-      
-      
+
+
       this.$router.push({ name: 'main' });
     },
   },

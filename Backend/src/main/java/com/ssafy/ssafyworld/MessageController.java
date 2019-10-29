@@ -64,10 +64,10 @@ public class MessageController {
 	
 	/**
 	 * 10-28 : 박규빈 
-	 * @기능 해당 방의 메세지 모두 가져오기
-	 * @호출방법 ssafywolrd/message/{rid}
-	 * @param rid
-	 * @return List<MessageDTO>
+	 * @기능 해당 방에
+	 * @호출방법 ssafywolrd/message
+	 * @param rid, uid , text
+	 * @return 200 OK
 	 */
 	@RequestMapping(value = "/message", method = RequestMethod.POST)
 	@ResponseBody
