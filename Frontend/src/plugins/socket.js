@@ -14,6 +14,7 @@ const SocketPlugin = {
       socket.emit($payload.rid, {
         msg: $payload.msg,
         name: $payload.name,
+        time: $payload.time,
       });
     };
 

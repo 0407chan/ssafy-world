@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.ssafyworld.dto.RoomDTO;
 import com.ssafy.ssafyworld.dto.UserDTO;
 import com.ssafy.ssafyworld.service.UserService;
 
@@ -28,7 +29,6 @@ public class UserController {
 
 	@Inject
 	private UserService uService;
-
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	/**
@@ -45,7 +45,26 @@ public class UserController {
 		logger.info("전체 유저 출력");
 		return new ResponseEntity<List<UserDTO>>(uService.selectUsers(), HttpStatus.OK);
 	}
-
+	/**
+	 * 10-29 : 이규찬
+	 *
+	 * @기능 유저 아이디를 통한 유저 정보
+	 * @호출방법 ssafywolrd/user/info
+	 * @param uid
+	 * @return UserDTO
+	 */
+	@RequestMapping(value = "/user/info", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<UserDTO> getUserInfo(@RequestBody String uid) throws Exception{
+		try {
+			logger.info("유저 정보 출력");
+			return ResponseEntity.ok().body(uService.getUserInfo(uid));
+		}
+		catch (Exception e) {
+			logger.info("유저 정보 출력 에러");
+			return ResponseEntity.badRequest().body(null);
+		}
+	}
 	/**
 	 * 2019.10.25 이찬호
 	 *
@@ -99,5 +118,24 @@ public class UserController {
 		ResponseEntity.ok().body(uService.getUser(user));
 	}
 		
-	// user/{uid} GET -> 해당 방번호랑 , 방이름
+	
+	/**
+	 * 10-29 : 이규찬
+	 *
+	 * @기능 유저 전체 리스트를 가져옴
+	 * @호출방법 ssafywolrd/userRooms
+	 * @param UserDTO
+	 * @return List<RoomDTO> 
+	 */
+	@RequestMapping(value = "/userRooms", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<List<RoomDTO>> selectUserRooms(@RequestBody UserDTO user) throws Exception {
+		List<RoomDTO> list = uService.selectUserRooms(user.getUid());
+		logger.info("유저가 들어간 방 리스트 출력");
+		try {
+			return ResponseEntity.ok().body(list);
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(null);
+		}
+	}
 }
