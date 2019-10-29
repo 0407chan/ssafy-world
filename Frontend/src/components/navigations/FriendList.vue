@@ -1,55 +1,63 @@
 <template>
-  <v-card>
-    <v-navigation-drawer
-      class="navigation"
-      absolute
-      permanent
-      left>
-      
-      <Profile />
-
-      <v-divider></v-divider>
-
-      <v-list dense>
-        <v-list-item
-          v-for="item in items"
-          :key="item.title"
-        >
-          <div class="menu" right>
-            <router-link v-bind:to="item.route">
-              <v-btn class="menu-button" rounded color="primary" dark>
-                <v-icon class="button-icon">{{ item.icon }}</v-icon>
-                {{ item.title }}
-              </v-btn>
-            </router-link>
-          </div>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-  </v-card>
+  <div v-show="friend">
+    <v-list v-for="i in items">
+      <v-list-item @click="goTo(i.path)">
+        <v-list-item-title >
+          {{ i.uid }}
+        </v-list-item-title>
+      </v-list-item>
+    </v-list>
+    <v-list>
+      <v-list-item @click="addFriend">
+        <v-list-item-title>
+          추가 하기
+        </v-list-item-title>
+      </v-list-item>
+    </v-list>
+  </div>
 </template>
 
 <script>
-import Profile from "./profile/Profile"
+import { mapActions, mapState, mapMutations } from 'vuex';
+import api from '@/api'
 
 export default {
   name: 'FriendList',
   components: {
-      Profile,
+
   },
-  data() {
-      return {
-        items: [
-          { title: '친 구 들', function: '', icon: 'mdi-account' },
-          { title: '채 팅 방', function: '', icon: 'mdi-account-group-outline' },
-          { title: '방 명 록', function: '', icon: 'mdi-home-city' },
-          { title: '게 시 판', function: '', icon: 'mdi-account-group-outline' },
-          { title: '공 지 글', function: '', icon: 'mdi-account-group-outline' },
-        ],
-      }
-    },
-    methods() {
+  data () {
+    return {
+      items: [],
     }
+  },
+  computed:{
+    //userLogintoken 부분 수정 해야함
+    ...mapState('data',['userLoginToken' , 'userLoginPassword','friend'])
+  },
+  mounted(){
+    api.postFriend(sessionStorage.getItem('id')).then(res=>{
+
+      for(let i=0;i<res.data.length;i++){
+        this.items.push({
+          'uid' : res.data[i],
+        });
+      }
+      console.log(res);
+      
+    }).catch(error=>{
+      console.log("test");
+      
+    });
+    
+  },
+  methods :{
+    addFriend(){
+      console.log("친구 추가 구현해야함");
+      
+    }
+
+  }
 };
 </script>
 

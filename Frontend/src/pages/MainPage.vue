@@ -83,13 +83,9 @@ export default {
   }),
   mounted() {
     console.log("상태확인");
-<<<<<<< HEAD
-    console.log(this.$store.state.data.userLoginToken);
-=======
 
     if (this.$store.state.data.userLoginToken != '' && this.$store.state.data.userLoginToken != null)
       this.$router.push({ name: 'chatroom' })
->>>>>>> 488e0ab5cb22859942017a71fb964c00f525a467
   },
   computed:{
     idLen() {

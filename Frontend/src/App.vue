@@ -43,11 +43,7 @@
             {{ afterLoginItems[1].title }}
           </v-list-item-title>
         </v-list-item>
-          <v-list-item v-show="friend">
-            <v-list-item-title>
-              {{ afterLoginItems[1].title }}
-            </v-list-item-title>
-          </v-list-item>
+        <FriendList />
         <!-- 대화방 열기 -->
         <v-list-item @click="reverse('chatlist')">
           <v-list-item-action>
@@ -57,21 +53,7 @@
             {{ afterLoginItems[2].title }}
           </v-list-item-title>
         </v-list-item>
-          <v-list-item v-show="chatlist">
-            <v-list-item-title>
-              {{ afterLoginItems[1].title }}
-            </v-list-item-title>
-          </v-list-item>
-        <!-- <template v-for="(item, i) in afterLoginItems">
-          <v-list-item :key="i" @click="() => { if (item.path) { goTo(item.path) } }">
-            <v-list-item-action>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-action>
-            <v-list-item-title>
-              {{ item.title }}
-            </v-list-item-title>
-          </v-list-item>
-        </template> -->
+        <ChatroomList />
       </v-list>
 
     </v-navigation-drawer>
@@ -86,12 +68,16 @@
 
 <script>
 import Navigation from '@/components/Navigation'
+import ChatroomList from '@/components/navigations/ChatroomList'
+import FriendList from '@/components/navigations/FriendList'
 import { mapActions, mapState, mapMutations } from 'vuex';
 
 export default {
   name: 'App',
   components: {
     Navigation,
+    ChatroomList,
+    FriendList
   },
   data () {
     return {
@@ -140,7 +126,7 @@ export default {
 
     if(params.id !=null && params.pw != null)
       this.login(params).then(res=>{
-        if(res.data==='Login Success'){
+        if(res.status=='200'){
           this.$router.push({name : 'chatroom'})
         }
       })
@@ -168,6 +154,10 @@ export default {
 
       this.$router.push({ name: 'main' });
     },
-  },
+  },destroyed(){
+    this.$socket.emit('disconnect',{
+      msg : 'disconnect'
+    })
+  }
 }
 </script>
