@@ -99,10 +99,9 @@ public class UserController {
 	 * @return 성공 200 OK , 실패 400 BAD REQUEST
 	 * @Test - 아이디가 있는 경우엔 어떻게 되는가?
 	 */
-	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/login", method = RequestMethod.POST , produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<String> login(@RequestBody UserDTO user) throws Exception {
-
 		UserDTO resultUser = uService.getUser(user);
 		if (resultUser == null) {
 			logger.error("없는 유저");
@@ -111,13 +110,11 @@ public class UserController {
 		}
 		if (!BCrypt.checkpw(user.getPassword(), resultUser.getPassword())) {
 			logger.error("로그인 실패");
-			
 			return ResponseEntity.badRequest().body("비밀번호가 일치하지 않습니다.");
 		}
 		logger.info("로그인 성공");
 		return ResponseEntity.ok().body(uService.getUser(user).toString());
 	}
-		
 	
 	/**
 	 * 10-29 : 이규찬
@@ -127,7 +124,7 @@ public class UserController {
 	 * @param UserDTO
 	 * @return List<RoomDTO> 
 	 */
-	@RequestMapping(value = "/user/rooms", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/rooms", method = RequestMethod.POST , produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<List<RoomDTO>> selectUserRooms(@RequestBody UserDTO user) throws Exception {
 		List<RoomDTO> list = uService.selectUserRooms(user.getUid());

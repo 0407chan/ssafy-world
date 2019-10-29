@@ -69,7 +69,7 @@ public class FriendController {
 	 * @return 200 OK 400 BAD REQUEST
 	 * @throws Exception 
 	 */
-	@RequestMapping(value="/friend/delete", method=RequestMethod.POST)
+	@RequestMapping(value="/friend/delete", method=RequestMethod.POST, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<String> deleteFriend(@RequestBody FriendDTO friend) throws Exception{
 		String person1 = friend.getUid();
@@ -80,10 +80,10 @@ public class FriendController {
 			fService.deleteFriend(friend);
 			fService.deleteFriend(temp);
 			logger.info("친구 삭제 완료");
-			return ResponseEntity.ok().body("Friend Delete");
+			return ResponseEntity.ok().body("친구 삭제 완료");
 		} catch (Exception e) {
 			logger.info("친구 삭제 실패");
-			return ResponseEntity.badRequest().body("Friend Delete");
+			return ResponseEntity.badRequest().body("친구 삭제 실패");
 		}
 	}
 	
@@ -95,7 +95,7 @@ public class FriendController {
 	 * @return 200 OK 400 BAD REQUEST
 	 * @throws Exception 
 	 */
-	@RequestMapping(value="/friend/add", method=RequestMethod.POST)
+	@RequestMapping(value="/friend/add", method=RequestMethod.POST, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<String> addFriend(@RequestBody FriendDTO friend) throws Exception{
 		String person1 = friend.getUid();
@@ -106,13 +106,10 @@ public class FriendController {
 			fService.addFriend(friend);
 			fService.addFriend(temp);
 			logger.info("친구 추가 완료");
-			return ResponseEntity.ok().body("Friend Add");
+			return ResponseEntity.ok().body("친구 추가 완료");
 		} catch (Exception e) {
 			logger.info("친구 추가 실패");
-			return ResponseEntity.badRequest().body("Friend Add Fail");
+			return ResponseEntity.badRequest().body("친구 추가 실패");
 		}
 	}
-	
-	
-	
 }
