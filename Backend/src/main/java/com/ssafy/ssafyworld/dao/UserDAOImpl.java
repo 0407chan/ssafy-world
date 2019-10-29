@@ -54,5 +54,11 @@ public class UserDAOImpl implements UserDAO {
 		List<RoomDTO> list = sqlSession.selectList(Namespace+".selectUserRooms", uid);
 		return list;
 	}
+
+	@Override
+	public UserDTO getUserInfo(String uid) throws Exception {
+		UserDTO dto = sqlSession.selectOne(Namespace+".getUserInfo", uid);
+		return dto;
+	}
  
 }

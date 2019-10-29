@@ -11,4 +11,5 @@ public interface UserDAO {
    public UserDTO login(UserDTO user) throws Exception;
    public UserDTO getUser(UserDTO user) throws Exception;
    public List<RoomDTO> selectUserRooms(String uid) throws Exception;
+   public UserDTO getUserInfo(String uid) throws Exception;
 }

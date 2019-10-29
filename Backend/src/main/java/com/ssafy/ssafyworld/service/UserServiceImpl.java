@@ -40,4 +40,9 @@ public class UserServiceImpl implements UserService {
 	public List<RoomDTO> selectUserRooms(String uid) throws Exception {
 		return dao.selectUserRooms(uid);
 	}
+
+	@Override
+	public UserDTO getUserInfo(String uid) throws Exception {
+		return dao.getUserInfo(uid);
+	}
 }

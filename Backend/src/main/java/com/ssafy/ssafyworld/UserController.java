@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.ssafyworld.dto.RoomDTO;
 import com.ssafy.ssafyworld.dto.UserDTO;
-import com.ssafy.ssafyworld.service.RoomService;
 import com.ssafy.ssafyworld.service.UserService;
 
 /**
@@ -46,7 +45,20 @@ public class UserController {
 		logger.info("전체 유저 출력");
 		return new ResponseEntity<List<UserDTO>>(uService.selectUsers(), HttpStatus.OK);
 	}
-
+	/**
+	 * 10-29 : 이규찬
+	 *
+	 * @기능 유저 아이디를 통한 유저 정보
+	 * @호출방법 ssafywolrd/getUserInfo
+	 * @param uid
+	 * @return UserDTO
+	 */
+	@RequestMapping(value = "/getUserInfo", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<UserDTO> getUserInfo(@RequestBody String uid) throws Exception{
+		logger.info("유저 정보 출력");
+		return ResponseEntity.ok().body(uService.getUserInfo(uid));
+	}
 	/**
 	 * 2019.10.25 이찬호
 	 *
@@ -119,5 +131,4 @@ public class UserController {
 			return ResponseEntity.badRequest().body(null);
 		}
 	}
-	// user/{uid} GET -> 해당 방번호랑 , 방이름
 }
