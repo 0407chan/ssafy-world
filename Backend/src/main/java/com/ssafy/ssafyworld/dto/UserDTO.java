@@ -3,11 +3,20 @@ package com.ssafy.ssafyworld.dto;
 import java.io.Serializable;
 
 public class UserDTO implements Serializable{
+	private String uidx;
 	private String uid;
 	private String uname;
 	private String password;
 	private String img;
 	private int staff;
+	
+	
+	public String getUidx() {
+		return uidx;
+	}
+	public void setUidx(String uidx) {
+		this.uidx = uidx;
+	}
 	public String getImg() {
 		return img;
 	}
@@ -43,17 +52,15 @@ public class UserDTO implements Serializable{
 		super();
 	}
 	
-	public UserDTO(String uid, String uname, String password,String img, int staff) {
+	public UserDTO(String uidx, String uid, String uname, String password, String img, int staff) {
 		super();
-		this.setUid(uid);
-		this.setUname(uname);
-		this.setPassword(password);
-		this.setImg(img);
-		this.setStaff(staff);
+		this.uidx = uidx;
+		this.uid = uid;
+		this.uname = uname;
+		this.password = password;
+		this.img = img;
+		this.staff = staff;
 	}
-	
-	
-	
 	
 	@Override
 	public int hashCode() {
@@ -70,6 +77,8 @@ public class UserDTO implements Serializable{
 		StringBuilder builder = new StringBuilder();
 		builder.append("{\"uid\":\"");
 		builder.append(uid);
+		builder.append("\", \"uidx\":\"");
+		builder.append(uidx);
 		builder.append("\", \"uname\":\"");
 		builder.append(uname);
 		builder.append("\", \"img\":\"");
