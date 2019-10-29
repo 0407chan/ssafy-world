@@ -35,12 +35,15 @@ export default {
    
   },
   methods :{
+    ...mapActions('socket',['getMsg']),
+    ...mapMutations('socket',['clearMsg']),
     addChatroom(){
       console.log("구현해야함");
     },
     goTo(rid){
       console.log(rid);
-      this.msgDatas=[]
+      this.clearMsg();
+      this.getMsg(rid);
       this.$router.push(rid)
     }
   }

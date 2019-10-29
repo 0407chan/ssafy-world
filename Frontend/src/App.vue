@@ -1,5 +1,7 @@
 <template>
   <v-app xs12>
+    <div>
+    </div>
     
     <v-navigation-drawer v-model="drawer" app>
       <v-list dense v-show="checkLogin == 0">
@@ -95,12 +97,6 @@ export default {
     ...mapState('data',['userLoginToken:','userLoginPassword','checkLogin','friend','chatlist']),
   },
   created(){
-    let params = {
-      'id' : sessionStorage.getItem('id'),
-      'pw' : sessionStorage.getItem('pw')
-    }
-    console.log(params);
-
     //이미 접속한 이력이 있을 경우
     this.$socket.on('check',(data)=>{
       console.log(data.msg)

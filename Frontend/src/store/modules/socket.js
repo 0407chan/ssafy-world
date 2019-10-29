@@ -1,4 +1,5 @@
 import Constant from '../../Constant';
+import api from '@/api'
 
 const state = {
   msgDatas: [],
@@ -10,6 +11,11 @@ const getters = {
 
 // actions
 const actions = {
+  getMsg(params){
+    api.getRoomMessage(params).then(res=>{
+      state.msgDatas=res.data
+    })
+  }
 };
 
 // mutations
