@@ -5,7 +5,7 @@ public class MessageDTO {
 	private int rid;
 	private String uid;
 	private String text;
-	private String sendtime;
+	private String time;
 	public int getMid() {
 		return mid;
 	}
@@ -30,16 +30,16 @@ public class MessageDTO {
 	public void setText(String text) {
 		this.text = text;
 	}
-	public String getSendtime() {
-		return sendtime;
+	public String getTime() {
+		return time;
 	}
-	public void setSendtime(String sendtime) {
-		this.sendtime = sendtime;
+	public void setTime(String time) {
+		this.time = time;
 	}
 	
 	@Override
 	public String toString() {
-		return "MessageDTO [mid=" + mid + ", rid=" + rid + ", uid=" + uid + ", text=" + text + ", sendtime=" + sendtime
+		return "MessageDTO [mid=" + mid + ", rid=" + rid + ", uid=" + uid + ", text=" + text + ", time=" + time
 				+ "]";
 	}
 	@Override

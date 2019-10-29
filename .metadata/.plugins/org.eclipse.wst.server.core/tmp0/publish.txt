@@ -1,11 +1,6 @@
 #Tomcat publish data
-<<<<<<< HEAD
-#Mon Oct 28 12:15:43 KST 2019
+#Tue Oct 29 11:43:47 KST 2019
+>>>>>>>=feature/gb04
 org.eclipse.jst.jee.server\:/binary\:C\:\\Users\\multicampus\\.m2\\repository\\org\\springframework\\spring-web\\5.0.7.RELEASE\\spring-web-5.0.7.RELEASE.jar=WEB-INF/lib/spring-web-5.0.7.RELEASE.jar
-=======
-#Mon Oct 28 17:14:33 KST 2019
->>>>>>>=feature/gb02
-org.eclipse.jst.jee.server\:/binary\:C\:\\Users\\multicampus\\.m2\\repository\\org\\springframework\\spring-web\\5.0.7.RELEASE\\spring-web-5.0.7.RELEASE.jar=WEB-INF/lib/spring-web-5.0.7.RELEASE.jar
-<<<<<<<=HEAD
 =\=\=\=\=\=\=
->>>>>>> feature/gb04
+<<<<<<<=HEAD

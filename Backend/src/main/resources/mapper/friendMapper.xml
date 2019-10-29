@@ -9,6 +9,11 @@
 		SELECT * FROM friend;
 	</select>
 	
+	<!-- 친구 출력-->
+	<select id="selectFriend" parameterType="String" resultType="String">
+		SELECT friend FROM friend where uid=#{uid};
+	</select>
+	
 	<!-- 친구 찾기 -->
 	<select id="getFriend" parameterType="friendDTO" resultType="friendDTO">
 		SELECT * FROM friend where uid=#{uid} and friend=#{friend};
