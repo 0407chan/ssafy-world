@@ -7,6 +7,8 @@ const state = {
   userLoginToken:'',
   userLoginPassword:'',
   checkLogin:0,
+  friend : false,
+  chatlist : false,
 
   currUser:[],
 }
@@ -17,7 +19,7 @@ const actions = {
   async login({ commit }, params) {
     return api.login(params).then(res =>{
       console.log(res)
-      if(res.data==='Login Success'){
+      if(res.status == '200'){
         state.userLoginToken = params.id
         state.userLoginPassword = params.pw
         state.checkLogin=1
@@ -51,6 +53,14 @@ const actions = {
 
 // mutations
 const mutations = {
+
+  
+  reverse(state,string){
+    if(string=='friend')
+      state.friend=!state.friend
+    else
+      state.chatlist=!state.chatlist
+  },
 
   setClusterList(state, ratings) {
     state.ratingList = ratings.map(m => m)

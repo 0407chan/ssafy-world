@@ -83,9 +83,6 @@ export default {
   }),
   mounted() {
     console.log("상태확인");
-
-    if (this.$store.state.data.userLoginToken != '' && this.$store.state.data.userLoginToken != null)
-      this.$router.push({ name: 'chatroom' })
   },
   computed:{
     idLen() {
@@ -111,15 +108,6 @@ export default {
       }
       let res = await this.login(params)
       console.log("loginAction",res)
-      // this.$session.start();
-      // this.$session.set('token', res.data.token);
-      //
-      // if(res.data == 'LOGIN SUCCESS'){
-      //   this.successAlert('WELCOME!',res.data);
-      //   this.$router.push({ name: 'chatroom' })
-      // }else{
-      //   this.errorAlert(res.data,'');
-      // }
       if(res.status == 200){
         this.successAlert(res.data);
         this.$store.state.checkLogin=1;

@@ -1,8 +1,8 @@
 <template>
   <v-app xs12>
-    <!-- <Navigation /> -->
-    <v-navigation-drawer v-model="drawer" app>
+    <!-- <Navigation props="checkLogin"/> -->
 
+    <v-navigation-drawer v-model="drawer" app>
       <v-list dense v-show="checkLogin == 0">
         <template v-for="(item, i) in beforeLoginItems">
           <v-list-item :key="i" @click="() => { if (item.path) { goTo(item.path) } }">
@@ -26,16 +26,34 @@
 
         <v-divider></v-divider>
 
-        <template v-for="(item, i) in afterLoginItems">
-          <v-list-item :key="i" @click="() => { if (item.path) { goTo(item.path) } }">
-            <v-list-item-action>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-action>
-            <v-list-item-title>
-              {{ item.title }}
-            </v-list-item-title>
-          </v-list-item>
-        </template>
+        <v-list-item @click="()=>{if(afterLoginItems[0].path) {goTo(afterLoginItems[0].path)}}">
+          <v-list-item-action >
+            <v-icon>{{ afterLoginItems[0].icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-title>
+            {{ afterLoginItems[0].title }}
+          </v-list-item-title>
+        </v-list-item>
+        <!-- 친구 목록 열기 -->
+        <v-list-item @click="reverse('friend')">
+          <v-list-item-action>
+            <v-icon>{{ afterLoginItems[1].icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-title>
+            {{ afterLoginItems[1].title }}
+          </v-list-item-title>
+        </v-list-item>
+        <FriendList />
+        <!-- 대화방 열기 -->
+        <v-list-item @click="reverse('chatlist')">
+          <v-list-item-action>
+            <v-icon>{{ afterLoginItems[2].icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-title>
+            {{ afterLoginItems[2].title }}
+          </v-list-item-title>
+        </v-list-item>
+        <ChatroomList />
       </v-list>
 
     </v-navigation-drawer>
@@ -50,12 +68,16 @@
 
 <script>
 import Navigation from '@/components/Navigation'
+import ChatroomList from '@/components/navigations/ChatroomList'
+import FriendList from '@/components/navigations/FriendList'
 import { mapActions, mapState, mapMutations } from 'vuex';
 
 export default {
   name: 'App',
   components: {
     Navigation,
+    ChatroomList,
+    FriendList
   },
   data () {
     return {
@@ -64,22 +86,20 @@ export default {
         { title: '회 원 가 입', icon: 'mdi-account-group-outline', path:"register" },
       ],
       afterLoginItems: [
-        { title: '친 구 들', icon: 'mdi-account', path:"main"},
+        { title: '일 정 표', icon: 'mdi-calendar', path:"" },
+        { title: '친 구 들', icon: 'mdi-account', path:"chatroom"},
         { title: '채 팅 방', icon: 'mdi-account-group-outline', path:"" },
-        { title: '방 명 록', icon: 'mdi-account-group-outline', path:"" },
-        { title: '게 시 판', icon: 'mdi-account-group-outline', path:"" },
-        { title: '공 지 사 항', icon: 'mdi-account-group-outline', path:"" },
       ],
       drawer: true,
       logincheck: false,
-      first : 0
+      first : 0,
     }
   },
-  computed :{
-    ...mapState('data',['userLoginToken:','userLoginPassword','checkLogin']),
-  },
-  mounted(){
-    let params = {
+  computed :{  
+    ...mapState('data',['userLoginToken:','userLoginPassword','checkLogin','friend','chatlist']),
+  },  
+  created(){
+    let params = { 
       'id' : sessionStorage.getItem('id'),
       'pw' : sessionStorage.getItem('pw')
     }
@@ -106,7 +126,7 @@ export default {
 
     if(params.id !=null && params.pw != null)
       this.login(params).then(res=>{
-        if(res.data==='LOGIN SUCCESS'){
+        if(res.status=='200'){
           this.$router.push({name : 'chatroom'})
         }
       })
@@ -118,12 +138,12 @@ export default {
       this.first= 1;
   },
   methods: {
-    ...mapMutations('data',['setMenu','clearUser']),
+    ...mapMutations('data',['setMenu','clearUser','reverse']),
+      ...mapActions('data',['login']),
     goTo(path) {
       console.log(path);
       this.$router.push({ name: path });
     },
-    ...mapActions('data',['login']),
     logout() {
       this.clearUser()
       this.setMenu(0);
@@ -134,6 +154,10 @@ export default {
 
       this.$router.push({ name: 'main' });
     },
-  },
+  },destroyed(){
+    this.$socket.emit('disconnect',{
+      msg : 'disconnect'
+    })
+  }
 }
 </script>

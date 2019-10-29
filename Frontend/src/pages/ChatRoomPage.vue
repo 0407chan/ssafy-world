@@ -43,6 +43,10 @@ export default {
       // $ths.datas.push(data)
     });
   },
+  beforeupdated(){
+    if (this.userLoginToken==''||this.userLoginPassword=='')
+      this.$router.push({ name: 'main' })
+  },
   methods: {
     ...mapMutations({
       'pushMsgData': Constant.PUSH_MSG_DATA,
