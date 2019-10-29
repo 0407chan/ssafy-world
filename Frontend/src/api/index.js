@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 // const apiUrl = 'http://localhost:8080/ssafyworld';
-const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
-// const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
+// const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
+const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
 
 export default {
   // param 없는 경우
@@ -66,11 +66,29 @@ export default {
   },
 
   // 10-17 최재형
+  // 방 번호에 해당되는 이름 가져오기
+  // 파라미터 : 방 번호
+  // 리턴 : 방 번호에 해당되는 리스트 (json)
+  getRoomName(param) {
+    return axios.get(`${apiUrl}/room/${param}`)
+  },
+
+  // 10-28 최재형
   // 사용자가 가지고 있는 방 번호 가져오기
   // 파라미터 : 방 번호
   // 리턴 : 방 번호에 해당되는 리스트 (json)
-  getRoomByUser(param) {
-    return axios.get(`${apiUrl}/room/${param}`)
+  getUserByRoom(param) {
+    return axios.get(`${apiUrl}/user/${param}`).then(async res=>{
+        let arr = []
+        for(let i=0;i<res.data.length;i++){
+          data = {
+            name : await getRoomName(res.data[i]),
+            path : '/chatroom/'+res.data[i]
+          }
+          arr.push(data)
+        }
+        return arr
+      })
   },
 
   // 10-17 최재형
@@ -93,13 +111,30 @@ export default {
                   .catch((ex) => {
                       console.warn("ERROR!!!!! : ",ex)
                   })
-  }
+  },
 
-  /* param 있는 경우
-  getUser(params){
-    return axios.get(`${apiUrl}/user/`, {
-      params,
+  // 10-17 최재형
+  // 메세지 입력
+  // 파라미터 : 메세지 테이블에 있는 전 목록(날짜 빼고)
+  // 리턴 : 없을듯 (아마도)
+  postFriend(uid){
+    return axios.post(`${apiUrl}/friend/`, {
+      'uid': uid
+    }).then(res=>{
+      return res
+    }).then(error=>{
+      return error
     })
   },
-  */
+
+  postAddFriend(uid){
+    return axios.post(`${apiUrl}/friend/add`, {
+      'uid': uid
+    }).then(res=>{
+      return res
+    }).then(error=>{
+      return error
+    })
+  },
+  
 }
