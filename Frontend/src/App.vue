@@ -1,7 +1,6 @@
 <template>
   <v-app xs12>
-    <!-- <Navigation props="checkLogin"/> -->
-
+    
     <v-navigation-drawer v-model="drawer" app>
       <v-list dense v-show="checkLogin == 0">
         <template v-for="(item, i) in beforeLoginItems">
@@ -67,7 +66,6 @@
 </template>
 
 <script>
-import Navigation from '@/components/Navigation'
 import ChatroomList from '@/components/navigations/ChatroomList'
 import FriendList from '@/components/navigations/FriendList'
 import { mapActions, mapState, mapMutations } from 'vuex';
@@ -75,7 +73,6 @@ import { mapActions, mapState, mapMutations } from 'vuex';
 export default {
   name: 'App',
   components: {
-    Navigation,
     ChatroomList,
     FriendList
   },
@@ -92,19 +89,12 @@ export default {
       ],
       drawer: true,
       logincheck: false,
-      first : 0,
     }
   },
   computed :{
     ...mapState('data',['userLoginToken:','userLoginPassword','checkLogin','friend','chatlist']),
   },
   created(){
-    let params = {
-      'id' : sessionStorage.getItem('id'),
-      'pw' : sessionStorage.getItem('pw')
-    }
-    console.log(params);
-
     //이미 접속한 이력이 있을 경우
     this.$socket.on('check',(data)=>{
       console.log(data.msg)
@@ -124,18 +114,12 @@ export default {
       this.$socket.disconnect()
     })
 
-    if(params.id !=null && params.pw != null)
-      this.login(params).then(res=>{
-        if(res.status=='200'){
-          this.$router.push({name : 'chatroom'})
-        }
-      })
-
-    //로그인 여부 확인
-    if (this.userLoginToken == '' || this.userLoginPassword=='')
-      this.first= 0;
-    else
-      this.first= 1;
+    // if(params.id !=null && params.pw != null)
+    //   this.login(params).then(res=>{
+    //     if(res.status=='200'){
+    //       this.$router.push({name : 'chatroom'})
+    //     }
+    //   })
   },
   methods: {
     ...mapMutations('data',['setMenu','clearUser','reverse']),
@@ -158,6 +142,7 @@ export default {
     this.$socket.emit('disconnect',{
       msg : 'disconnect'
     })
+    this.logout()
   }
 }
 </script>
