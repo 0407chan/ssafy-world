@@ -49,18 +49,19 @@ public class UserController {
 	 * 10-29 : 이규찬
 	 *
 	 * @기능 유저 아이디를 통한 유저 정보
-	 * @호출방법 ssafywolrd/getUserInfo
+	 * @호출방법 ssafywolrd/user/info
 	 * @param uid
 	 * @return UserDTO
 	 */
-	@RequestMapping(value = "/getUserInfo", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/info", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<UserDTO> getUserInfo(@RequestBody String uid) throws Exception{
-		logger.info("유저 정보 출력");
 		try {
+			logger.info("유저 정보 출력");
 			return ResponseEntity.ok().body(uService.getUserInfo(uid));
 		}
 		catch (Exception e) {
+			logger.info("유저 정보 출력 에러");
 			return ResponseEntity.badRequest().body(null);
 		}
 	}
