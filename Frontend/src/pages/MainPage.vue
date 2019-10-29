@@ -108,18 +108,6 @@ export default {
       }
       let res = await this.login(params)
       console.log("loginAction",res)
-<<<<<<< HEAD
-=======
-      // this.$session.start();
-      // this.$session.set('token', res.data.token);
-      //
-      // if(res.data == 'LOGIN SUCCESS'){
-      //   this.successAlert('WELCOME!',res.data);
-      //   this.$router.push({ name: 'chatroom' })
-      // }else{
-      //   this.errorAlert(res.data,'');
-      // }
->>>>>>> 488e0ab5cb22859942017a71fb964c00f525a467
       if(res.status == 200){
         this.successAlert(res.data);
         this.$store.state.checkLogin=1;
