@@ -57,7 +57,12 @@ public class UserController {
 	@ResponseBody
 	public ResponseEntity<UserDTO> getUserInfo(@RequestBody String uid) throws Exception{
 		logger.info("유저 정보 출력");
-		return ResponseEntity.ok().body(uService.getUserInfo(uid));
+		try {
+			return ResponseEntity.ok().body(uService.getUserInfo(uid));
+		}
+		catch (Exception e) {
+			return ResponseEntity.badRequest().body(null);
+		}
 	}
 	/**
 	 * 2019.10.25 이찬호
