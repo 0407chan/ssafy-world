@@ -55,10 +55,10 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/user/info", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<UserDTO> getUserInfo(@RequestBody String uid) throws Exception{
+	public ResponseEntity<UserDTO> getUserInfo(@RequestBody UserDTO user) throws Exception{
 		try {
 			logger.info("유저 정보 출력");
-			return ResponseEntity.ok().body(uService.getUserInfo(uid));
+			return ResponseEntity.ok().body(uService.getUserInfo(user.getUid()));
 		}
 		catch (Exception e) {
 			logger.info("유저 정보 출력 에러");
@@ -123,11 +123,11 @@ public class UserController {
 	 * 10-29 : 이규찬
 	 *
 	 * @기능 유저 전체 리스트를 가져옴
-	 * @호출방법 ssafywolrd/userRooms
+	 * @호출방법 ssafywolrd/user/rooms
 	 * @param UserDTO
 	 * @return List<RoomDTO> 
 	 */
-	@RequestMapping(value = "/userRooms", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/rooms", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<List<RoomDTO>> selectUserRooms(@RequestBody UserDTO user) throws Exception {
 		List<RoomDTO> list = uService.selectUserRooms(user.getUid());

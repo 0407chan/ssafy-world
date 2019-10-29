@@ -6,7 +6,7 @@
 <mapper namespace="com.ssafy.ssafyworld.mapper.userMapper">
 	<!-- 유저목록  -->
 	<select id="selectUsers" resultType="UserDTO">
-		SELECT uid,uname,password
+		SELECT *
 		FROM user;
 	</select>
 	<!-- 회원가입 -->
@@ -32,7 +32,7 @@
 		WHERE H.uid = #{uid} AND R.rid = H.rid;
 	</select>
 	<select id="getUserInfo" parameterType="String" resultType="UserDTO">
-		SELECT uid, uname, password
+		SELECT *
 		FROM user
 		WHERE uid = #{uid}; 
 	</select>
