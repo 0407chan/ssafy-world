@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -53,12 +54,12 @@ public class UserController {
 	 * @param uid
 	 * @return UserDTO
 	 */
-	@RequestMapping(value = "/user/info", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/info/{uidx}", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<UserDTO> getUserInfo(@RequestBody UserDTO user) throws Exception{
+	public ResponseEntity<UserDTO> getUserInfo(@PathVariable("uidx") int uidx) throws Exception{
 		try {
 			logger.info("유저 정보 출력");
-			return ResponseEntity.ok().body(uService.getUserInfo(user.getUid()));
+			return ResponseEntity.ok().body(uService.getUserInfo(uidx));
 		}
 		catch (Exception e) {
 			logger.info("유저 정보 출력 에러");
@@ -91,33 +92,28 @@ public class UserController {
 	}
 
 	/**
-	 * 2019.10.23 이찬호 -> 추후 AWT로 토큰 받아와야함
-	 *
+	 * 2019.10.29 이찬호 
 	 * @기능 로그인
 	 * @호출방법 ssafywolrd/user/login
 	 * @param uid, password
-	 * @return 성공 200 OK , 실패 400 BAD REQUEST
-	 * @Test - 아이디가 있는 경우엔 어떻게 되는가?
+	 * @return 성공 200 OK , 실패 400 BAD REQUEST, UserDTO JSON형태로 보냄
 	 */
-	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/login", method = RequestMethod.POST , produces="application/json; charset=utf8")
 	@ResponseBody
-	public void login(@RequestBody UserDTO user) throws Exception {
-
+	public ResponseEntity<String> login(@RequestBody UserDTO user) throws Exception {
 		UserDTO resultUser = uService.getUser(user);
 		if (resultUser == null) {
 			logger.error("없는 유저");
 			ResponseEntity.badRequest().body("");
-			return;
+			return ResponseEntity.badRequest().body("존재하지 않는 아이디 입니다.");
 		}
 		if (!BCrypt.checkpw(user.getPassword(), resultUser.getPassword())) {
 			logger.error("로그인 실패");
-			ResponseEntity.badRequest();
-			return;
+			return ResponseEntity.badRequest().body("비밀번호가 일치하지 않습니다.");
 		}
 		logger.info("로그인 성공");
-		ResponseEntity.ok().body(uService.getUser(user));
+		return ResponseEntity.ok().body(uService.getUser(user).toString());
 	}
-		
 	
 	/**
 	 * 10-29 : 이규찬
@@ -127,7 +123,7 @@ public class UserController {
 	 * @param UserDTO
 	 * @return List<RoomDTO> 
 	 */
-	@RequestMapping(value = "/user/rooms", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/rooms", method = RequestMethod.POST , produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<List<RoomDTO>> selectUserRooms(@RequestBody UserDTO user) throws Exception {
 		List<RoomDTO> list = uService.selectUserRooms(user.getUid());

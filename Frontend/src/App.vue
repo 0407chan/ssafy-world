@@ -20,5 +20,10 @@ export default {
             
         }
     },
+    destroyed() {
+        this.$socket.emit('disconnect', {
+            msg: 'disconnect'
+        })
+    },
 }
 </script>

@@ -88,14 +88,12 @@ export default {
     },
     computed: {
         ...mapState('data', ['friend', 'chatlist']),
+        ...mapState({
+            currUser: state => state.data.currUser,
+        }),
     },
     methods: {
         ...mapMutations('data', ['setMenu', 'clearUser', 'reverse']),
-    },
-    destroyed() {
-        this.$socket.emit('disconnect', {
-            msg: 'disconnect'
-        })
     },
 }
 </script>

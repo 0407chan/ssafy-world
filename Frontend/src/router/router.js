@@ -16,6 +16,11 @@ export default new Router({
             component: LoginPage
         },
         {
+            path: '/',
+            name: 'login',
+            component: MainPage
+        },
+        {
             path: '/register',
             name: 'register',
             component: RegisterPage
@@ -27,7 +32,7 @@ export default new Router({
         },
         {
             path: '/chatroom/:id',
-            name: 'chatroom',
+            name: 'selectroom',
             component: ChatRoomPage
         },
         {

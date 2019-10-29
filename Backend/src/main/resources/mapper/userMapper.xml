@@ -31,9 +31,9 @@
 		FROM room R, room_has_user H
 		WHERE H.uid = #{uid} AND R.rid = H.rid;
 	</select>
-	<select id="getUserInfo" parameterType="String" resultType="UserDTO">
+	<select id="getUserInfo" parameterType="int" resultType="UserDTO">
 		SELECT *
 		FROM user
-		WHERE uid = #{uid}; 
+		WHERE uidx = #{uidx}; 
 	</select>
 </mapper>

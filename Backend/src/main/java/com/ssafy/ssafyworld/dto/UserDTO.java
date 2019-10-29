@@ -3,11 +3,20 @@ package com.ssafy.ssafyworld.dto;
 import java.io.Serializable;
 
 public class UserDTO implements Serializable{
+	private String uidx;
 	private String uid;
 	private String uname;
 	private String password;
 	private String img;
 	private int staff;
+	
+	
+	public String getUidx() {
+		return uidx;
+	}
+	public void setUidx(String uidx) {
+		this.uidx = uidx;
+	}
 	public String getImg() {
 		return img;
 	}
@@ -43,27 +52,41 @@ public class UserDTO implements Serializable{
 		super();
 	}
 	
-	public UserDTO(String uid, String uname, String password,String img, int staff) {
+	public UserDTO(String uidx, String uid, String uname, String password, String img, int staff) {
 		super();
-		this.setUid(uid);
-		this.setUname(uname);
-		this.setPassword(password);
-		this.setImg(img);
-		this.setStaff(staff);
+		this.uidx = uidx;
+		this.uid = uid;
+		this.uname = uname;
+		this.password = password;
+		this.img = img;
+		this.staff = staff;
 	}
 	
-	
-	@Override
-	public String toString() {
-		return "UserDTO [uid=" + uid + ", uname=" + uname + ", password=" + password + ", img=" + img + ", staff="
-				+ staff + "]";
-	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((uid == null) ? 0 : uid.hashCode());
 		return result;
+	}
+	
+//  '{ "name":"John", "age":30, "city":"New York"}'
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("{\"uid\":\"");
+		builder.append(uid);
+		builder.append("\", \"uidx\":\"");
+		builder.append(uidx);
+		builder.append("\", \"uname\":\"");
+		builder.append(uname);
+		builder.append("\", \"img\":\"");
+		builder.append(img);
+		builder.append("\", \"staff\":\"");
+		builder.append(staff);
+		builder.append("\"}");
+		return builder.toString();
 	}
 	@Override
 	public boolean equals(Object obj) {

@@ -104,15 +104,21 @@ export default {
   // 파라미터 : 방 번호
   // 리턴 : 방 번호에 해당되는 리스트 (json)
   getUserByRoom(param) {
-    return axios.get(`${apiUrl}/user/${param}`).then(async res=>{
+    
+    return axios.post(`${apiUrl}/user/rooms`,{
+      'uid' : param
+    }).then(async res=>{
         let arr = []
+        
         for(let i=0;i<res.data.length;i++){
-          data = {
-            name : await getRoomName(res.data[i]),
-            path : '/chatroom/'+res.data[i]
+          let tmp = await this.getRoomName(res.data[i].rid)
+          let data = {
+            'name' : tmp.data.rname,
+            'path' : '/chatroom/'+res.data[i].rid
           }
           arr.push(data)
         }
+        
         return arr
       })
   },
@@ -147,8 +153,15 @@ export default {
     return axios.post(`${apiUrl}/friend/`, {
       'uid': uid
     }).then(res=>{
-      return res
-    }).then(error=>{
+      let data = []
+      for(let i=0;i<res.data.length;i++){
+        let tmp ={
+          'uid':res.data[i]
+        }
+        data.push(tmp)
+      }
+      return data
+    }).catch(error=>{
       return error
     })
   },
@@ -158,9 +171,9 @@ export default {
       'uid': uid
     }).then(res=>{
       return res
-    }).then(error=>{
+    }).catch(error=>{
       return error
     })
   },
-  
+
 }

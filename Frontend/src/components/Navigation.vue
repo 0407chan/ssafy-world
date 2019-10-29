@@ -1,10 +1,10 @@
 <template>
     <v-layout>
         <v-navigation-drawer v-model="drawer">
-            <v-list dense v-show="checkLogin == 0">
+            <v-list dense v-show="currUser == ''">
                 <BeforeLogin />
             </v-list>
-            <v-list dense v-show="checkLogin == 1">
+            <v-list dense v-show="currUser != ''">
                 <Profile />
                 <v-divider></v-divider>
                 <AfterLogin />
