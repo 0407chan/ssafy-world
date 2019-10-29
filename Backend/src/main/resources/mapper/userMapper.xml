@@ -26,5 +26,10 @@
 		SELECT * FROM user Where uid=#{uid}; 
 	</select>
 	
+	<select id="selectUserRooms" parameterType="String" resultType="RoomDTO">
+		SELECT R.rid, R.rname
+		FROM room R, room_has_user H
+		WHERE H.uid = #{uid} AND R.rid = H.rid;
+	</select>
 
 </mapper>

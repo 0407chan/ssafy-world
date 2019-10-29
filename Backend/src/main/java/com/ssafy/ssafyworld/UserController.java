@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.ssafyworld.dto.RoomDTO;
 import com.ssafy.ssafyworld.dto.UserDTO;
+import com.ssafy.ssafyworld.service.RoomService;
 import com.ssafy.ssafyworld.service.UserService;
 
 /**
@@ -28,7 +30,6 @@ public class UserController {
 
 	@Inject
 	private UserService uService;
-
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	/**
@@ -98,5 +99,25 @@ public class UserController {
 		
 	}
 		
+	
+	/**
+	 * 10-29 : 이규찬
+	 *
+	 * @기능 유저 전체 리스트를 가져옴
+	 * @호출방법 ssafywolrd/userRooms
+	 * @param UserDTO
+	 * @return List<RoomDTO> 
+	 */
+	@RequestMapping(value = "/userRooms", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<List<RoomDTO>> selectUserRooms(@RequestBody UserDTO user) throws Exception {
+		List<RoomDTO> list = uService.selectUserRooms(user.getUid());
+		logger.info("유저가 들어간 방 리스트 출력");
+		try {
+			return ResponseEntity.ok().body(list);
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(null);
+		}
+	}
 	// user/{uid} GET -> 해당 방번호랑 , 방이름
 }
