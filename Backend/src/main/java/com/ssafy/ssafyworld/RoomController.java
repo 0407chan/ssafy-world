@@ -86,16 +86,16 @@ public class RoomController {
 	 * @return Integer
 	 * @throws Exception 
 	 */
-	@RequestMapping(value="/room/delete", method=RequestMethod.POST)
+	@RequestMapping(value="/room/delete", method=RequestMethod.POST, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<String> deleteRoom(@RequestBody RoomDTO room) throws Exception{
 		try {
 			rService.deleteRoom(room.getRid());
 			logger.info(room.getRid()+"번 방 삭제");
-			return ResponseEntity.ok().body("Room Delete");
+			return ResponseEntity.ok().body("방 삭제 완료");
 		} catch (Exception e) {
 			logger.error("방 삭제 실패");
-			return ResponseEntity.badRequest().body("Room Delete Fail");
+			return ResponseEntity.badRequest().body("방 삭제 실패");
 		}
 	}
 }
