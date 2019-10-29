@@ -55,10 +55,10 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/user/info", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<UserDTO> getUserInfo(@RequestBody String uid) throws Exception{
+	public ResponseEntity<UserDTO> getUserInfo(@RequestBody UserDTO user) throws Exception{
 		try {
 			logger.info("유저 정보 출력");
-			return ResponseEntity.ok().body(uService.getUserInfo(uid));
+			return ResponseEntity.ok().body(uService.getUserInfo(user.getUid()));
 		}
 		catch (Exception e) {
 			logger.info("유저 정보 출력 에러");
