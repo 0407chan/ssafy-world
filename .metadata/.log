@@ -8666,3 +8666,156 @@ java.lang.InterruptedException
 !ENTRY org.eclipse.m2e.logback.appender 2 0 2019-10-29 11:43:46.750
 !MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
 >>>>>>> feature/gb04
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-10-29 11:54:06.312
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-10-29 11:54:06.315
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:06.449
+!MESSAGE Preparing classpath changed notification Backend
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:06.450
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:06.451
+!MESSAGE classpath=80 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:06.452
+!MESSAGE buffering callback sts4.classpath.ylmOntXI Backend false 80
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:06.453
+!MESSAGE executing callback sts4.classpath.ylmOntXI 1 batched events
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:06.463
+!MESSAGE executing callback sts4.classpath.ylmOntXI SUCCESS [done]
+
+!ENTRY org.eclipse.wst.server.core 4 0 2019-10-29 11:54:07.430
+!MESSAGE Could not delete C:/Users/multicampus/Desktop/project/SSAFY_WORLD/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/Backend/WEB-INF/lib. May be locked by another process.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-10-29 11:54:08.375
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-10-29 11:54:08.384
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-10-29 11:54:08.388
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:22.858
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.ylmOntXI
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:22.859
+!MESSAGE unsubscribing from classpath changes: sts4.classpath.ylmOntXI
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:22.859
+!MESSAGE subsribers = {}
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:22.859
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.ylmOntXI => OK
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:23.978
+!MESSAGE Entering DelegatingStreamConnectionProvider()
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:23.979
+!MESSAGE DelegatingStreamConnectionProvider classloader = org.eclipse.osgi.internal.loader.EquinoxClassLoader@2981064d[org.springframework.tooling.boot.ls:1.11.0.201909171347(id=632)]
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:23.979
+!MESSAGE SpringBootLanguageServer exists!
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:26.033
+!MESSAGE Boot LS startup time from start to initialized: 2054ms
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:26.053
+!MESSAGE ClasspathListenerHandler addClasspathListener sts4.classpath.DFLjHwMdisBatched = true
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:26.053
+!MESSAGE subscribing to classpath changes: sts4.classpath.DFLjHwMd isBatched = true
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:26.054
+!MESSAGE Setting up ClasspathListenerManager
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:26.054
+!MESSAGE subsribers = {sts4.classpath.DFLjHwMd=Send Classpath Notifications(4105)}
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:26.054
+!MESSAGE Sending initial event for all projects ...
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:26.054
+!MESSAGE project Backend ...
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:26.055
+!MESSAGE project Servers ...
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:26.055
+!MESSAGE Preparing classpath changed notification Backend
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:26.055
+!MESSAGE project Servers SKIPPED
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:26.055
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:26.055
+!MESSAGE Sending initial event for all projects DONE
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:26.056
+!MESSAGE ClasspathListenerHandler addClasspathListener sts4.classpath.DFLjHwMd => OK
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:26.056
+!MESSAGE classpath=80 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:26.057
+!MESSAGE buffering callback sts4.classpath.DFLjHwMd Backend false 80
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:26.058
+!MESSAGE executing callback sts4.classpath.DFLjHwMd 1 batched events
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:54:26.075
+!MESSAGE executing callback sts4.classpath.DFLjHwMd SUCCESS [done]
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-10-29 11:54:34.946
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-10-29 11:54:34.952
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.wst.server.discovery 1 0 2019-10-29 11:56:48.414
+!MESSAGE already installed: org.eclipse.jst.server.generic.jonas4
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:57:00.263
+!MESSAGE Preparing classpath changed notification Backend
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:57:00.263
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:57:00.265
+!MESSAGE classpath=80 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:57:00.266
+!MESSAGE buffering callback sts4.classpath.DFLjHwMd Backend false 80
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:57:00.266
+!MESSAGE executing callback sts4.classpath.DFLjHwMd 1 batched events
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2019-10-29 11:57:00.339
+!MESSAGE executing callback sts4.classpath.DFLjHwMd SUCCESS [done]
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-10-29 11:57:00.784
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-10-29 11:57:00.803
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-10-29 12:21:57.153
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-10-29 12:21:57.165
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-10-29 12:22:07.546
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-10-29 12:22:07.554
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
