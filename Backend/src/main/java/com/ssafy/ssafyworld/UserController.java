@@ -101,21 +101,21 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
 	@ResponseBody
-	public void login(@RequestBody UserDTO user) throws Exception {
+	public ResponseEntity<String> login(@RequestBody UserDTO user) throws Exception {
 
 		UserDTO resultUser = uService.getUser(user);
 		if (resultUser == null) {
 			logger.error("없는 유저");
 			ResponseEntity.badRequest().body("");
-			return;
+			return ResponseEntity.badRequest().body("존재하지 않는 아이디 입니다.");
 		}
 		if (!BCrypt.checkpw(user.getPassword(), resultUser.getPassword())) {
 			logger.error("로그인 실패");
-			ResponseEntity.badRequest();
-			return;
+			
+			return ResponseEntity.badRequest().body("비밀번호가 일치하지 않습니다.");
 		}
 		logger.info("로그인 성공");
-		ResponseEntity.ok().body(uService.getUser(user));
+		return ResponseEntity.ok().body(uService.getUser(user).toString());
 	}
 		
 	

@@ -12,13 +12,13 @@ Vue.config.productionTip = false
 Vue.config.devtools = true
 
 Vue.use(directives)
+Vue.use(VueSession)
 
 new Vue({
   el: '#app',
   router,
   store,
   vuetify,
-  VueSession,
   render: h => h(App),
   components: { App },
   template: '<App />'

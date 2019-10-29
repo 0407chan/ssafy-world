@@ -4,13 +4,10 @@ import api from '@/api'
 const state = {
   currentNavigation: 0,
   currentContent: 0,
-  userLoginToken:'',
-  userLoginPassword:'',
-  checkLogin:0,
   friend : false,
   chatlist : false,
 
-  currUser:[],
+  currUser: '',
 }
 
 // actions
@@ -18,15 +15,8 @@ const actions = {
 
   async login({ commit }, params) {
     return api.login(params).then(res =>{
-      console.log(res)
       if(res.status == '200'){
-        state.userLoginToken = params.id
-        state.userLoginPassword = params.pw
-        state.checkLogin=1
-        sessionStorage.setItem('id',params.id)
-        sessionStorage.setItem('pw',params.pw)
-        state.currUser.id = params.id
-        state.currUser.name= params.name
+        state.currUser = res.data;
       }
       return res
     });
@@ -54,7 +44,7 @@ const actions = {
 // mutations
 const mutations = {
 
-  
+
   reverse(state,string){
     if(string=='friend')
       state.friend=!state.friend

@@ -1,4 +1,5 @@
-DROP SCHEMA ssafyworld ;
+DROP SCHEMA IF EXISTS ssafyworld ;
+
 CREATE SCHEMA IF NOT EXISTS `ssafyworld` DEFAULT CHARACTER SET utf8 ;
 USE `ssafyworld` ;
 -- -----------------------------------------------------
