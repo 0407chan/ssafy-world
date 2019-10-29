@@ -6,7 +6,20 @@ public class UserDTO implements Serializable{
 	private String uid;
 	private String uname;
 	private String password;
-	
+	private String img;
+	private int staff;
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
+	public int getStaff() {
+		return staff;
+	}
+	public void setStaff(int staff) {
+		this.staff = staff;
+	}
 	public String getUid() {
 		return uid;
 	}
@@ -30,15 +43,20 @@ public class UserDTO implements Serializable{
 		super();
 	}
 	
-	public UserDTO(String uid, String uname, String password) {
+	public UserDTO(String uid, String uname, String password,String img, int staff) {
 		super();
 		this.setUid(uid);
 		this.setUname(uname);
 		this.setPassword(password);
+		this.setImg(img);
+		this.setStaff(staff);
 	}
+	
+	
 	@Override
 	public String toString() {
-		return "UserDTO [uid=" + uid + ", uname=" + uname + ", password=" + password + "]";
+		return "UserDTO [uid=" + uid + ", uname=" + uname + ", password=" + password + ", img=" + img + ", staff="
+				+ staff + "]";
 	}
 	@Override
 	public int hashCode() {

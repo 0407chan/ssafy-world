@@ -123,11 +123,11 @@ public class UserController {
 	 * 10-29 : 이규찬
 	 *
 	 * @기능 유저 전체 리스트를 가져옴
-	 * @호출방법 ssafywolrd/userRooms
+	 * @호출방법 ssafywolrd/user/rooms
 	 * @param UserDTO
 	 * @return List<RoomDTO> 
 	 */
-	@RequestMapping(value = "/userRooms", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/rooms", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<List<RoomDTO>> selectUserRooms(@RequestBody UserDTO user) throws Exception {
 		List<RoomDTO> list = uService.selectUserRooms(user.getUid());
