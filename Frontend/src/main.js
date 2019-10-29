@@ -7,11 +7,13 @@ import directives from '@/plugins/directives'
 import VueSession from 'vue-session'
 import '@/plugins/socket'
 import '@/assets/_common.scss'
+import VueChatScroll from 'vue-chat-scroll'
 
 Vue.config.productionTip = false
 Vue.config.devtools = true
 
 Vue.use(directives)
+Vue.use(VueChatScroll)
 
 new Vue({
   el: '#app',

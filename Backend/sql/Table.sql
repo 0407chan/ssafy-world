@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `ssafyworld`.`user` (
 -- Table `ssafyworld`.`room`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ssafyworld`.`room` (
-  `rid` INT NOT NULL AUTO_INCREMENT,
+  `rid` INT AUTO_INCREMENT,
   `rname` VARCHAR(20) NULL,
   PRIMARY KEY (`rid`));
 

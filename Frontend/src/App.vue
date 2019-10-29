@@ -95,11 +95,11 @@ export default {
       first : 0,
     }
   },
-  computed :{  
+  computed :{
     ...mapState('data',['userLoginToken:','userLoginPassword','checkLogin','friend','chatlist']),
-  },  
+  },
   created(){
-    let params = { 
+    let params = {
       'id' : sessionStorage.getItem('id'),
       'pw' : sessionStorage.getItem('pw')
     }
