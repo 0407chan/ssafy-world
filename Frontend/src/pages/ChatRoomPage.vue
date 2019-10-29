@@ -1,9 +1,9 @@
 <template>
   <v-container fluid>
-    <v-layout row >
+    <v-layout row>
       <!-- <div class="message" v-for="(message,index) in msgs" :class="{own: message.from.name == username}"> -->
       <v-col cols="12" id="messageBody" class="scrollable" no-gutters>
-        <v-flex class="message-line" v-for="(message,index) in msgDatas" >
+        <v-flex class="message-line" v-for="(message, index) in msgDatas">
           <v-col no-gutters>
             <v-row align="center">
               <div>
@@ -51,6 +51,7 @@
 <script>
 import { mapMutations, mapState, mapActions } from 'vuex'
 import Constant from '@/Constant'
+
 export default {
   name: 'ChatRoomPage',
   data() {
@@ -67,20 +68,12 @@ export default {
     ...mapState('data',['userLoginToken' , 'userLoginPassword'])
   },
   mounted() {
-    if (this.userLoginToken==''||this.userLoginPassword=='')
-      this.$router.push({ name: 'main' })
-
     const $ths = this
     this.$socket.on('/chatroom', (data) => {
       var today = new Date(data.time);
       data.time = today;
       this.pushMsgData(data)
-      // $ths.datas.push(data)
     });
-  },
-  beforeupdated(){
-    if (this.userLoginToken==''||this.userLoginPassword=='')
-      this.$router.push({ name: 'main' })
   },
   methods: {
     ...mapMutations({

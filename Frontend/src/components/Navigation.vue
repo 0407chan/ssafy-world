@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Profile from '@/components/navigations/profile/Profile'
 import BeforeLogin from '@/components/navigations/BeforeLogin'
 import AfterLogin from '@/components/navigations/AfterLogin'
@@ -31,6 +32,11 @@ export default {
             drawer: true,
             checkLogin: 0,
         }
-    }
+    },
+    computed: {
+        ...mapState({
+            currUser: state => state.data.currUser,
+        }),
+    },
 };
 </script>

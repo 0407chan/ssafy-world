@@ -81,9 +81,6 @@ export default {
       pw:'',
     },
   }),
-  mounted() {
-    console.log("상태확인");
-  },
   computed:{
     idLen() {
       return this.user.id.length;
@@ -155,7 +152,7 @@ export default {
           this.getUser();
           this.getUserInfo();
           await this.postMatrix()
-          this.$router.push({name:'main'});
+          this.$router.push({ name: 'login' });
           const Toast = Swal.mixin({
               toast: true,
               position: 'bottom-end',

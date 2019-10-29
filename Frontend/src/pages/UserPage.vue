@@ -56,7 +56,7 @@
 import {mapState,mapActions} from "vuex";
 import axios from "axios";
 import Swal from 'sweetalert2'
-import UpdateInfo from '@/components/mypage/UpdateInfo'
+import UpdateInfo from '@/components/user/UpdateInfo'
 
 export default {
   props: {

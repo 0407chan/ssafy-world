@@ -28,7 +28,7 @@ export default {
   },
   computed:{
     //userLogintoken 부분 수정 해야함
-    ...mapState('data',['userLoginToken' , 'userLoginPassword','chatlist',"chatroomList"]),
+    ...mapState('data',['chatlist', "chatroomList"]),
     ...mapState('socket',['msgDatas'])
   },
   mounted(){
