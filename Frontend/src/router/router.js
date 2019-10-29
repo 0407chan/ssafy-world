@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import MainPage from "@/pages/MainPage.vue"
 import RegisterPage from "@/pages/RegisterPage.vue"
 import ChatRoomPage from "@/pages/ChatRoomPage.vue"
-import MyPage from "@/pages/MyPage.vue"
+import UserDetail from "@/pages/UserDetail.vue"
 
 Vue.use(Router)
 
@@ -26,9 +26,9 @@ export default new Router({
             component: ChatRoomPage
         },
         {
-            path: '/mypage',
-            name: 'mypage',
-            component: MyPage
+            path: '/userDetail',
+            name: 'userDetail',
+            component: UserDetail
         },
     ]
 })

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.ssafyworld.dto.MessageDTO;
 import com.ssafy.ssafyworld.dto.RoomDTO;
 import com.ssafy.ssafyworld.service.MessageService;
 import com.ssafy.ssafyworld.service.RoomService;
@@ -35,6 +34,21 @@ public class RoomController {
 	private static final Logger logger = LoggerFactory.getLogger(RoomController.class);
 
 	/**
+	 * 10-28 : 박규빈 			 
+	 * @기능 로그인
+	 * @호출방법 ssafywolrd/room
+	 * @param X
+	 * @return List<RoomDTO>
+	 */
+
+	@RequestMapping(value = "/room", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<List<RoomDTO>> selectRooms() throws Exception {
+		logger.info("전체 방 출력");
+		return new ResponseEntity<List<RoomDTO>>(rService.selectRooms(),HttpStatus.OK);
+	}
+	
+	/**
 	 * 10-18 : 박규빈 			10-24 수정 : 이규찬 
 	 * @기능 로그인
 	 * @호출방법 ssafywolrd/room/{rid}
@@ -44,11 +58,9 @@ public class RoomController {
 
 	@RequestMapping(value = "/room/{rid}", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<Integer>selectRoomAllMessage(@PathVariable("rid") int rid) throws Exception {
-		System.out.println(rid);
-		System.out.println("방 선택 완료!");
-		
-		return  new ResponseEntity<Integer>(rid,HttpStatus.OK);
+	public ResponseEntity<RoomDTO>selectRoom(@PathVariable("rid") int rid) throws Exception {
+		logger.info(rid+"방 선택 완료");
+		return new ResponseEntity<RoomDTO>(rService.selectRoom(rid),HttpStatus.OK);
 	}
 	
 	/**
@@ -61,11 +73,11 @@ public class RoomController {
 	 */
 	@RequestMapping(value="/room/create", method=RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Integer> createRoom(@RequestBody RoomDTO roomdto) throws Exception {
-		System.out.println("createRoom");
-		System.out.println(roomdto.getRname());
-		return new ResponseEntity<Integer>(rService.createRoom(roomdto.getRname()),HttpStatus.OK);
+	public ResponseEntity<Integer> createRoom(@RequestBody RoomDTO room) throws Exception {
+		logger.info(room.getRname()+" 방 생성");
+		return new ResponseEntity<Integer>(rService.createRoom(room.getRname()),HttpStatus.OK);
 	}
+	
 	/**
 	 * 10-24 : 이규찬 
 	 * @기능 방삭제
@@ -76,16 +88,14 @@ public class RoomController {
 	 */
 	@RequestMapping(value="/room/delete", method=RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<String> deleteRoom(@RequestBody RoomDTO roomdto) throws Exception{
-		RoomDTO roomdto1 = rService.selectRoom(roomdto.getRid());
+	public ResponseEntity<String> deleteRoom(@RequestBody RoomDTO room) throws Exception{
 		try {
-			rService.deleteRoom(roomdto1.getRid());
-			System.out.println("deleteRoom");
-			return new ResponseEntity<String>("Room delete!",HttpStatus.OK);
+			rService.deleteRoom(room.getRid());
+			logger.info(room.getRid()+"번 방 삭제");
+			return new ResponseEntity<String>("Room Delete",HttpStatus.OK);
 		} catch (Exception e) {
-			System.out.println("deleteRoom Fail!");
-			return new ResponseEntity<String>("Room delete Fail!",HttpStatus.BAD_REQUEST);
+			logger.error("방 삭제 실패");
+			return new ResponseEntity<String>("Room Delete Fail",HttpStatus.BAD_REQUEST);
 		}
-		
 	}
 }

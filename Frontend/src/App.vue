@@ -17,6 +17,7 @@
       </v-list>
 
       <v-list dense v-show="checkLogin == 1">
+<<<<<<< HEAD
         <v-img :aspect-ratio="16/9" src="https://cdn.vuetifyjs.com/images/parallax/material.jpg">
           <v-list-item>
             <v-row align="end" class="lightbox white--text pa-2 fill-height">
@@ -26,6 +27,12 @@
                 </v-list-item-avatar>
               </v-col>
             </v-row>
+=======
+        <v-list-item @click="() => {goTo('userDetail')}">
+          <v-list-item-avatar>
+            <v-img src="https://randomuser.me/api/portraits/women/75.jpg"></v-img>
+          </v-list-item-avatar>
+>>>>>>> 488e0ab5cb22859942017a71fb964c00f525a467
           <v-btn @click="logout">로그아웃</v-btn>
         </v-list-item>
       </v-img>
@@ -50,7 +57,7 @@
     <v-content>
       <router-view />
     </v-content>
-    
+
   </v-app>
 </template>
 
@@ -81,32 +88,41 @@ export default {
       first : 0
     }
   },
-  mounted() {
-    this.$store.state.data.userLoginToken = sessionStorage.getItem('uid')
-    console.log(sessionStorage.getItem('uid'))
-  },
-  computed :{  
+  computed :{
     ...mapState('data',['userLoginToken:','userLoginPassword','checkLogin']),
-    // first : function() {
-    //   if (this.userLoginToken == '' || this.userLoginPassword==null)
-    //     return 0;
-    //   else
-    //     return 1;
-    // },
-  },  
+  },
   mounted(){
-    let params = { 
+    let params = {
       'id' : sessionStorage.getItem('id'),
       'pw' : sessionStorage.getItem('pw')
     }
     console.log(params);
-    
-    this.login(params).then(res=>{
-      console.log(res.data);
-      if(res.data==='LOGIN SUCCESS'){
-        this.$router.push({name : 'chatroom'})
+
+    //이미 접속한 이력이 있을 경우
+    this.$socket.on('check',(data)=>{
+      console.log(data.msg)
+      if(data.msg==='already connect'){
+        if(confirm("이미 접속한 브라우져가 존재합니다. \n 지금 브라우져를 사용하시겠습니까?")){
+          this.$socket.emit('change',{
+            msg : 'yes'
+          })
+        }else{
+          this.$socket.emit('change',{
+            msg : 'no'
+          })
+        }
       }
     })
+    this.$socket.on('disc',(data)=>{
+      this.$socket.disconnect()
+    })
+
+    if(params.id !=null && params.pw != null)
+      this.login(params).then(res=>{
+        if(res.data==='LOGIN SUCCESS'){
+          this.$router.push({name : 'chatroom'})
+        }
+      })
 
     //로그인 여부 확인
     if (this.userLoginToken == '' || this.userLoginPassword=='')
@@ -117,7 +133,7 @@ export default {
   methods: {
     ...mapMutations('data',['setMenu','clearUser']),
     goTo(path) {
-      console.log(path); 
+      console.log(path);
       this.$router.push({ name: path });
     },
 
@@ -128,8 +144,8 @@ export default {
       sessionStorage.removeItem('id')
       sessionStorage.removeItem('pw')
       console.log("check");
-      
-      
+
+
       this.$router.push({ name: 'main' });
     },
   },
