@@ -6,7 +6,6 @@ const state = {
   currentContent: 0,
   friend : false,   // user가 가지고 있는 친구 목록 토글 (실시간 동기화 때문에 VueX 사용)
   chatlist : false, // user가 가지고 있는 단체방 목록 토글 (실시간 동기화 때문에 VueX 사용)
-  checkLogin : 0, // 내비게이션 바 조절
   friendList : [],  // user가 가지고 있는 친구 목록
   chatroomList : [],  // user가 접속해있는 단체방 목록
   currUser: '',
@@ -19,7 +18,6 @@ const actions = {
     return api.login(params).then(res =>{
       if(res.status == '200'){
         state.currUser = res.data;
-        state.checkLogin = 1;
         console.log(state.currUser);
 
         actions.registFriend()

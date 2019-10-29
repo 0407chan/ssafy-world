@@ -1,7 +1,7 @@
 <template>
   <v-app xs12>
     <v-navigation-drawer v-model="drawer" app>
-      <v-list dense v-show="currUser !=''">
+      <v-list dense v-show="currUser ==''">
         <template v-for="(item, i) in beforeLoginItems">
           <v-list-item :key="i" @click="() => { if (item.path) { goTo(item.path) } }">
             <v-list-item-action>
@@ -151,7 +151,7 @@ export default {
       if (this.$session.has("token")) {
         console.log("있다")
         this.$session.destroy();
-        this.$store.state.currUser = ''
+        this.$store.state.data.currUser = ''
       }
       console.log("check");
       this.$router.push({ name: 'login' });
