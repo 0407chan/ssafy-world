@@ -1,3 +1,4 @@
+DROP SCHEMA ssafyworld ;
 CREATE SCHEMA IF NOT EXISTS `ssafyworld` DEFAULT CHARACTER SET utf8 ;
 USE `ssafyworld` ;
 -- -----------------------------------------------------
@@ -8,6 +9,7 @@ CREATE TABLE IF NOT EXISTS `ssafyworld`.`user` (
   `uname` VARCHAR(10) NOT NULL,
   `password` VARCHAR(500) NOT NULL,
   `img` VARCHAR(100) , 
+  `staff` INT(1) default 0,
   PRIMARY KEY (`uid`));
 -- -----------------------------------------------------
 -- Table `ssafyworld`.`room`
@@ -40,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `ssafyworld`.`friend` (
 CREATE TABLE IF NOT EXISTS `ssafyworld`.`message` (
   `mid` INT AUTO_INCREMENT,
   `text` VARCHAR(200) NULL,
-  `sendtime` DATETIME NULL,
+  `time` DATETIME NULL,
   `uid` VARCHAR(50) NOT NULL,
   `rid` INT NOT NULL,
   PRIMARY KEY (`mid`),

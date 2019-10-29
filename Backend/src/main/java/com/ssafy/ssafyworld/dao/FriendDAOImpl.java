@@ -23,6 +23,13 @@ public class FriendDAOImpl implements FriendDAO {
 		List<FriendDTO> list=sqlSession.selectList(Namespace+".selectFriends");
     	return list;
 	}
+	
+	  
+	@Override
+	public List<String> selectFriend(String uid) throws Exception {
+		List<String> list=sqlSession.selectList(Namespace+".selectFriend",uid);
+    	return list;
+	}
 
 	@Override
 	public int addFriend(FriendDTO friend) throws Exception {

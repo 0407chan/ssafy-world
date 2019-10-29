@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.ssafyworld.dto.FriendDTO;
-import com.ssafy.ssafyworld.dto.RoomDTO;
 import com.ssafy.ssafyworld.service.FriendService;
 
 /**
@@ -37,33 +37,82 @@ public class FriendController {
 	 * @기능 전체 친구
 	 * @호출방법 ssafywolrd/friend/
 	 * @param X
-	 * @return List<MessageDTO>
+	 * @return List<FriendDTO>
 	 */
 	@RequestMapping(value = "/friend", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<List<FriendDTO>> selectFriends() throws Exception {
 		logger.info("전체 친구 출력");
-		return new ResponseEntity<List<FriendDTO>>(fService.selectFriends(),HttpStatus.OK);
+		return ResponseEntity.ok().body(fService.selectFriends());
 	}
 	
 	/**
-	 * 10-24 : 이규찬 
-	 * @기능 방삭제
-	 * @호출방법 ssafywolrd/room/delete
+	 * 10-28 : 박규빈 
+	 * @기능 uid 해당하는 친구 리스트
+	 * @호출방법 ssafywolrd/friend
+	 * @param uid
+	 * @return List<FriendDTO>
+	 */
+	@RequestMapping(value = "/friend", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<List<String>> selectFriend(@RequestBody FriendDTO friend) throws Exception {
+		logger.info("UID 해당 친구 출력");
+		System.out.println(friend);
+		return ResponseEntity.ok().body(fService.selectFriend(friend.getUid()));
+	}
+	
+	/**
+	 * 10-28 : 박규빈 
+	 * @기능 친구삭제
+	 * @호출방법 ssafywolrd/friend/delete
 	 * @param friend
-	 * @return X
+	 * @return 200 OK 400 BAD REQUEST
 	 * @throws Exception 
 	 */
 	@RequestMapping(value="/friend/delete", method=RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<String> deleteFriend(@RequestBody FriendDTO friend) throws Exception{
+		String person1 = friend.getUid();
+		String person2 = friend.getFriend();
+		FriendDTO temp = new FriendDTO(0,person2,person1);
+		System.out.println(temp);
 		try {
 			fService.deleteFriend(friend);
+			fService.deleteFriend(temp);
 			logger.info("친구 삭제 완료");
-			return new ResponseEntity<String>("Friend Delete",HttpStatus.OK);
+			return ResponseEntity.ok().body("Friend Delete");
 		} catch (Exception e) {
-			logger.info("친구 삭제 완료");
-			return new ResponseEntity<String>("Friend Delete Fail",HttpStatus.BAD_REQUEST);
+			logger.info("친구 삭제 실패");
+			return ResponseEntity.badRequest().body("Friend Delete");
 		}
 	}
+	
+	/**
+	 * 10-28 : 박규빈 
+	 * @기능 친구추가
+	 * @호출방법 ssafywolrd/friend/add
+	 * @param friend
+	 * @return 200 OK 400 BAD REQUEST
+	 * @throws Exception 
+	 */
+	@RequestMapping(value="/friend/add", method=RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<String> addFriend(@RequestBody FriendDTO friend) throws Exception{
+		String person1 = friend.getUid();
+		String person2 = friend.getFriend();
+		FriendDTO temp = new FriendDTO(0,person2,person1);
+		System.out.println(temp);
+		try {
+			fService.addFriend(friend);
+			fService.addFriend(temp);
+			logger.info("친구 추가 완료");
+			return ResponseEntity.ok().body("Friend Add");
+		} catch (Exception e) {
+			logger.info("친구 추가 실패");
+			return ResponseEntity.badRequest().body("Friend Add Fail");
+		}
+	}
+	
+	
+	
 }

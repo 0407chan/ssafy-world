@@ -4,6 +4,14 @@ public class FriendDTO {
 	private int fid;
 	private String uid;
 	private String friend;
+	
+	public FriendDTO(int fid, String uid, String friend) {
+		super();
+		this.fid = fid;
+		this.uid = uid;
+		this.friend = friend;
+	}
+	
 	public int getFid() {
 		return fid;
 	}
