@@ -1,7 +1,5 @@
 <template>
   <v-app xs12>
-    <div>
-    </div>
     
     <v-navigation-drawer v-model="drawer" app>
       <v-list dense v-show="checkLogin == 0">
@@ -116,12 +114,12 @@ export default {
       this.$socket.disconnect()
     })
 
-    if(params.id !=null && params.pw != null)
-      this.login(params).then(res=>{
-        if(res.status=='200'){
-          this.$router.push({name : 'chatroom'})
-        }
-      })
+    // if(params.id !=null && params.pw != null)
+    //   this.login(params).then(res=>{
+    //     if(res.status=='200'){
+    //       this.$router.push({name : 'chatroom'})
+    //     }
+    //   })
   },
   methods: {
     ...mapMutations('data',['setMenu','clearUser','reverse']),

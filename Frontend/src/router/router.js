@@ -27,7 +27,7 @@ export default new Router({
         },
         {
             path: '/chatroom/:id',
-            name: 'chatroomid',
+            name: 'selectroom',
             component: ChatRoomPage
         },
         {
