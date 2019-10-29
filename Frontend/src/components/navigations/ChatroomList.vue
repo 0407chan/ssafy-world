@@ -1,14 +1,14 @@
 <template>
-  <div v-show="friend">
+  <div v-show="chatlist">
     <v-list v-for="i in items">
       <v-list-item @click="goTo(i.path)">
-        <v-list-item-title >
-          {{ i.uid }}
+        <v-list-item-title>
+          {{ i.name }}
         </v-list-item-title>
       </v-list-item>
     </v-list>
     <v-list>
-      <v-list-item @click="addFriend">
+      <v-list-item @click="addChatroom">
         <v-list-item-title>
           추가 하기
         </v-list-item-title>
@@ -22,7 +22,7 @@ import { mapActions, mapState, mapMutations } from 'vuex';
 import api from '@/api'
 
 export default {
-  name: 'FriendList',
+  name: 'ChatroomList',
   components: {
 
   },
@@ -33,30 +33,26 @@ export default {
   },
   computed:{
     //userLogintoken 부분 수정 해야함
-    ...mapState('data',['userLoginToken' , 'userLoginPassword','friend'])
+    ...mapState('data',['userLoginToken' , 'userLoginPassword','chatlist'])
   },
   mounted(){
-    api.postFriend(sessionStorage.getItem('id')).then(res=>{
-
-      for(let i=0;i<res.data.length;i++){
-        this.items.push({
-          'uid' : res.data[i],
-        });
-      }
-      console.log(res);
-      
-    }).catch(error=>{
-      console.log("test");
-      
-    });
-    
+    // this.api.getUserByRoom(this.userLoginToken).then(res=>{
+    //   items.push(res.data);
+    // })
+    // this.items.push({
+    //   'name': 'test',
+    //   'path': '/chatroom/1'
+    // })
   },
   methods :{
-    addFriend(){
-      console.log("친구 추가 구현해야함");
+    addChatroom(){
+      console.log("구현해야함");
+    },
+    goTo(rid){
+      console.log(rid);
       
+      this.$router.push(rid)
     }
-
   }
 };
 </script>
@@ -64,7 +60,6 @@ export default {
 <style scoped>
   .navigation {
     background: rgba(0, 0, 0, 0);
-    display: inline-block;
   }
   .menu {
     margin-top: 50px;

@@ -15,6 +15,6 @@
 	</select>
 	
 	<insert id="insertMessage" parameterType="MessageDTO">
-		INSERT INTO message (rid,text,sendtime,uid) VALUES (#{rid},#{text},#{sendtime},#{uid});
+		INSERT INTO message (rid,text,time,uid) VALUES (#{rid},#{text},#{time},#{uid});
 	</insert>
 </mapper>

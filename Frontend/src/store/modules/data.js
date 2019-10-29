@@ -7,6 +7,8 @@ const state = {
   userLoginToken:'',
   userLoginPassword:'',
   checkLogin:0,
+  friend : false,
+  chatlist : false,
 
   currUser:[],
 }
@@ -55,6 +57,14 @@ const actions = {
 
 // mutations
 const mutations = {
+
+  
+  reverse(state,string){
+    if(string=='friend')
+      state.friend=!state.friend
+    else
+      state.chatlist=!state.chatlist
+  },
 
   setClusterList(state, ratings) {
     state.ratingList = ratings.map(m => m)

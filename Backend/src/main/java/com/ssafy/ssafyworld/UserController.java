@@ -87,15 +87,16 @@ public class UserController {
 		UserDTO resultUser = uService.getUser(user);
 		if (resultUser == null) {
 			logger.error("없는 유저");
-			ResponseEntity.badRequest();
+			ResponseEntity.badRequest().body("");
+			return;
 		}
 		if (!BCrypt.checkpw(user.getPassword(), resultUser.getPassword())) {
 			logger.error("로그인 실패");
 			ResponseEntity.badRequest();
+			return;
 		}
 		logger.info("로그인 성공");
 		ResponseEntity.ok().body(uService.getUser(user));
-		
 	}
 		
 	// user/{uid} GET -> 해당 방번호랑 , 방이름
