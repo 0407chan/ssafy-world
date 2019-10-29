@@ -6,11 +6,9 @@
           <v-row justify="center">
             <v-card width="300px" color="rgba(255, 255, 255, 0.8)" style="margin: 0 1%">
               <v-row justify="center">
-                <v-col cols="12" v-if="isModify">
+                <v-col cols="12">
                   <v-row justify="center">
-                    <v-img :src="modiImage"
-                      aspect-ratio="1.8" contain >
-                    </v-img>
+                    <v-img :src="modiImage" aspect-ratio="1.8" contain></v-img>
                   </v-row>
                   <v-row justify="center" style="width:290px; margin: auto">
                     <v-text-field
@@ -29,61 +27,19 @@
                     />
                   </v-row>
                 </v-col>
-                <v-col cols="12" v-else style="margin-top: 5%">
-                  <!-- <v-img v-if="UserList[0] && UserList[0].image" :src="UserList[0].image"
-                    aspect-ratio="1.8" contain >
-                  </v-img> -->
-                </v-col>
-
               </v-row>
             </v-card>
-            <v-card width="300px" color="rgba(255, 255, 255, 0.8)" style="margin: 0 1%">
-              <v-flex xs12 ma-3 v-if="isModify">
-                <v-text-field  v-model="modiName"
-                  label="이름" hide-details filled
-                ></v-text-field>
-                <v-select v-model="modiGender" :items="genders"
-                  item-text="text" item-value="value" label="Gender*" hide-details filled/>
-                <v-select v-model="modiAge" :items="ages"
-                  item-text="text" item-value="value" label="Age*" hide-details filled/>
-                <v-select v-model="modiJob" :items="occupations"
-                  label="Occupation*" hide-details filled/>
-              </v-flex>
-              <v-flex xs12 ma-3 v-else>
-                <!-- <v-text-field v-if="UserList[0]" v-model="UserList[0].username"
-                  label="이름" hide-details readonly
-                ></v-text-field>
-                <v-text-field v-if="UserList[0]" v-model="UserList[0].gender"
-                  label="성별" hide-details readonly
-                ></v-text-field>
-                <v-text-field v-if="UserList[0]" v-model="UserList[0].age"
-                  label="나이" hide-details readonly
-                ></v-text-field>
-                <v-text-field v-if="UserList[0]" v-model="UserList[0].occupation"
-                  label="직업" hide-details readonly
-                ></v-text-field> -->
-              </v-flex>
-              <v-flex xs12 ma-3 v-if="isModify">
-                <v-row justify="center">
-                  <v-btn :color="index" rounded v-on:click="modifyAction" style="margin: 1% 1%">
-                    <span class="btnStyle">
-                      수정
-                    </span>
-                  </v-btn>
-                  <v-btn rounded v-on:click="modifyActivate" style="margin: 0 1%">
-                    취소
-                  </v-btn>
-                </v-row>
-              </v-flex>
-              <v-flex xs12 ma-3 v-else-if="!isModify && id == user.user_id">
-                <v-row justify="center">
-                  <v-btn :color="index" rounded v-on:click="modifyActivate">
-                    <span class="btnStyle">
-                      프로필 변경
-                    </span>
-                  </v-btn>
-                </v-row>
-              </v-flex>
+            <v-card style="width: 35%;">
+              <v-card-title style="margin: 20px;">
+                회 원 정 보
+              </v-card-title>
+                <v-data-table
+    :headers="headers"
+    :items="desserts"
+    hide-default-header
+    hide-default-footer
+    class="elevation-1"
+  />
             </v-card>
           </v-row>
         </v-col>
@@ -108,6 +64,7 @@
 import {mapState,mapActions} from "vuex";
 import axios from "axios";
 import Swal from 'sweetalert2'
+
 export default {
   props: {
     id: 0
@@ -127,18 +84,50 @@ export default {
       imageName:'',
       dday:'',
 
+      headers: [
+          {
+            align: 'center',
+            value: 'name',
+          },
+          { value: 'context' },
+        ],
+        desserts: [
+          {
+            name: '이름',
+            value: '',
+          },
+          {
+            name: '등급',
+            value: '',
+          },
+          {
+            name: '아이디',
+            value: '',
+          },
+          {
+            name: '비밀번호',
+            value: '',
+          },
+        ],
     }
   },
-
   computed: {
     ...mapState({
 
     }),
   },
   mounted() {
-
+    this.getUserInfoAction()
   },
   methods: {
+
+    ...mapActions("data", ['getUserInfo']),
+    async getUserInfoAction() {
+
+      console.log("규빈" + this.getUserInfo(this.$store));
+      var user = await this.getUserInfo(userLoginToken);
+      this.desserts[0].value = user.uid;
+    },
 
     /* 2019.10.08 이찬호
     * 프로필 수정 할 수 있게 된다.

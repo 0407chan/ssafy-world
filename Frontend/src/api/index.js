@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const apiUrl = 'http://localhost:8080/ssafyworld';
+const apiUrl = 'http://localhost:8081/ssafyworld';
 //const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
 //const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
 
@@ -10,6 +10,19 @@ export default {
     return axios.get(`${apiUrl}/user`)
   },
 
+  getUserInfo(params) {
+    return axios.post(`${apiUrl}/user/info`, {
+      uid: params.id,
+    }).then(response => {
+      return response
+    })
+    .catch(error => {
+      console.log(error);
+      return error.response
+    });
+  },
+
+
   /** 2019.10.18 이찬호
   * 기능 : 로그인
   * 파라미터 : params = uid, password
@@ -18,8 +31,8 @@ export default {
   login(params) {
     console.log("index",params);
     return axios.post(`${apiUrl}/user/login`, {
-      uid:params.id,
-      password:params.pw,
+      uid: params.id,
+      password: params.pw,
     }).then(response => {
       return response
     })

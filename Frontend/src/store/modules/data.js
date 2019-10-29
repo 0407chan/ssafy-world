@@ -39,6 +39,10 @@ const actions = {
     const resp = await api.getUser()
   },
 
+  async getUserInfo({ commit }, params) {
+    const resp = await api.getUserInfo(params)
+  },
+
   async getUser({ commit }, params) {
     const resp = await api.getUser()
   },
