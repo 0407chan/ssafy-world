@@ -49,7 +49,7 @@ public class FriendController {
 	/**
 	 * 10-24 : 이규찬 
 	 * @기능 방삭제
-	 * @호출방법 ssafywolrd/room/delete
+	 * @호출방법 ssafywolrd/friend/delete
 	 * @param friend
 	 * @return X
 	 * @throws Exception 

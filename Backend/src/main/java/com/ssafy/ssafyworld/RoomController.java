@@ -45,7 +45,7 @@ public class RoomController {
 	@ResponseBody
 	public ResponseEntity<List<RoomDTO>> selectRooms() throws Exception {
 		logger.info("전체 방 출력");
-		return new ResponseEntity<List<RoomDTO>>(rService.selectRooms(),HttpStatus.OK);
+		return ResponseEntity.ok().body(rService.selectRooms());
 	}
 	
 	/**
@@ -60,7 +60,7 @@ public class RoomController {
 	@ResponseBody
 	public ResponseEntity<RoomDTO>selectRoom(@PathVariable("rid") int rid) throws Exception {
 		logger.info(rid+"방 선택 완료");
-		return new ResponseEntity<RoomDTO>(rService.selectRoom(rid),HttpStatus.OK);
+		return ResponseEntity.ok().body(rService.selectRoom(rid));
 	}
 	
 	/**
@@ -75,7 +75,7 @@ public class RoomController {
 	@ResponseBody
 	public ResponseEntity<Integer> createRoom(@RequestBody RoomDTO room) throws Exception {
 		logger.info(room.getRname()+" 방 생성");
-		return new ResponseEntity<Integer>(rService.createRoom(room.getRname()),HttpStatus.OK);
+		return ResponseEntity.ok().body(rService.createRoom(room.getRname()));
 	}
 	
 	/**
@@ -92,10 +92,10 @@ public class RoomController {
 		try {
 			rService.deleteRoom(room.getRid());
 			logger.info(room.getRid()+"번 방 삭제");
-			return new ResponseEntity<String>("Room Delete",HttpStatus.OK);
+			return ResponseEntity.ok().body("Room Delete");
 		} catch (Exception e) {
 			logger.error("방 삭제 실패");
-			return new ResponseEntity<String>("Room Delete Fail",HttpStatus.BAD_REQUEST);
+			return ResponseEntity.badRequest().body("Room Delete Fail");
 		}
 	}
 }
