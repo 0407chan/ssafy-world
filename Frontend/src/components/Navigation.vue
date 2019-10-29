@@ -1,6 +1,6 @@
 <template>
     <v-layout>
-        <v-navigation-drawer v-model="drawer">
+        <v-navigation-drawer v-model="drawer" app>
             <v-list dense v-show="currUser == ''">
                 <BeforeLogin />
             </v-list>
@@ -10,7 +10,7 @@
                 <AfterLogin />
             </v-list>
         </v-navigation-drawer>
-        <v-btn @click="drawer = !drawer"></v-btn>
+        <v-btn @click="drawer = !drawer" ></v-btn>
     </v-layout>
 </template>
 

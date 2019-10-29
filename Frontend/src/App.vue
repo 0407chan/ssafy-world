@@ -9,6 +9,7 @@
 
 <script>
 import Navigation from '@/components/Navigation'
+import { mapState, mapActions } from 'vuex'
 
 export default {
     name: 'App',
@@ -19,6 +20,15 @@ export default {
         return {
             
         }
+    },
+    computed:{
+        
+    },
+    methods :{
+        ...mapActions('data',['refresh']),
+    },
+    mounted(){
+      this.refresh(this.$session.get("token"))  
     },
     destroyed() {
         this.$socket.emit('disconnect', {

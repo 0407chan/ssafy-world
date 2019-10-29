@@ -1,4 +1,3 @@
-import Constant from '../../Constant';
 import api from '@/api'
 
 const state = {
@@ -11,26 +10,40 @@ const getters = {
 
 // actions
 const actions = {
-  getMsg(params){
+  getMsg({commit},params){
+    console.log(params);
+    
     api.getRoomMessage(params).then(res=>{
-      state.msgDatas=res.data
+      console.log(res.data);
+      for(let i =0;i<res.data.length;i++){
+        state.msgDatas.push({
+          from:{
+            name : res.data[i].uid
+          },
+          msg : res.data[i].text,
+          time : new Date(res.data[i].time),
+        })
+      }
+      console.log(state.msgDatas);
+      
     })
   }
 };
 
 // mutations
 const mutations = {
-  [Constant.PUSH_MSG_DATA]: ($state, $payload) => {
-    $state.msgDatas.push($payload);
+  pushMsgData(state, $payload) {
+    state.msgDatas.push($payload);
   },
-  clearMsg(){
+  clearMsg(state){
     state.msgDatas=[]
   },
   
 
 };
 
-export default {
+export default { 
+  namespaced: true,
   state,
   getters,
   actions,

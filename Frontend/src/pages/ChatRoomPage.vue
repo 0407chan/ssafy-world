@@ -49,8 +49,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState, mapActions } from 'vuex'
-import Constant from '@/Constant'
+import { mapMutations, mapState, mapActions } from 'vuex' 
 
 export default {
   name: 'ChatRoomPage',
@@ -65,7 +64,7 @@ export default {
       'msgDatas': state => state.socket.msgDatas,
       //아이디 vuex 링크 잡기
     }),
-    ...mapState('data',['userLoginToken' , 'userLoginPassword'])
+    ...mapState('data',['currUser'])
   },
   mounted() {
     const $ths = this
@@ -76,23 +75,21 @@ export default {
     });
   },
   methods: {
-    ...mapMutations({
-      'pushMsgData': Constant.PUSH_MSG_DATA,
-    }),
+    ...mapMutations('socket',['pushMsgData']),
 
     sendMessage() {
       if (this.msg.length === 0) return false;
       var today = new Date();
       this.pushMsgData({
         from: {
-          name: this.$store.state.data.userLoginToken,
+          name: this.currUser.uid,
         },
         msg:this.msg,
         time:today,
       });
       this.$sendMessage({
         rid:window.location.pathname,
-        name: this.$store.state.data.userLoginToken,
+        name: this.currUser.uid,
         msg:this.msg,
         time:today.toString(),
       });

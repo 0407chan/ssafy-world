@@ -54,11 +54,6 @@ export default {
         ChatRoomList,
     },
     created() {
-        let params = {
-            'id': sessionStorage.getItem('id'),
-            'pw': sessionStorage.getItem('pw'),
-        }
-        
         // 이미 접속한 이력이 있을 경우
         this.$socket.on('check', (data) => {
             if (data.msg === 'already connect') {

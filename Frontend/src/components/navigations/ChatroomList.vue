@@ -40,10 +40,10 @@ export default {
     addChatroom(){
       console.log("구현해야함");
     },
-    goTo(rid){
+    async goTo(rid){
       console.log(rid);
-      this.clearMsg();
-      this.getMsg(rid);
+      await this.clearMsg();
+      await this.getMsg(rid.split('/')[2]);
       this.$router.push(rid)
     }
   }

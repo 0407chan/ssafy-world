@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex';
 export default {
     name: 'Profile',
     data() {
@@ -21,15 +22,18 @@ export default {
 
         }
     },
+    computed:{
+        ...mapState('data',['currUser'])
+    },
     methods: {
+        ...mapMutations('data',['clearUser']),
         goTo(path) {
-            this.$router.push({ name: path });
+            if(this.currUser != '')
+                this.$router.push({ name: path });
         },
         logout() {
             this.clearUser()
-            this.setMenu(0)
-            sessionStorage.removeItem('id')
-            sessionStorage.removeItem('pw')
+            this.$session.set('token','')
             this.$router.push({ name: 'login' });
         },
     },

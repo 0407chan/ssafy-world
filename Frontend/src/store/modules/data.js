@@ -14,6 +14,13 @@ const state = {
 // actions
 const actions = {
 
+  refresh({commit},params){
+    state.currUser = params;
+    
+    actions.registFriend()
+    actions.registChatroom()
+  },
+
   async login({ commit }, params) {
     return api.login(params).then(res =>{
       if (res.status == '200') {
@@ -77,10 +84,6 @@ const mutations = {
     state.ratingList = ratings.map(m => m)
   },
   //
-  setMenu(state, value) {
-    state.checkLogin = value;
-  },
-
   clearUser(state){
     state.currUser = ''
     state.chatroomList=[]
