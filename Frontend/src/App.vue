@@ -25,10 +25,10 @@ export default {
         
     },
     methods :{
-        ...mapActions('data',['refresh']),
+        ...mapActions('data', ['refresh']),
     },
     mounted(){
-      this.refresh(this.$session.get("token"))  
+      this.refresh(this.$session.get('token'))  
     },
     destroyed() {
         this.$socket.emit('disconnect', {

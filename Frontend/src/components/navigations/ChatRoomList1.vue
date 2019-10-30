@@ -28,20 +28,19 @@ export default {
   },
   computed:{
     //userLogintoken 부분 수정 해야함
-    ...mapState('data',['chatlist', "chatroomList"]),
-    ...mapState('socket',['msgDatas'])
+    ...mapState('data', ['chatlist', 'chatroomList']),
+    ...mapState('socket', ['msgDatas'])
   },
   mounted(){
    
   },
   methods :{
-    ...mapActions('socket',['getMsg']),
-    ...mapMutations('socket',['clearMsg']),
-    addChatroom(){
+    ...mapActions('socket', ['getMsg']),
+    ...mapMutations('socket', ['clearMsg']),
+    addChatroom() {
       console.log("구현해야함");
     },
-    async goTo(rid){
-      console.log(rid);
+    async goTo(rid) {
       await this.clearMsg();
       await this.getMsg(rid.split('/')[2]);
       this.$router.push(rid)
