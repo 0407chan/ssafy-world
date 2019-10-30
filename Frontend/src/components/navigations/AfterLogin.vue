@@ -74,15 +74,15 @@ export default {
             this.$socket.disconnect()
         })
         
-        if (params.id != null && params.pw != null) {
-            this.login(params).then(res => {
+        if (this.currUser != '') {
+            this.login(this.currUser.uid).then(res => {
                 if (res.status == '200')
                     this.$router.push({ name: 'chatroom' })
             })
         }
     },
     computed: {
-        ...mapState('data', ['friend', 'chatlist']),
+        ...mapState('data', ['friend', 'chatlist', 'currUser']),
     },
     methods: {
         ...mapMutations('data', ['setMenu', 'clearUser', 'reverse']),

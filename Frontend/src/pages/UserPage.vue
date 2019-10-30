@@ -90,7 +90,7 @@ export default {
         desserts: [
           {
             name: '등급',
-            value: '초보',
+            value: '',
           },
           {
             name: '이름',
@@ -117,7 +117,7 @@ export default {
     ...mapActions("data", ['getUserInfo']),
     async getUserInfoAction() {
       let params = {
-        id: sessionStorage.getItem('id')
+        id: this.$session.get('token').uid,
       }
 
       let user = await this.getUserInfo(params);
