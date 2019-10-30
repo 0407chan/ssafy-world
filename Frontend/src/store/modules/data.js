@@ -14,9 +14,16 @@ const state = {
 // actions
 const actions = {
 
+  refresh({commit},params){
+    state.currUser = params;
+    
+    actions.registFriend()
+    actions.registChatroom()
+  },
+
   async login({ commit }, params) {
     return api.login(params).then(res =>{
-      if(res.status == '200'){
+      if (res.status == '200') {
         state.currUser = res.data;
         console.log(state.currUser);
 
@@ -48,6 +55,12 @@ const actions = {
     const resp = await api.getUser()
   },
 
+  async getUserInfo({ commit }, params) {
+    const resp = await api.getUserInfo(params)
+    console.log("test: " + resp)
+    return await api.getUserInfo(params)
+  },
+
   async getUser({ commit }, params) {
     const resp = await api.getUser()
   },
@@ -71,10 +84,6 @@ const mutations = {
     state.ratingList = ratings.map(m => m)
   },
   //
-  setMenu(state, value) {
-    state.checkLogin = value;
-  },
-
   clearUser(state){
     state.currUser = ''
     state.chatroomList=[]

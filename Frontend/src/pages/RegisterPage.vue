@@ -79,7 +79,7 @@ export default {
     image: '',
   }),
   methods: {
-    ...mapActions('data', ['register']),
+    ...mapActions('data', ['register','login']),
 
     /** 2019.10.25 이찬호
     *기능 : 회원가입 버튼을 누르면 회원 정보를 등록하고 로그인 한다.
@@ -93,10 +93,15 @@ export default {
       };
       let res = await this.register(params);
       console.log("registerAction",res)
-      if(res.status == '200'){
+      if (res.status == '200') {
         this.successAlert("WELCOME!","User Created successfully");
+        await this.login({
+          id : params.uid,
+          pw : params.password
+        })
         this.$router.push({ name: 'chatroom' })
-      }else{
+      }
+      else {
         this.errorAlert(res.data,"Try other name");
       }
     },

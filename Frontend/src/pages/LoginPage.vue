@@ -81,9 +81,6 @@ export default {
       pw:'',
     },
   }),
-  mounted() {
-    console.log("상태확인");
-  },
   computed:{
     idLen() {
       return this.user.id.length;
@@ -107,11 +104,10 @@ export default {
       }
       let res = await this.login(params)
       console.log("loginAction",res)
-      if(res.status == 200){
-        this.successAlert("환영합니다!","최고의 채팅을 이용해보세요.");
+      if (res.status == 200) {
+        this.successAlert("환영합니다!", "최고의 채팅을 이용해보세요.");
         this.$session.start();
         this.$session.set('token', res.data);
-
         this.$router.push({ name: 'chatroom' }).catch(err => {})
       }
       else {
@@ -156,7 +152,7 @@ export default {
           this.getUser();
           this.getUserInfo();
           await this.postMatrix()
-          this.$router.push({name:'main'});
+          this.$router.push({ name: 'login' });
           const Toast = Swal.mixin({
               toast: true,
               position: 'bottom-end',

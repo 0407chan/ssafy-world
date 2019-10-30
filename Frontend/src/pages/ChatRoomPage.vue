@@ -1,9 +1,9 @@
 <template>
   <v-container fluid>
-    <v-layout row >
+    <v-layout row>
       <!-- <div class="message" v-for="(message,index) in msgs" :class="{own: message.from.name == username}"> -->
       <v-col cols="12" id="messageBody" class="scrollable" no-gutters>
-        <v-flex class="message-line" v-for="(message,index) in msgDatas" >
+        <v-flex class="message-line" v-for="(message, index) in msgDatas">
           <v-col no-gutters>
             <v-row align="center">
               <div>
@@ -49,8 +49,8 @@
 </template>
 
 <script>
-import { mapMutations, mapState, mapActions } from 'vuex'
-import Constant from '@/Constant'
+import { mapMutations, mapState, mapActions } from 'vuex' 
+
 export default {
   name: 'ChatRoomPage',
   data() {
@@ -64,42 +64,32 @@ export default {
       'msgDatas': state => state.socket.msgDatas,
       //아이디 vuex 링크 잡기
     }),
-    ...mapState('data',['userLoginToken' , 'userLoginPassword'])
+    ...mapState('data',['currUser'])
   },
   mounted() {
-    if (this.userLoginToken==''||this.userLoginPassword=='')
-      this.$router.push({ name: 'main' })
-
     const $ths = this
     this.$socket.on('/chatroom', (data) => {
       var today = new Date(data.time);
       data.time = today;
       this.pushMsgData(data)
-      // $ths.datas.push(data)
     });
   },
-  beforeupdated(){
-    if (this.userLoginToken==''||this.userLoginPassword=='')
-      this.$router.push({ name: 'main' })
-  },
   methods: {
-    ...mapMutations({
-      'pushMsgData': Constant.PUSH_MSG_DATA,
-    }),
+    ...mapMutations('socket',['pushMsgData']),
 
     sendMessage() {
       if (this.msg.length === 0) return false;
       var today = new Date();
       this.pushMsgData({
         from: {
-          name: this.$store.state.data.userLoginToken,
+          name: this.currUser.uid,
         },
         msg:this.msg,
         time:today,
       });
       this.$sendMessage({
         rid:window.location.pathname,
-        name: this.$store.state.data.userLoginToken,
+        name: this.currUser.uid,
         msg:this.msg,
         time:today.toString(),
       });

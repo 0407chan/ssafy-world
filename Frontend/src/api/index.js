@@ -10,6 +10,32 @@ export default {
     return axios.get(`${apiUrl}/user`)
   },
 
+
+  /**
+   * 
+   * 2019.10.29 준범이
+   * 자소서도 안돼
+   * 면접도 안돼
+   * 이 안에 배신자가 있다
+   * 이게 내 결론이다
+   *  
+   */
+  getUserInfo(params) {
+    console.log(params.id)
+    return axios.post(`${apiUrl}/user/info`, {
+      uid: params.id,
+    }).then(response => {
+      console.log("규빈")
+      console.log(response)
+      return response
+    })
+    .catch(error => {
+      console.log(error)
+      return error.response
+    });
+  },
+
+
   /** 2019.10.18 이찬호
   * 기능 : 로그인
   * 파라미터 : params = uid, password
@@ -18,8 +44,8 @@ export default {
   login(params) {
     console.log("index",params);
     return axios.post(`${apiUrl}/user/login`, {
-      uid:params.id,
-      password:params.pw,
+      uid: params.id,
+      password: params.pw,
     }).then(response => {
       return response
     })
