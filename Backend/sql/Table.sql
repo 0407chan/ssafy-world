@@ -6,13 +6,14 @@ USE `ssafyworld` ;
 -- Table `ssafyworld`.`user`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ssafyworld`.`user` (
-  `uid` VARCHAR(50) NOT NULL,
+  `uidx` int(5) AUTO_INCREMENT,
+  `uid` VARCHAR(50) NOT NULL unique,
   `uname` VARCHAR(10) NOT NULL,
   `password` VARCHAR(500) NOT NULL,
   `img` VARCHAR(100) , 
   `staff` INT(1) default 0,
-  PRIMARY KEY (`uid`));
--- -----------------------------------------------------
+  PRIMARY KEY (`uidx`));
+-- ----------------------------1-------------------------
 -- Table `ssafyworld`.`room`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ssafyworld`.`room` (
