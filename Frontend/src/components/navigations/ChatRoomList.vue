@@ -32,7 +32,7 @@ export default {
     ...mapState('socket', ['msgDatas'])
   },
   mounted(){
-   
+
   },
   methods :{
     ...mapActions('socket', ['getMsg']),
