@@ -132,7 +132,7 @@ io.on('connection', function(socket){
 
   for(let i =0;i<room.length;i++){
     socket.on('/chatroom/'+room[i].rid, function(data) {
-      console.log('Message from %s: %s', data.name, data.msg);
+      console.log('Message from %s %s: %s',room[i].rid, data.name, data.msg);
       var msg = {
         from: {
           name: data.name,
@@ -149,7 +149,7 @@ io.on('connection', function(socket){
       })
   
       // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
-      socket.broadcast.emit('/chatroom'/+room[i].rid, msg);
+      socket.broadcast.emit('/chatroom/'+room[i].rid, msg);
     });
   }
 
