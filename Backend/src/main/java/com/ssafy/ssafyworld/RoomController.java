@@ -6,7 +6,6 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.ssafyworld.dto.RoomDTO;
+import com.ssafy.ssafyworld.dto.UserDTO;
 import com.ssafy.ssafyworld.service.MessageService;
 import com.ssafy.ssafyworld.service.RoomService;
 
@@ -58,8 +58,8 @@ public class RoomController {
 
 	@RequestMapping(value = "/room/{rid}", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<RoomDTO>selectRoom(@PathVariable("rid") int rid) throws Exception {
-		logger.info(rid+"방 선택 완료");
+	public ResponseEntity<List<UserDTO>>selectRoom(@PathVariable("rid") int rid) throws Exception {
+		logger.info(rid+"방에 속한 사람");
 		return ResponseEntity.ok().body(rService.selectRoom(rid));
 	}
 	

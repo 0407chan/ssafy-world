@@ -116,7 +116,7 @@ public class UserController {
 	}
 	
 	/**
-	 * 10-29 : 이규찬
+	 * 10-29 : 이규찬    10-30 수정 : 박규빈
 	 *
 	 * @기능 유저 전체 리스트를 가져옴
 	 * @호출방법 ssafywolrd/user/rooms
