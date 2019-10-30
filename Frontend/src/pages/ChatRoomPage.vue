@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-layout row>
       <!-- <div class="message" v-for="(message,index) in msgs" :class="{own: message.from.name == username}"> -->
-      <v-col cols="12" id="messageBody" class="scrollable" no-gutters>
+      <v-col cols="12" id="messageBody" class="scrollable">
         <v-flex class="message-line" v-for="(message, index) in msgDatas">
           <v-col no-gutters>
             <v-row align="center">
@@ -77,7 +77,7 @@ export default {
   methods: {
     ...mapMutations('socket',['pushMsgData']),
 
-    sendMessage() {
+    async sendMessage() {
       if (this.msg.length === 0) return false;
       var today = new Date();
       this.pushMsgData({
@@ -87,7 +87,7 @@ export default {
         msg:this.msg,
         time:today,
       });
-      this.$sendMessage({
+      await this.$sendMessage({
         rid:window.location.pathname,
         name: this.currUser.uid,
         msg:this.msg,
@@ -101,7 +101,7 @@ export default {
       console.log(this.msgs);
     },
 
-    scrollToBottom(){
+    scrollToBottom() {
       var messageBody = document.getElementById('messageBody');
       messageBody.scrollTop = messageBody.scrollHeight;
     },
