@@ -67,6 +67,10 @@ const actions = {
     const resp = await api.getUser()
   },
 
+  async createChatRoom({ commit }, params) {
+    return await api.createChatRoom(params)
+  },
+
   async getRoomByUser({ commit }, params) {
     const resp = await api.getRoomByUser(params)
   },
@@ -75,11 +79,11 @@ const actions = {
 
 // mutations
 const mutations = {
-  reverse(state,string){
-    if(string=='friend')
-      state.friend=!state.friend
+  reverse(state, string) {
+    if (string == 'friend')
+      state.friend =! state.friend
     else
-      state.chatlist=!state.chatlist
+      state.chatlist =! state.chatlist
   },
 
   setClusterList(state, ratings) {

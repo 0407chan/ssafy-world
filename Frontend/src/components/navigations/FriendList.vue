@@ -33,14 +33,11 @@ export default {
   },
   computed:{
     //userLogintoken 부분 수정 해야함
-    ...mapState('data',['userLoginToken' , 'userLoginPassword','friend','friendList'])
-  },
-  mounted(){
+    ...mapState('data', ['friend', 'friendList'])
   },
   methods :{
-    addFriend(){
+    addFriend() {
       console.log("친구 추가 구현해야함");
-
     }
   }
 };

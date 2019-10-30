@@ -5,11 +5,11 @@ const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
 // const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
 
 export default {
+
   // param 없는 경우
   getUser() {
     return axios.get(`${apiUrl}/user`)
   },
-
 
   /**
    * 
@@ -68,7 +68,8 @@ export default {
       uid: params.uid,
       uname: params.uname,
       password: params.password,
-    }).then(response => {
+    })
+    .then(response => {
       return response
     })
     .catch(error => {
@@ -89,6 +90,25 @@ export default {
                   .catch((ex) => {
                       console.warn("ERROR!!!!! : ",ex)
                   })
+  },
+
+  /**
+   * 
+   *  19.10.30. 준범이
+   *  방만들기
+   *  내방에서 라면먹고갈래???
+   * 
+   */
+  createChatRoom(params) {
+    return axios.post(`${apiUrl}/room/create`, {
+      rname: params.rname,
+    })
+    .then(response => {
+      return response
+    })
+    .catch(error => {
+      return error.response
+    });
   },
 
   // 10-17 최재형

@@ -8,36 +8,38 @@
       </v-list-item>
     </v-list>
     <v-list>
-      <v-list-item @click="addChatroom">
-        <v-list-item-title>
-          채팅방 만들기
-        </v-list-item-title>
+      <MakeChatRoom />
+      <v-list-item @click="enterChatroom">
+        <v-list-item-title />
       </v-list-item>
     </v-list>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState, mapMutations } from 'vuex';
+import { mapActions, mapState, mapMutations } from 'vuex'
 import api from '@/api'
+import MakeChatRoom from '@/components/room/MakeChatRoom'
 
 export default {
   name: 'ChatRoomList',
+  data() {
+    return {
+      
+    }
+  },
   components: {
-
+    MakeChatRoom,
   },
   computed:{
     //userLogintoken 부분 수정 해야함
     ...mapState('data', ['chatlist', 'chatroomList']),
     ...mapState('socket', ['msgDatas'])
   },
-  mounted(){
-   
-  },
-  methods :{
+  methods : {
     ...mapActions('socket', ['getMsg']),
     ...mapMutations('socket', ['clearMsg']),
-    addChatroom() {
+    enterChatroom() {
       console.log("구현해야함");
     },
     async goTo(rid) {

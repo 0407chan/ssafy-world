@@ -5,10 +5,10 @@
                 <v-img src="https://randomuser.me/api/portraits/women/75.jpg"></v-img>
             </v-list-item-avatar>
             <v-list-item-content>
-                <v-list-item-title>Jane Smith</v-list-item-title>
+                <v-list-item-title>{{ currUser.uname }}</v-list-item-title>
                 <v-list-item-subtitle>Logged In</v-list-item-subtitle>
-                <v-btn @click="logout">로그아웃</v-btn>
             </v-list-item-content>
+            <v-btn @click="logout">로그아웃</v-btn>
         </v-list-item>
     </v-list>
 </template>
@@ -23,10 +23,10 @@ export default {
         }
     },
     computed:{
-        ...mapState('data',['currUser'])
+        ...mapState('data', ['currUser'])
     },
     methods: {
-        ...mapMutations('data',['clearUser']),
+        ...mapMutations('data', ['clearUser']),
         goTo(path) {
             if(this.currUser != '')
                 this.$router.push({ name: path });
