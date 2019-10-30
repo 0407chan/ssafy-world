@@ -17,22 +17,15 @@ api.getRoom().then(res=>{
   console.log(room);
 })
 
-// setInterval(intervalFuction, 300000);
+setInterval(intervalFuction, 300000);
 
-// async function intervalFuction(){
-//   console.log(message);
-//   await api.postMessage(message)
-//   message = []
-//   console.log('interval OK')
-// }
-
-function timeType(data){
-  let time = new Date(data.time)
-  console.log(data.time.toString());
-  time.setHours
-  console.log(time);
-  console.log(time.toString);
+async function intervalFuction(){
+  console.log(message);
+  await api.postMessage(message)
+  message = []
+  console.log('interval OK')
 }
+
 
 app.all('/*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -123,21 +116,25 @@ io.on('connection', function(socket){
       msg: data.msg,
       time : data.time
     };
-    console.log(data);
+    console.log(msg);
     
-    // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
-    socket.broadcast.emit('/chatroom', msg);
-    
-    api.postMessage({
-      text : data.msg, 
-      uid : data.name,
+
+    message.push({
+      text:data.msg, 
+      uid:data.name,
       rid : 1,
       time : data.time
     })
+    console.log(message);
+    
+
+    // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
+    socket.broadcast.emit('/chatroom', msg);
   })  
 
   for(let i =0;i<room.length;i++){
     socket.on('/chatroom/'+room[i].rid, function(data) {
+      console.log('Message from %s %s: %s',room[i].rid, data.name, data.msg);
       var msg = {
         from: {
           name: data.name,
@@ -145,18 +142,16 @@ io.on('connection', function(socket){
         msg: data.msg,
         time : data.time
       };
-      
-      // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
-      socket.broadcast.emit('/chatroom/'+room[i].rid, msg);
 
-      console.log(data);
-      
-      api.postMessage({
+      message.push({
         text:data.msg, 
         uid:data.name,
         rid:room[i].rid,
         time : data.time
       })
+  
+      // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
+      socket.broadcast.emit('/chatroom/'+room[i].rid, msg);
     });
   }
 

@@ -69,7 +69,7 @@ export default {
   mounted() {
     const $ths = this
     console.log("connect chatroom" , window.location.pathname);
-    
+    this.getMsg(window.location.pathname.split('/')[2])
     this.$socket.on(window.location.pathname, (data) => {
       var today = new Date(data.time);
       data.time = today;
@@ -77,6 +77,7 @@ export default {
     });
   },
   methods: {
+    ...mapActions('socket', ['getMsg']),
     ...mapMutations('socket',['pushMsgData']),
 
     sendMessage() {
