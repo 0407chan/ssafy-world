@@ -10,4 +10,5 @@ public interface RoomDAO {
 	public int createRoom(String rname) throws Exception;
 	public void deleteRoom(int rid) throws Exception;
 	public List<RoomDTO> selectRooms() throws Exception;
+	public void enterRoom(int room, String user) throws Exception;
 }
