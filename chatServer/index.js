@@ -81,13 +81,15 @@ io.on('connection', function(socket){
     }
   })
 
+  //1031 최재형
   // 방 생성 요청
-  // 파라미터 : name
-  // 해야 할 것 :   방을 하나 열어주고, 
-  //              방에 해당되는 소켓을 뚫어줍니다. 
-  //              그리고 룸 리스트에 추가해 줍니다.
-  socket.on('create',(data)=>{
-    api.createRoom(data.name).then(res=>{
+  // 파라미터 : value( name :  방 이름, )
+  // 해야 할 것 :   방을 하나 열어주고, (o) 
+  //              방에 해당되는 소켓을 뚫어줍니다. (o)
+  //              그리고 룸 리스트에 추가해 줍니다. (o)
+  socket.on('create',(value)=>{
+    api.createRoom(value.name).then(res=>{
+      //res=rid, value.name = rname
       //많이 반복되는 구분
       socket.on('/chatroom/'+res, function(data) {
         console.log('Message from %s: %s', data.name, data.msg);
@@ -128,12 +130,12 @@ io.on('connection', function(socket){
     // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
     socket.broadcast.emit('/chatroom', msg);
     
-    api.postMessage({
-      text : data.msg, 
-      uid : data.name,
-      rid : 1,
-      time : data.time
-    })
+    // api.postMessage({
+    //   text : data.msg, 
+    //   uid : data.name,
+    //   rid : 1,
+    //   time : data.time
+    // })
   })  
 
   for(let i =0;i<room.length;i++){
@@ -153,7 +155,7 @@ io.on('connection', function(socket){
       
       api.postMessage({
         text:data.msg, 
-        uid:data.name,
+        uidx:data.uidx,
         rid:room[i].rid,
         time : data.time
       })

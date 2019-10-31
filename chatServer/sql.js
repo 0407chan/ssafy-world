@@ -20,7 +20,7 @@ module.exports.getRoom=() =>{
 module.exports.postMessage=(object)=>{
     axios.post(`${apiUrl}/message`,{ 
       "text":object.text, 
-      "uid":object.uid,
+      "uidx":object.uidx,
       "rid":object.rid,
       "time":object.time }).then(res=>{
       }).catch(error=>{
