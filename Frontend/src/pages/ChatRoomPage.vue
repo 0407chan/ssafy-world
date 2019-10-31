@@ -1,37 +1,90 @@
 <template>
   <v-container fluid>
-    <v-layout row>
-      <!-- <div class="message" v-for="(message,index) in msgs" :class="{own: message.from.name == username}"> -->
-      <v-col cols="12" id="messageBody" class="scrollable" no-gutters>
-        <v-flex class="message-line" v-for="(message, index) in msgDatas">
-          <v-col no-gutters>
-            <v-row align="center">
-              <div>
-                <v-avatar tile v-if=" (index-1 >= 0 && msgDatas[index-1].from.name != message.from.name) || index == 0">
-                  <v-img src="https://randomuser.me/api/portraits/women/75.jpg"></v-img>
-                </v-avatar>
-              </div>
-              <div class="message">
-                <div v-if=" (index-1 >= 0 && msgDatas[index-1].from.name != message.from.name) || index == 0">
-                  <span class="username">
-                    {{message.from.name}}
-                  </span>
-                  <span v-if="message.time">
-                    {{getTime(message.time)}}
-                  </span>
-                </div>
-                <div class="content">
-                  {{message.msg}}
-                  <!-- <chat-image v-if="message.image" :imgsrc="message.image" @imageLoad="imageLoad"></chat-image> -->
-                </div>
-              </div>
-              <div v-if="message.time && index > 0" :class="{time: index-1 >= 0 && message.time.getMinutes() == msgDatas[index-1].time.getMinutes()}">
-                {{getTime(message.time)}}
-              </div>
-            </v-row>
-          </v-col>
-        </v-flex>
+
+    <v-row id="messageBody" class="scrollable">
+      <v-col cols="12" style="padding:12px;">
+        <v-row class="message-line" v-for="(message, index) in msgDatas" no-gutters>
+          <template v-if="message.name != this.currUser">
+            <v-col cols="12" style="padding : 8px;">
+              <v-row  no-gutters>
+                <!-- 사진 -->
+                <v-col cols="auto" style="padding : 8px;">
+                  <v-row no-gutters>
+                    <v-col  v-if=" (index-1 >= 0 && msgDatas[index-1].from.name != message.from.name) || index == 0">
+                      <v-avatar tile>
+                        <v-img src="https://randomuser.me/api/portraits/women/75.jpg"></v-img>
+                      </v-avatar>
+                    </v-col>
+                    <v-col v-else >
+                      <div class="time" v-if="message.time && index > 0" :class="{time: index-1 >= 0 && message.time.getMinutes() == msgDatas[index-1].time.getMinutes()}">
+                        {{getTime(message.time)}}
+                      </div>
+                    </v-col>
+                  </v-row>
+                </v-col>
+                <!-- 이름, 메세지 -->
+                <v-col cols="auto">
+                  <v-row no-gutters>
+                    <v-col cols="12" v-if=" (index-1 >= 0 && msgDatas[index-1].from.name != message.from.name) || index == 0">
+                      <span class="username">
+                        {{message.from.name}}
+                      </span>
+                      <span class="profileTime">
+                        {{getTime(message.time)}}
+                      </span>
+                    </v-col>
+                    <v-col cols="auto" class="content"  style="padding : 8px;">
+                      {{message.msg}}
+                    </v-col>
+                  </v-row>
+                </v-col>
+              </v-row>
+            </v-col>
+          </template>
+          <template v-else>
+            <v-col cols="12" style="padding : 8px;">
+              <v-row no-gutters align="end">
+
+                <!-- 이름, 메세지 -->
+                <v-col cols="auto">
+                  <v-row no-gutters>
+                    <v-col cols="12" v-if=" (index-1 >= 0 && msgDatas[index-1].from.name != message.from.name) || index == 0">
+                      <span class="username">
+                        {{message.from.name}}
+                      </span>
+                      <span class="profileTime">
+                        {{getTime(message.time)}}
+                      </span>
+                    </v-col>
+                    <v-col cols="auto" class="content"  style="padding : 8px;">
+                      {{message.msg}}
+                    </v-col>
+                  </v-row>
+                </v-col>
+                <!-- 사진 -->
+                <v-col cols="auto" style="padding : 8px;">
+                  <v-row no-gutters>
+                    <v-col  v-if=" (index-1 >= 0 && msgDatas[index-1].from.name != message.from.name) || index == 0">
+                      <v-avatar tile>
+                        <v-img src="https://randomuser.me/api/portraits/women/75.jpg"></v-img>
+                      </v-avatar>
+                    </v-col>
+                    <v-col v-else >
+                      <div class="time" v-if="message.time && index > 0" :class="{time: index-1 >= 0 && message.time.getMinutes() == msgDatas[index-1].time.getMinutes()}">
+                        {{getTime(message.time)}}
+                      </div>
+                    </v-col>
+                  </v-row>
+                </v-col>
+
+              </v-row>
+            </v-col>
+          </template>
+        </v-row>
       </v-col>
+    </v-row>
+
+    <v-row id="chatInput">
       <v-col cols="12">
         <v-flex>
           <v-text-field
@@ -44,12 +97,14 @@
           ></v-text-field>
         </v-flex>
       </v-col>
-    </v-layout>
+    </v-row>
+      <!-- <div class="message" v-for="(message,index) in msgs" :class="{own: message.from.name == username}"> -->
+
   </v-container>
 </template>
 
 <script>
-import { mapMutations, mapState, mapActions } from 'vuex' 
+import { mapMutations, mapState, mapActions } from 'vuex'
 
 export default {
   name: 'ChatRoomPage',
@@ -70,29 +125,31 @@ export default {
     const $ths = this
     console.log("connect chatroom" , window.location.pathname);
     this.getMsg(window.location.pathname.split('/')[2])
-    this.$socket.on(window.location.pathname, (data) => {
+    this.$socket.on(window.location.pathname,async (data) => {
       var today = new Date(data.time);
       data.time = today;
-      this.pushMsgData(data)
+      await this.pushMsgData(data)
+      this.scrollToBottom();
     });
   },
   methods: {
     ...mapActions('socket', ['getMsg']),
     ...mapMutations('socket',['pushMsgData']),
 
-    sendMessage() {
+    async sendMessage() {
       if (this.msg.length === 0) return false;
       var today = new Date();
       this.pushMsgData({
         from: {
-          name: this.currUser.uid,
+          name: this.currUser.uname,
         },
         msg:this.msg,
         time:today,
       });
-      this.$sendMessage({
+      await this.$sendMessage({
         rid:window.location.pathname,
-        name: this.currUser.uid,
+        uidx: this.currUser.uidx,
+        name: this.currUser.uname,
         msg:this.msg,
         time:today.toString(),
       });
@@ -149,6 +206,7 @@ export default {
 }
 .time{
   color : rgba(0,0,0,0);
+  font-size: 12px;
 }
 
 .message-line:hover .time {
@@ -165,5 +223,13 @@ export default {
   border-radius: 5px;
   background-color: orange;
   padding: 5px;
+}
+#chatInput{
+  position: sticky;
+  bottom: 0px;
+  z-index: 1;
+}
+.profileTime{
+  font-size: 12px;
 }
 </style>
