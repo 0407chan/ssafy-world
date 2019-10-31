@@ -40,6 +40,13 @@ const firestore = firebase.firestore();
 
 
 export default {
+    //변화 감지 함수
+    getMessageRealtime(){
+        return firestore.collection(ROOM)
+        .onSnapshot(function(snapshot) {
+          store.state.newMessage = true;
+        });
+    },
     getRoomInfo(id){
         var postDoc = firestore.collection(ROOM).doc(id);
         return postDoc.get().then(function(doc) {
@@ -51,7 +58,33 @@ export default {
             }
           }).catch(function(error) {
             console.log("Error getting document:", error);
-          });
+          })
+    }, 
+    createRoom(uidx, rname) {
+        return firestore.collection(ROOM).add({
+            chatUserList : [uidx],
+            massages : [],
+            time : [],
+            uidx : [],
+            rname : rname
+        }).then(function(docRef) {
+            return docRef.id;
+        })
+    },
+    addMessage(id,params){
+        this.getRoomInfo(id).then(res=>{
+            console.log(res);
+            
+            res.messages.push(params.message)
+            res.time.push(params.time)
+            res.uidx.push(params.uidx)
+            firestore.collection(ROOM).doc(id).update({
+                'messages' : res.messages,
+                'midx' : res.midx,
+                'time': res.time,
+                'uidx' : res.uidx
+            })
+        })
     },
 
   /********************\

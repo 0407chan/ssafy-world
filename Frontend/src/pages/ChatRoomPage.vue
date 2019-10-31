@@ -50,6 +50,7 @@
 
 <script>
 import { mapMutations, mapState, mapActions } from 'vuex' 
+import firebaseMy from '@/plugins/FirebaseService'
 
 export default {
   name: 'ChatRoomPage',
@@ -64,9 +65,21 @@ export default {
       'msgDatas': state => state.socket.msgDatas,
       //아이디 vuex 링크 잡기
     }),
-    ...mapState('data',['currUser'])
+    ...mapState('data',['currUser']),
+    getNewMessage(){
+      return this.$store.state.newMessage;
+    }
+  },
+  watch:{
+    getNewMessage(val){
+      let data = firebaseMy.getRoomInfo(window.location.pathname.split('/')[2])
+      //데이터 한뭉탱이 처리해야함
+
+      this.$store.state.newMessage=false
+    }
   },
   mounted() {
+    firebaseMy.getMessageRealtime()
     const $ths = this
     console.log("connect chatroom" , window.location.pathname);
     if(window.location.pathname.split('/')[2]!=undefined)
