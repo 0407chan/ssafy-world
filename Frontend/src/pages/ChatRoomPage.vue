@@ -17,7 +17,7 @@
                     {{message.from.name}}
                   </span>
                   <span v-if="message.time">
-                    {{getTime(message.time)}}
+                    <!-- {{getTime(message.time)}} -->
                   </span>
                 </div>
                 <div class="content">
@@ -25,9 +25,9 @@
                   <!-- <chat-image v-if="message.image" :imgsrc="message.image" @imageLoad="imageLoad"></chat-image> -->
                 </div>
               </div>
-              <div v-if="message.time && index > 0" :class="{time: index-1 >= 0 && message.time.getMinutes() == msgDatas[index-1].time.getMinutes()}">
-                {{getTime(message.time)}}
-              </div>
+              <!-- <div v-if="message.time && index > 0" :class="{time: index-1 >= 0 && message.time.getMinutes() == msgDatas[index-1].time.getMinutes()}"> -->
+                <!-- {{getTime(message.time)}} -->
+              <!-- </div> -->
             </v-row>
           </v-col>
         </v-flex>
@@ -58,13 +58,14 @@ export default {
     return {
       datas: [],
       msg:'',
+      msgDatas:[]
     };
   },
   computed: {
-    ...mapState({
-      'msgDatas': state => state.socket.msgDatas,
-      //아이디 vuex 링크 잡기
-    }),
+    // ...mapState({
+    //   'msgDatas': state => state.socket.msgDatas,
+    //   //아이디 vuex 링크 잡기
+    // }),
     ...mapState('data',['currUser']),
     getNewMessage(){
       return this.$store.state.newMessage;
@@ -80,19 +81,43 @@ export default {
   },
   mounted() {
     firebaseMy.getMessageRealtime()
-    const $ths = this
-    console.log("connect chatroom" , window.location.pathname);
-    if(window.location.pathname.split('/')[2]!=undefined)
-      this.getMsg(window.location.pathname.split('/')[2])
-    this.$socket.on(window.location.pathname, (data) => {
-      var today = new Date(data.time);
-      data.time = today;
-      this.pushMsgData(data)
-    });
+    firebaseMy.getRoomInfo(window.location.pathname.split('/')[2]).then(res=>{
+
+      
+      this.setMessageList(res)
+    })
+
+    
+    // const $ths = this
+    // console.log("connect chatroom" , window.location.pathname);
+    // if(window.location.pathname.split('/')[2]!=undefined)
+    //   this.getMsg(window.location.pathname.split('/')[2])
+    // this.$socket.on(window.location.pathname, (data) => {
+    //   var today = new Date(data.time);
+    //   data.time = today;
+    //   this.pushMsgData(data)
+    // });
   },
   methods: {
     ...mapActions('socket', ['getMsg']),
     ...mapMutations('socket',['pushMsgData']),
+    setMessageList(data){
+      console.log(data.uidx.length);
+      
+      let arr = [] 
+      for(let i =0;i<data.uidx.length;i++){
+        arr.push({
+          'from' :{
+            //추가 구현 해야함 (uidx 로 값 가져오는것)
+            'name': data.uidx[i]
+          },
+          'time': data.time[i],
+          'msg':data.messages[i]
+        })
+      }
+      this.msgDatas=arr
+    }
+    ,
 
     sendMessage() {
       if (this.msg.length === 0) return false;

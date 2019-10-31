@@ -3,6 +3,7 @@
         <v-btn @click="test('q17Eg1P4GkZ3YhTx5Hx6')"> test </v-btn>
         <v-btn @click="createTest()"> create </v-btn>
         <v-btn @click="addMessage('q17Eg1P4GkZ3YhTx5Hx6')"> create </v-btn>
+        <v-btn @click="ccc()"> test </v-btn>
     </v-container>
 </template>
 
@@ -41,6 +42,12 @@ export default {
         uidx : this.currUser.uidx
       })
     },
+    allUser(){
+      firebaseMy.test().then(res=>{
+        console.log(res);
+        
+      })
+    }
   }
 }
 </script>
