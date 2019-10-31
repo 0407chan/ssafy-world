@@ -1,6 +1,8 @@
 package com.ssafy.ssafyworld.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,14 @@ public class RoomDAOImpl implements RoomDAO {
 	public List<UserDTO> selectRoom(int rid) throws Exception {
 		List<UserDTO> list = sqlSession.selectList(Namespace+".selectRoom",rid);
 		return list;
+	}
+
+	@Override
+	public void enterRoom(int room, String user) throws Exception {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("rid", room);
+		parameters.put("uid", user);
+		sqlSession.insert(Namespace+".enterRoom",parameters);
 	}
 
 }
