@@ -23,10 +23,10 @@ public class RoomDAOImpl implements RoomDAO {
 
 	@Override
 	public int createRoom(String rname) {
-		sqlSession.insert(Namespace+".createRoom",rname);
-		List<RoomDTO> list=sqlSession.selectList(Namespace+".selectRoomName",rname);
-		return list.get(list.size()-1).getRid();
-	}
+        sqlSession.insert(Namespace+".createRoom",rname);
+        List<RoomDTO> list=sqlSession.selectList(Namespace+".selectRoomName",rname);
+        return list.get(list.size()-1).getRid();
+    }
 
 	@Override
 	public void deleteRoom(int rid) throws Exception {
