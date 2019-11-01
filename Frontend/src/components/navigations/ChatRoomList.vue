@@ -48,6 +48,10 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature/cjh
   </div>
 </template>
 
@@ -68,25 +72,41 @@ export default {
   components: {
 
   },
+  data () {
+      return {
+        dialog: false,
+        insertuid :'',
+        roomname :''
+      }
+    },
+
   computed:{
     //userLogintoken 부분 수정 해야함
     ...mapState('data', ['chatlist', 'chatroomList','currUser']),
+<<<<<<< HEAD
     ...mapState('socket', ['msgDatas']),
+=======
+    ...mapState('socket', ['msgDatas'])
+>>>>>>> feature/cjh
   },
   updated(){
     this.getRoomList()
   },
   methods :{
+    ...mapActions('data', ['registChatroom']),
     ...mapActions('socket', ['getMsg']),
     ...mapMutations('socket', ['clearMsg']),
-    async addChatroom() {
-
+    addChatroom() {
       console.log(this.insertuid);
       console.log(this.roomname);
       let arr = []
       arr.push(this.currUser.uidx)
       console.log(arr);
-      await firebaseMy.createRoom(arr,this.roomname)
+      // 룸 생성
+      this.createRoom(this.roomname)
+      // 룸 참가
+
+      // 룸 최신화
       this.getRoomList()
       this.dialog=false
       this.insertuid=''
@@ -97,11 +117,16 @@ export default {
       await this.getMsg(rid);
       this.$router.push('/chatroom/'+rid)
     },
-    getRoomList(){
-      firebaseMy.getUserRoom(this.$session.get('token').uidx).then(res=>{
-        this.$store.state.data.chatroomList= res
-      })
-    }
+     getRoomList(){
+       this.registChatroom(this.currUser.uid)
+     },
+     createRoom(roomname){
+       api.postRoom(this.roomname).then(res=>{
+         let rid = res.data
+         this.$socket.emit('create',rid)
+       })
+     }
+
   }
 };
 </script>
