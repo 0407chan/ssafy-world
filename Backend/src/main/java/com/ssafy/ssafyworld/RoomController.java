@@ -57,7 +57,7 @@ public class RoomController {
 	 * @return RoomDTO
 	 */
 
-	@RequestMapping(value = "/room/{rid}", method = RequestMethod.GET)
+	@RequestMapping(value = "/room/{rid}", method = RequestMethod.GET, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<List<UserDTO>>selectRoom(@PathVariable("rid") int rid) throws Exception {
 		logger.info(rid+"방에 속한 사람");
@@ -73,7 +73,7 @@ public class RoomController {
 	 * @return Integer
 	 * @throws Exception 
 	 */
-	@RequestMapping(value="/room/create", method=RequestMethod.POST)
+	@RequestMapping(value="/room/create", method=RequestMethod.POST, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<Integer> createRoom(@RequestBody RoomDTO room) throws Exception {
 		logger.info(room.getRname()+" 방 생성");
@@ -109,10 +109,11 @@ public class RoomController {
 	 * @return String
 	 * @throws Exception 
 	 */
-	@RequestMapping(value="/room/enter", method=RequestMethod.POST)
+	@RequestMapping(value="/room/enter", method=RequestMethod.POST, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<String> enterRoom(@RequestBody RoomHasUserDTO dto){
 		try {
+			System.out.println(dto.getRid()+" "+dto.getUid());
 			rService.enterRoom(dto.getRid(), dto.getUid());
 			System.out.println("ok");
 			return ResponseEntity.ok().body("Room Enter!");

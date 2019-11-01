@@ -40,7 +40,7 @@ public class UserController {
 	 * @param X
 	 * @return List<UserDTO> user 데이터
 	 */
-	@RequestMapping(value = "/user", method = RequestMethod.GET)
+	@RequestMapping(value = "/user", method = RequestMethod.GET, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<List<UserDTO>> selectUsers() throws Exception {
 		logger.info("전체 유저 출력");
@@ -54,7 +54,7 @@ public class UserController {
 	 * @param uid
 	 * @return UserDTO
 	 */
-	@RequestMapping(value = "/user/info/{uidx}", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/info/{uidx}", method = RequestMethod.GET, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<UserDTO> getUserInfo(@PathVariable("uidx") int uidx) throws Exception{
 		try {
@@ -75,7 +75,7 @@ public class UserController {
 	 * @return 성공시 200 OK 실패시 400 BAD_REQUEST
 	 * @추가 비밀번호 암호화 해서 저장 추가
 	 */
-	@RequestMapping(value = "/user/register", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/register", method = RequestMethod.POST, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<String> register(@RequestBody UserDTO user) throws Exception {
 		System.out.println(user);
