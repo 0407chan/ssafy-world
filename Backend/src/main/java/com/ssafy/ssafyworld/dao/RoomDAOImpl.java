@@ -24,8 +24,8 @@ public class RoomDAOImpl implements RoomDAO {
 	@Override
 	public int createRoom(String rname) {
 		sqlSession.insert(Namespace+".createRoom",rname);
-		RoomDTO room=sqlSession.selectOne(Namespace+".selectRoomName",rname);
-		return room.getRid();
+		List<RoomDTO> list=sqlSession.selectList(Namespace+".selectRoomName",rname);
+		return list.get(list.size()-1).getRid();
 	}
 
 	@Override
