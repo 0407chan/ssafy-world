@@ -101,6 +101,7 @@ public class UserController {
 	@RequestMapping(value = "/user/login", method = RequestMethod.POST , produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<String> login(@RequestBody UserDTO user) throws Exception {
+		user.setStaff(0);
 		UserDTO resultUser = uService.getUser(user);
 		if (resultUser == null) {
 			logger.error("없는 유저");

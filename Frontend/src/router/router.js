@@ -4,7 +4,7 @@ import LoginPage from "@/pages/LoginPage.vue"
 import RegisterPage from "@/pages/RegisterPage.vue"
 import ChatRoomPage from "@/pages/ChatRoomPage.vue"
 import UserPage from "@/pages/UserPage.vue"
-
+import UserInfoPage from "@/pages/UserPage.vue"
 Vue.use(Router)
 
 export default new Router({
@@ -35,5 +35,12 @@ export default new Router({
             name: 'user',
             component: UserPage
         },
+        {
+          path: '/userinfo/:id',
+          component: UserInfoPage,
+          name: 'userinfo',
+          props: true,
+        }
+
     ]
 })

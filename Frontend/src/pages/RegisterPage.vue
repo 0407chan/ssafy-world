@@ -90,6 +90,7 @@ export default {
         uid: this.uid,
         uname : this.uname,
         password: this.password,
+        img: "https://i.imgur.com/PuEZpTi.png"
       };
       let res = await this.register(params);
       console.log("registerAction",res)

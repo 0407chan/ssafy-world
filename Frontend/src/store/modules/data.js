@@ -9,6 +9,7 @@ const state = {
   friendList : [],  // user가 가지고 있는 친구 목록
   chatroomList : [],  // user가 접속해있는 단체방 목록
   currUser: '',
+  navDrawer: false,
 }
 
 // actions
@@ -27,7 +28,7 @@ const actions = {
     return api.login(params).then(res =>{
       if (res.status == '200') {
         state.currUser = res.data;
-        console.log(state.currUser);
+        console.log("로그인 했냐 ",state.currUser);
 
         actions.registFriend()
         actions.registChatroom()
@@ -90,6 +91,10 @@ const mutations = {
     state.currUser = ''
     state.chatroomList=[]
     state.friendList=[]
+  },
+
+  toggleNav(state){
+    state.navDrawer = !state.navDrawer;
   }
 };
 

@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 // const apiUrl = 'http://localhost:8080/ssafyworld';
-const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
-// const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
+// const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
+const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
 
 export default {
   // param 없는 경우
@@ -12,13 +12,13 @@ export default {
 
 
   /**
-   * 
+   *
    * 2019.10.29 준범이
    * 자소서도 안돼
    * 면접도 안돼
    * 이 안에 배신자가 있다
    * 이게 내 결론이다
-   *  
+   *
    */
   getUserInfo(params) {
     console.log(params.id)
@@ -68,6 +68,7 @@ export default {
       uid: params.uid,
       uname: params.uname,
       password: params.password,
+      img: params.img,
     }).then(response => {
       return response
     })
@@ -104,25 +105,25 @@ export default {
   // 파라미터 : 방 번호
   // 리턴 : 방 번호에 해당되는 리스트 (json)
   getUserByRoom(param) {
-    
+
     return axios.post(`${apiUrl}/user/rooms`,{
       'uid' : param
     }).then(async res=>{
         // let arr = []
         // console.log(res);
-        
-        
+
+
         // for(let i=0;i<res.data.length;i++){
         //   let tmp = await this.getRoomName(res.data[i].rid)
         //   console.log(tmp);
-          
+
         //   let data = {
         //     'name' : tmp.data.rname,
         //     'path' : '/chatroom/'+res.data[i].rid
         //   }
         //   arr.push(data)
         // }
-        
+
         return res.data
       })
   },
