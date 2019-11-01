@@ -81,9 +81,6 @@ export default {
     ...mapState('data', ['chatlist', 'chatroomList','currUser']),
     ...mapState('socket', ['msgDatas']),
   },
-  mounted(){
-    this.getRoomList()
-  },
   methods :{
     ...mapActions('data', ['registChatroom']),
     ...mapActions('socket', ['getMsg']),
