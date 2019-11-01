@@ -68,22 +68,28 @@ export default {
     // }),
     ...mapState('data',['currUser']),
     getNewMessage(){
-      return this.$store.state.newMessage;
+      return this.$store.state.data.newMessage;
     }
   },
   watch:{
     getNewMessage(val){
-      let data = firebaseMy.getRoomInfo(window.location.pathname.split('/')[2])
-      //데이터 한뭉탱이 처리해야함
-
-      this.$store.state.newMessage=false
-    }
+      firebaseMy.getRoomInfo(window.location.pathname.split('/')[2]).then(res=>{
+        this.setMessageList(res)
+        console.log("실행되는지");
+        
+        this.$store.state.data.newMessage=false
+      })    
+    },
+    //라우터 움직일때 사용되는 것
+    '$route'(to, from) {
+      firebaseMy.getRoomInfo(window.location.pathname.split('/')[2]).then(res=>{
+        this.setMessageList(res)
+      })
+    },
   },
   mounted() {
     firebaseMy.getMessageRealtime()
     firebaseMy.getRoomInfo(window.location.pathname.split('/')[2]).then(res=>{
-
-      
       this.setMessageList(res)
     })
 
@@ -116,31 +122,48 @@ export default {
         })
       }
       this.msgDatas=arr
+      this.scrollToBottom();
     }
     ,
 
     sendMessage() {
-      if (this.msg.length === 0) return false;
-      var today = new Date();
-      this.pushMsgData({
-        from: {
-          name: this.currUser.uid,
-        },
-        msg:this.msg,
-        time:today,
-      });
-      this.$sendMessage({
-        rid:window.location.pathname,
-        name: this.currUser.uid,
-        msg:this.msg,
-        time:today.toString(),
-      });
+      let params = {
+        message :this.msg
+        ,time : new Date()
+        ,uidx : this.$session.get('token').uidx
+      }
+      let rid =window.location.pathname.split('/')[2]
+      firebaseMy.addMessage(rid,params)
+      
+      this.$store.state.data.newMessage=true;
       this.msg = '';
-      this.scrollToBottom();
-    },
+      // firebaseMy.addMessage(rid,params).then(res=>{
+      //   firebaseMy.getRoomInfo(rid).then(res=>{
+      //     this.setMessageList(res)
+      //     this.msg = '';
+      //     this.scrollToBottom();
+      //   })
+      // })
+      
+      
 
-    test(){
-      console.log(this.msgs);
+      // if (this.msg.length === 0) return false;
+      // var today = new Date();
+      // this.pushMsgData({
+      //   from: {
+      //     name: this.currUser.uid,
+      //   },
+      //   msg:this.msg,
+      //   time:today,
+      // });
+      // this.$sendMessage({
+      //   rid:window.location.pathname,
+      //   name: this.currUser.uid,
+      //   msg:this.msg,
+      //   time:today.toString(),
+      // });
+      // this.msg = '';
+      // this.scrollToBottom();
     },
 
     scrollToBottom(){

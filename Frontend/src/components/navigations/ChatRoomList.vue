@@ -73,7 +73,7 @@ export default {
     ...mapState('data', ['chatlist', 'chatroomList','currUser']),
     ...mapState('socket', ['msgDatas']),
   },
-  mounted(){
+  updated(){
     this.getRoomList()
   },
   methods :{

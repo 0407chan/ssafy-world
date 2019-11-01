@@ -44,7 +44,7 @@ export default {
     getMessageRealtime(){
         return firestore.collection(ROOM)
         .onSnapshot(function(snapshot) {
-          store.state.newMessage = true;
+          store.state.data.newMessage = true;
         });
     },
 
@@ -82,16 +82,18 @@ export default {
     //해당되어 있는 단톡방에 메세지 추가
     //id=rid(firebase에 접근할 수 있는) params {message,time,uidx}
     addMessage(id,params){
-        this.getRoomInfo(id).then(res=>{
+        return this.getRoomInfo(id).then(res=>{
             console.log(res);
             
             res.messages.push(params.message)
             res.time.push(params.time)
             res.uidx.push(params.uidx)
-            firestore.collection(ROOM).doc(id).update({
+            return firestore.collection(ROOM).doc(id).update({
                 'messages' : res.messages,
                 'time': res.time,
                 'uidx' : res.uidx
+            }).then(res=>{
+                return 'sucess'
             })
         })
     },
@@ -125,9 +127,7 @@ export default {
     getUserRoom(uidx){
         return this.getAllRoom().then(res=>{
             let data = []
-            
-            for(let i =0;i<res.length;i++){
-                
+            for(let i =0;i<res.length;i++){   
                 for(let j=0;j<res[i].data.chatUserList.length;j++){
                     if(res[i].data.chatUserList[j]==uidx){
                         data.push({
@@ -138,8 +138,6 @@ export default {
                     }
                 }
             }
-            console.log(data);
-            
             return data
         })
     },
