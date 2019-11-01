@@ -1,9 +1,9 @@
 <template>
   <div v-show="chatlist">
     <v-list v-for="i in chatroomList">
-      <v-list-item @click="goTo(i.path)">
+      <v-list-item @click="goTo(i.rid)">
         <v-list-item-title>
-          {{ i.name }}
+          {{ i.rname }}
         </v-list-item-title>
       </v-list-item>
     </v-list>
@@ -32,7 +32,7 @@ export default {
     ...mapState('socket', ['msgDatas'])
   },
   mounted(){
-   
+
   },
   methods :{
     ...mapActions('socket', ['getMsg']),
@@ -42,8 +42,8 @@ export default {
     },
     async goTo(rid) {
       await this.clearMsg();
-      await this.getMsg(rid.split('/')[2]);
-      this.$router.push(rid)
+      await this.getMsg(rid);
+      this.$router.push('/chatroom/'+rid)
     }
   }
 };

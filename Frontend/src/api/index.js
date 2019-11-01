@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const apiUrl = 'http://localhost:8080/ssafyworld';
-// const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
+// const apiUrl = 'http://localhost:8080/ssafyworld';
+const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
 // const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
 
 export default {
@@ -96,7 +96,7 @@ export default {
   // 파라미터 : 방 번호
   // 리턴 : 방 번호에 해당되는 리스트 (json)
   getRoomName(param) {
-    return axios.get(`${apiUrl}/room/${param}`)
+    return axios.get(`${apiUrl}/room/name/${param}`)
   },
 
   // 10-28 최재형
@@ -108,18 +108,22 @@ export default {
     return axios.post(`${apiUrl}/user/rooms`,{
       'uid' : param
     }).then(async res=>{
-        let arr = []
+        // let arr = []
+        // console.log(res);
         
-        for(let i=0;i<res.data.length;i++){
-          let tmp = await this.getRoomName(res.data[i].rid)
-          let data = {
-            'name' : tmp.data.rname,
-            'path' : '/chatroom/'+res.data[i].rid
-          }
-          arr.push(data)
-        }
         
-        return arr
+        // for(let i=0;i<res.data.length;i++){
+        //   let tmp = await this.getRoomName(res.data[i].rid)
+        //   console.log(tmp);
+          
+        //   let data = {
+        //     'name' : tmp.data.rname,
+        //     'path' : '/chatroom/'+res.data[i].rid
+        //   }
+        //   arr.push(data)
+        // }
+        
+        return res.data
       })
   },
 

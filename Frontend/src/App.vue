@@ -28,7 +28,9 @@ export default {
         ...mapActions('data', ['refresh']),
     },
     mounted(){
-      this.refresh(this.$session.get('token'))  
+        this.$session.start()
+        let token = this.$session.get('token')
+        this.refresh(token)
     },
     destroyed() {
         this.$socket.emit('disconnect', {

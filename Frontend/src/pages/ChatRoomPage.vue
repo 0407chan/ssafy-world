@@ -68,13 +68,17 @@ export default {
   },
   mounted() {
     const $ths = this
-    this.$socket.on('/chatroom', (data) => {
+    console.log("connect chatroom" , window.location.pathname);
+    if(window.location.pathname.split('/')[2]!=undefined)
+      this.getMsg(window.location.pathname.split('/')[2])
+    this.$socket.on(window.location.pathname, (data) => {
       var today = new Date(data.time);
       data.time = today;
       this.pushMsgData(data)
     });
   },
   methods: {
+    ...mapActions('socket', ['getMsg']),
     ...mapMutations('socket',['pushMsgData']),
 
     sendMessage() {

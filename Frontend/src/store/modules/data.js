@@ -15,10 +15,12 @@ const state = {
 const actions = {
 
   refresh({commit},params){
-    state.currUser = params;
-    
-    actions.registFriend()
-    actions.registChatroom()
+    if(params != null)
+      state.currUser = params;
+    if(state.currUser != ''){
+      actions.registFriend()
+      actions.registChatroom()
+    }
   },
 
   async login({ commit }, params) {

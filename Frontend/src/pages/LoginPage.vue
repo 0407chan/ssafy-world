@@ -108,7 +108,7 @@ export default {
         this.successAlert("환영합니다!", "최고의 채팅을 이용해보세요.");
         this.$session.start();
         this.$session.set('token', res.data);
-        this.$router.push({ name: 'chatroom' }).catch(err => {})
+        this.$router.push({ name: 'user' }).catch(err => {})
       }
       else {
         this.errorAlert(res.data);
