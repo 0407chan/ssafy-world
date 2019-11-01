@@ -40,6 +40,16 @@ const firestore = firebase.firestore();
 
 
 export default {
+    //변화 감지 함수
+    getMessageRealtime(){
+        return firestore.collection(ROOM)
+        .onSnapshot(function(snapshot) {
+          store.state.data.newMessage = true;
+        });
+    },
+
+    //10.31 최재형
+    //해당 방 번호에 있는 모든 정보 꺼내옴 (firebase DB 참고)
     getRoomInfo(id){
         var postDoc = firestore.collection(ROOM).doc(id);
         return postDoc.get().then(function(doc) {
@@ -51,7 +61,85 @@ export default {
             }
           }).catch(function(error) {
             console.log("Error getting document:", error);
-          });
+          })
+    }, 
+
+    //10.31 최재형
+    //단톡방 하나 만들기 / 유저정보를 바로 추가하고, 이름을 지정해준다
+    //리턴값 rid (mysql에 ridx, rid, rname 순으로 들어가길 원함)
+    createRoom(uidx, rname) {
+        return firestore.collection(ROOM).add({
+            chatUserList : uidx,
+            messages : [],
+            time : [],
+            uidx : [],
+            rname : rname
+        }).then(function(docRef) {
+            return docRef.id;
+        })
+    },
+    //10.31 최재형
+    //해당되어 있는 단톡방에 메세지 추가
+    //id=rid(firebase에 접근할 수 있는) params {message,time,uidx}
+    addMessage(id,params){
+        return this.getRoomInfo(id).then(res=>{
+            console.log(res);
+            
+            res.messages.push(params.message)
+            res.time.push(params.time)
+            res.uidx.push(params.uidx)
+            return firestore.collection(ROOM).doc(id).update({
+                'messages' : res.messages,
+                'time': res.time,
+                'uidx' : res.uidx
+            }).then(res=>{
+                return 'sucess'
+            })
+        })
+    },
+
+    //10.31 최재형
+    //해당되는 친구를 추가
+    //uidx 초대할 친구의 uidx, 초대될 방의 rid(firebase 에 접근이 가능한)
+    inviteUser(uidx,rid){
+        this.getRoomInfo(rid).then(res=>{
+            res.chatUserList.push(uidx)
+            firestore.collection(ROOM).doc(rid).update({
+                'chatUserList' : res.chatUserList,
+            })
+        })
+    },
+
+    //10.31 최재형
+    // 전체 룸 정보를 가져옴 rid 포함
+    getAllRoom(){
+        return firestore.collection(ROOM).get().then(function(querySnapshot) {
+            let data = []
+            querySnapshot.forEach(function(doc) {
+                data.push({id:doc.id,data:doc.data()})
+            });
+            return data
+        });
+    },
+
+    //10.31 최재형
+    //해당 유저가 가지고 있는 방 목록 보여주기
+    getUserRoom(uidx){
+        return this.getAllRoom().then(res=>{
+            let data = []
+            for(let i =0;i<res.length;i++){   
+                for(let j=0;j<res[i].data.chatUserList.length;j++){
+                    if(res[i].data.chatUserList[j]==uidx){
+                        data.push({
+                            rid : res[i].id,
+                            rname : res[i].data.rname
+                        })
+                        break;
+                    }
+                }
+            }
+            return data
+        })
     },
 
   /********************\
