@@ -17,17 +17,17 @@
                     {{message.from.name}}
                   </span>
                   <span v-if="message.time">
-                    <!-- {{getTime(message.time)}} -->
+                    {{getTime(message.time)}}
                   </span>
                 </div>
                 <div class="content">
                   {{message.msg}}
-                  <!-- <chat-image v-if="message.image" :imgsrc="message.image" @imageLoad="imageLoad"></chat-image> -->
+                  <chat-image v-if="message.image" :imgsrc="message.image" @imageLoad="imageLoad"></chat-image>
                 </div>
               </div>
-              <!-- <div v-if="message.time && index > 0" :class="{time: index-1 >= 0 && message.time.getMinutes() == msgDatas[index-1].time.getMinutes()}"> -->
-                <!-- {{getTime(message.time)}} -->
-              <!-- </div> -->
+              <div v-if="message.time && index > 0" :class="{time: index-1 >= 0 && message.time.getMinutes() == msgDatas[index-1].time.getMinutes()}">
+                {{getTime(message.time)}}
+              </div>
             </v-row>
           </v-col>
         </v-flex>
@@ -50,7 +50,6 @@
 
 <script>
 import { mapMutations, mapState, mapActions } from 'vuex' 
-import firebaseMy from '@/plugins/FirebaseService'
 
 export default {
   name: 'ChatRoomPage',
@@ -58,51 +57,26 @@ export default {
     return {
       datas: [],
       msg:'',
-      msgDatas:[]
     };
   },
   computed: {
-    // ...mapState({
-    //   'msgDatas': state => state.socket.msgDatas,
-    //   //아이디 vuex 링크 잡기
-    // }),
+    ...mapState({
+      'msgDatas': state => state.socket.msgDatas,
+      //아이디 vuex 링크 잡기
+    }),
     ...mapState('data',['currUser']),
-    getNewMessage(){
-      return this.$store.state.data.newMessage;
-    }
-  },
-  watch:{
-    getNewMessage(val){
-      firebaseMy.getRoomInfo(window.location.pathname.split('/')[2]).then(res=>{
-        this.setMessageList(res)
-        console.log("실행되는지");
-        
-        this.$store.state.data.newMessage=false
-      })    
-    },
-    //라우터 움직일때 사용되는 것
-    '$route'(to, from) {
-      firebaseMy.getRoomInfo(window.location.pathname.split('/')[2]).then(res=>{
-        this.setMessageList(res)
-      })
-    },
+    
   },
   mounted() {
-    firebaseMy.getMessageRealtime()
-    firebaseMy.getRoomInfo(window.location.pathname.split('/')[2]).then(res=>{
-      this.setMessageList(res)
-    })
-
-    
-    // const $ths = this
-    // console.log("connect chatroom" , window.location.pathname);
-    // if(window.location.pathname.split('/')[2]!=undefined)
-    //   this.getMsg(window.location.pathname.split('/')[2])
-    // this.$socket.on(window.location.pathname, (data) => {
-    //   var today = new Date(data.time);
-    //   data.time = today;
-    //   this.pushMsgData(data)
-    // });
+    const $ths = this
+    console.log("connect chatroom" , window.location.pathname);
+    if(window.location.pathname.split('/')[2]!=undefined)
+      this.getMsg(window.location.pathname.split('/')[2])
+    this.$socket.on(window.location.pathname, (data) => {
+      var today = new Date(data.time);
+      data.time = today;
+      this.pushMsgData(data)
+    });
   },
   methods: {
     ...mapActions('socket', ['getMsg']),
@@ -127,43 +101,23 @@ export default {
     ,
 
     sendMessage() {
-      let params = {
-        message :this.msg
-        ,time : new Date()
-        ,uidx : this.$session.get('token').uidx
-      }
-      let rid =window.location.pathname.split('/')[2]
-      firebaseMy.addMessage(rid,params)
-      
-      this.$store.state.data.newMessage=true;
+      if (this.msg.length === 0) return false;
+      var today = new Date();
+      this.pushMsgData({
+        from: {
+          name: this.currUser.uid,
+        },
+        msg:this.msg,
+        time:today,
+      });
+      this.$sendMessage({
+        rid:window.location.pathname,
+        name: this.currUser.uid,
+        msg:this.msg,
+        time:today.toString(),
+      });
       this.msg = '';
-      // firebaseMy.addMessage(rid,params).then(res=>{
-      //   firebaseMy.getRoomInfo(rid).then(res=>{
-      //     this.setMessageList(res)
-      //     this.msg = '';
-      //     this.scrollToBottom();
-      //   })
-      // })
-      
-      
-
-      // if (this.msg.length === 0) return false;
-      // var today = new Date();
-      // this.pushMsgData({
-      //   from: {
-      //     name: this.currUser.uid,
-      //   },
-      //   msg:this.msg,
-      //   time:today,
-      // });
-      // this.$sendMessage({
-      //   rid:window.location.pathname,
-      //   name: this.currUser.uid,
-      //   msg:this.msg,
-      //   time:today.toString(),
-      // });
-      // this.msg = '';
-      // this.scrollToBottom();
+      this.scrollToBottom();
     },
 
     scrollToBottom(){
