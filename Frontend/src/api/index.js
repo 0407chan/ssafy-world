@@ -216,4 +216,14 @@ export default {
     })
   },
 
+  postRoom(rname){
+    return axios.post(`${apiUrl}/room/create`, {
+      'rname': rname
+    }).then(res=>{
+      return res
+    }).catch(error=>{
+      return error
+    })
+  },
+
 }
