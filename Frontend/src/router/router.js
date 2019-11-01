@@ -4,7 +4,6 @@ import LoginPage from "@/pages/LoginPage.vue"
 import RegisterPage from "@/pages/RegisterPage.vue"
 import ChatRoomPage from "@/pages/ChatRoomPage.vue"
 import UserPage from "@/pages/UserPage.vue"
-import TestPage from "@/pages/TestPage.vue"
 
 Vue.use(Router)
 
@@ -35,11 +34,6 @@ export default new Router({
             path: '/user',
             name: 'user',
             component: UserPage
-        },
-        {
-            path: '/test',
-            name: 'test',
-            component: TestPage
         },
     ]
 })

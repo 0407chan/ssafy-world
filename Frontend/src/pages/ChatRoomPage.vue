@@ -50,7 +50,6 @@
 
 <script>
 import { mapMutations, mapState, mapActions } from 'vuex' 
-import firebaseMy from '@/plugins/FirebaseService'
 
 export default {
   name: 'ChatRoomPage',

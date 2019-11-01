@@ -48,17 +48,12 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-<<<<<<< HEAD
-=======
-
->>>>>>> feature/cjh
   </div>
 </template>
 
 <script>
 import { mapActions, mapState, mapMutations } from 'vuex';
 import api from '@/api'
-import firebaseMy from '@/plugins/FirebaseService'
 
 export default {
   name: 'ChatRoomList',
