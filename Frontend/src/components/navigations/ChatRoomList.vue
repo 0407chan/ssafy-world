@@ -114,7 +114,10 @@ export default {
      createRoom(roomname){
        api.postRoom(this.roomname).then(res=>{
          let rid = res.data
-         this.$socket.emit('create',rid)
+         this.$socket.emit('create',{
+           rid : rid,
+           rname : roomname
+           })
        })
      }
 
