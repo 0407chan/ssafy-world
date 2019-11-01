@@ -46,4 +46,14 @@ public class UserServiceImpl implements UserService {
 	public UserDTO getUserInfo(int uidx) throws Exception {
 		return dao.getUserInfo(uidx);
 	}
+
+	@Override
+	public void update(UserDTO user) throws Exception {
+		dao.update(user);
+	}
+
+	@Override
+	public void deleteUser(int uidx) throws Exception {
+		dao.deleteUser(uidx);
+	}
 }

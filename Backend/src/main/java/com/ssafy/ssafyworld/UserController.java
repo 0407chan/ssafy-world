@@ -78,6 +78,7 @@ public class UserController {
 	@RequestMapping(value = "/user/register", method = RequestMethod.POST, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<String> register(@RequestBody UserDTO user) throws Exception {
+		System.out.println(user);
 		UserDTO resultUser = uService.getUser(user);
 		if (resultUser != null) {
 			logger.error("이미 존재하는 유저");
@@ -116,12 +117,47 @@ public class UserController {
 	}
 	
 	/**
+	 * 2019.11.01 박규빈 
+	 * @기능 유저수정
+	 * @호출방법 ssafywolrd/user/update
+	 * @param uidx, uname, password
+	 * @return 성공 200 OK , 실패 400 BAD REQUEST, UserDTO JSON형태로 보냄
+	 */
+	@RequestMapping(value = "/user/update", method = RequestMethod.POST , produces="application/json; charset=utf8")
+	@ResponseBody
+	public ResponseEntity<String> update(@RequestBody UserDTO user) throws Exception {
+		logger.info("유저 수정");
+		String hashPw = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+		user.setPassword(hashPw);
+		System.out.println("들어온"+user);
+		uService.update(user);
+		System.out.println(uService.getUserInfo(user.getUidx()).toString());
+		return ResponseEntity.ok().body(uService.getUserInfo(user.getUidx()).toString());
+	}
+	
+	/**
 	 * 10-29 : 이규찬    10-30 수정 : 박규빈
 	 *
 	 * @기능 유저 전체 리스트를 가져옴
 	 * @호출방법 ssafywolrd/user/rooms
 	 * @param UserDTO
 	 * @return List<RoomDTO> 
+	 */
+	@RequestMapping(value = "/user/delete/{uidx}", method = RequestMethod.GET , produces="application/json; charset=utf8")
+	@ResponseBody
+	public ResponseEntity<String> deleteUser(@PathVariable("uidx") int uidx) throws Exception {
+		logger.info("유저 삭제");
+		uService.deleteUser(uidx);
+		return ResponseEntity.ok().body("삭제 성공");
+	}
+	
+	/**
+	 * 11-01 : 박규빈 
+	 *
+	 * @기능 유저삭제
+	 * @호출방법 ssafywolrd/user/delete
+	 * @param idx
+	 * @return 200 OK  
 	 */
 	@RequestMapping(value = "/user/rooms", method = RequestMethod.POST , produces="application/json; charset=utf8")
 	@ResponseBody
