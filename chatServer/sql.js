@@ -24,7 +24,7 @@ module.exports.postMessage=(object)=>{
       "text":object.text, 
       "uid":object.uid,
       "rid":object.rid,
-      "time":'1994-10-31' }).then(res=>{
+      "time":object.time }).then(res=>{
         console.log("sucess");
         
       }).catch(error=>{

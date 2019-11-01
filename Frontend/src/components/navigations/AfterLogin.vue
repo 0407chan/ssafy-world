@@ -90,7 +90,7 @@ export default {
     },
     methods: {
         ...mapMutations('data', ['setMenu', 'clearUser', 'reverse']),
-        ...mapActions('data', ['registChatroom','registChatroom'])
+        ...mapActions('data', ['registChatroom','registFriend','login'])
     },
 }
 </script>
