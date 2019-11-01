@@ -53,6 +53,11 @@ const actions = {
     return resp;
   },
 
+  async update({ commit }, params) {
+    const resp = await api.update(params);
+    return resp;
+  },
+
   async getUser({ commit }, params) {
     const resp = await api.getUser()
   },

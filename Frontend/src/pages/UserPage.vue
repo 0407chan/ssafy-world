@@ -35,7 +35,7 @@
                                 </v-dialog>
                             </v-col>
                             <v-col>
-                                <UpdateInfo :user="[desserts[2].value, desserts[1].value]" />
+                                <UpdateInfo :user="[uidx, desserts[2].value, desserts[1].value]" />
                             </v-col>
                             <v-col>
                                 <v-dialog v-model="dialog" persistent max-width="600px">
@@ -53,8 +53,8 @@
 </template>
 
 <script>
-import {mapState,mapActions} from "vuex";
-import axios from "axios";
+import { mapState, mapActions } from "vuex"
+import axios from "axios"
 import Swal from 'sweetalert2'
 import UpdateInfo from '@/components/user/UpdateInfo'
 
@@ -76,6 +76,7 @@ export default {
       modiImage:'',
       imageName:'',
       dday:'',
+      uidx: 0,
 
       headers: [
           {
@@ -106,9 +107,6 @@ export default {
   components: {
     UpdateInfo,
   },
-  computed: {
-    ...mapState('data', ['userLoginToken']),
-  },
   mounted() {
     this.getUserInfoAction()
   },
@@ -116,27 +114,21 @@ export default {
 
     ...mapActions("data", ['getUserInfo']),
     async getUserInfoAction() {
-      let params = {
-        id: this.$session.get('token').uid,
-      }
+      let user = await this.getUserInfo(this.$session.get('token').uidx)
+      console.log(user)
 
-      let user = await this.getUserInfo(params);
-      console.log(user.data.staff)
-
-      this.desserts[0].value = user.data.staff;
-      this.desserts[1].value = user.data.uname;
-      this.desserts[2].value = user.data.uid;
-
-      // var user = await this.getUserInfo(userLoginToken);
-      // this.desserts[0].value = user.uid;
+      this.uidx = user.data.uidx
+      this.desserts[0].value = user.data.staff
+      this.desserts[1].value = user.data.uname
+      this.desserts[2].value = user.data.uid
     },
 
     /* 2019.10.08 이찬호
     * 프로필 수정 할 수 있게 된다.
     */
-    modifyActivate(){
+    modifyActivate() {
       this.isModify = !this.isModify;
-      if(this.isModify){
+      if (this.isModify) {
         this.modiName = this.UserList[0].username;
         this.modiAge = this.UserList[0].age.toString();
         this.modiGender = this.UserList[0].gender ;
@@ -181,9 +173,11 @@ export default {
     pickFile() {
       this.$refs.image.click();
     },
-    setImageUrl(url){
+
+    setImageUrl(url) {
       this.modiImage = url;
     },
+
     onFilePicked(e) {
       this.modiImage = '';
       const files = e.target.files;

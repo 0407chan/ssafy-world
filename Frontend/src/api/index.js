@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 // const apiUrl = 'http://localhost:8080/ssafyworld';
-const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
-// const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
+// const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
+const apiUrl = 'http://70.12.246.62:8080/ssafyworld'; // 9비니여보야의여보야
 
 export default {
 
@@ -20,14 +20,31 @@ export default {
    * 이게 내 결론이다
    *  
    */
-  getUserInfo(params) {
-    console.log(params.id)
-    return axios.post(`${apiUrl}/user/info`, {
-      uid: params.id,
-    }).then(response => {
-      console.log("규빈")
-      console.log(response)
+  getUserInfo(param) {
+    return axios.get(`${apiUrl}/user/info/${param}`)
+    .then(response => {
       return response
+    })
+    .catch(error => {
+      console.log(error)
+      return error.response
+    });
+  },
+
+  /**
+   * 
+   * 2019.11.01 준범이
+   * 기능: 회원정보수정
+   * 파라미터: param = uidx
+   * 리턴: 없음
+   * 특징: 이건 백문제
+   *  
+   */
+  update(params) {
+    return axios.post(`${apiUrl}/user/update`, {
+      uidx: params.uidx,
+      uname: params.uname,
+      password: params.password
     })
     .catch(error => {
       console.log(error)
@@ -42,7 +59,7 @@ export default {
   * 리턴 : 일치하는 유저 가져오기
   */
   login(params) {
-    console.log("index",params);
+    console.log("index", params);
     return axios.post(`${apiUrl}/user/login`, {
       uid: params.id,
       password: params.pw,
@@ -51,7 +68,6 @@ export default {
     })
     .catch(error => {
       console.log(error);
-
       return error.response
     });
   },
@@ -62,7 +78,7 @@ export default {
   * 리턴 : 일치하는 유저 가져오기
   */
   register(params) {
-    console.log("index",params);
+    console.log("index", params);
     return axios.post(`${apiUrl}/user/register`, {
       // params,
       uid: params.uid,
