@@ -64,6 +64,7 @@ public class RoomController {
 		return ResponseEntity.ok().body(rService.selectRoom(rid));
 	}
 	
+	
 	/**
 	 * 10-23 : 이규찬 
 	 * @기능 방생성

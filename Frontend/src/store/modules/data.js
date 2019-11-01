@@ -1,5 +1,4 @@
 import api from '@/api'
-import firebaseMy from '@/plugins/FirebaseService'
 
 // initial state
 const state = {

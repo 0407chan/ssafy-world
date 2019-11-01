@@ -48,17 +48,12 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-<<<<<<< HEAD
-=======
-
->>>>>>> feature/cjh
   </div>
 </template>
 
 <script>
 import { mapActions, mapState, mapMutations } from 'vuex';
 import api from '@/api'
-import firebaseMy from '@/plugins/FirebaseService'
 
 export default {
   name: 'ChatRoomList',
@@ -83,11 +78,7 @@ export default {
   computed:{
     //userLogintoken 부분 수정 해야함
     ...mapState('data', ['chatlist', 'chatroomList','currUser']),
-<<<<<<< HEAD
     ...mapState('socket', ['msgDatas']),
-=======
-    ...mapState('socket', ['msgDatas'])
->>>>>>> feature/cjh
   },
   updated(){
     this.getRoomList()
@@ -123,7 +114,10 @@ export default {
      createRoom(roomname){
        api.postRoom(this.roomname).then(res=>{
          let rid = res.data
-         this.$socket.emit('create',rid)
+         this.$socket.emit('create',{
+           rid : rid,
+           rname : roomname
+           })
        })
      }
 

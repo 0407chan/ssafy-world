@@ -1,5 +1,9 @@
 Manifest-Version: 1.0
 Built-By: multicampus
+<<<<<<< HEAD
 Build-Jdk: 1.8.0_212
+=======
+Build-Jdk: 1.8.0_221
+>>>>>>> e419662d3b94119dd605b2fc80fe216566de3e1c
 Created-By: Maven Integration for Eclipse
 

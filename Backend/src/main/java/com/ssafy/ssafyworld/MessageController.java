@@ -41,7 +41,7 @@ public class MessageController {
 	 * @param X
 	 * @return List<MessageDTO>
 	 */
-	@RequestMapping(value = "/message", method = RequestMethod.GET)
+	@RequestMapping(value = "/message", method = RequestMethod.GET, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<List<MessageDTO>> selectMessages() throws Exception {
 		logger.info("전체 메세지 출력");
@@ -55,7 +55,7 @@ public class MessageController {
 	 * @param rid
 	 * @return List<MessageDTO>
 	 */
-	@RequestMapping(value = "/message/{rid}", method = RequestMethod.GET)
+	@RequestMapping(value = "/message/{rid}", method = RequestMethod.GET, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<List<MessageDTO>> roomMessages(@PathVariable("rid") int rid) throws Exception {
 		logger.info(rid+"번 방 메세지 추출 완료");
