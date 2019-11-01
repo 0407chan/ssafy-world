@@ -76,6 +76,7 @@ public class RoomController {
 	@ResponseBody
 	public ResponseEntity<Integer> createRoom(@RequestBody RoomDTO room) throws Exception {
 		logger.info(room.getRname()+" 방 생성");
+		System.out.println(room);
 		return ResponseEntity.ok().body(rService.createRoom(room.getRname()));
 	}
 	

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-// const apiUrl = 'http://localhost:8080/ssafyworld';
-const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
+const apiUrl = 'http://localhost:8080/ssafyworld';
+// const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
 // const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
 
 export default {
@@ -173,6 +173,16 @@ export default {
   postAddFriend(uid){
     return axios.post(`${apiUrl}/friend/add`, {
       'uid': uid
+    }).then(res=>{
+      return res
+    }).catch(error=>{
+      return error
+    })
+  },
+
+  postRoom(rname){
+    return axios.post(`${apiUrl}/room/create`, {
+      'rname': rname
     }).then(res=>{
       return res
     }).catch(error=>{
