@@ -19,7 +19,7 @@
             </v-list-item-title>
         </v-list-item>
         <FriendList />
-        
+
         <!-- 대화방 열기 -->
         <v-list-item @click="reverse('chatlist')">
             <v-list-item-action>
@@ -69,11 +69,11 @@ export default {
                 }
             }
         })
-        
+
         this.$socket.on('disc', (data) => {
             this.$socket.disconnect()
         })
-        
+
         if (this.currUser != '') {
             this.login(this.currUser.uid).then(res => {
                 if (res.status == '200')

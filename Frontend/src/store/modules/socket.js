@@ -11,8 +11,6 @@ const getters = {
 // actions
 const actions = {
   getMsg({commit},params){
-    console.log(params);
-    
     api.getRoomMessage(params).then(res=>{
       console.log(res.data);
       for(let i =0;i<res.data.length;i++){

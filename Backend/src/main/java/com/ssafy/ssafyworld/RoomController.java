@@ -6,7 +6,6 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.ssafyworld.dto.RoomDTO;
+import com.ssafy.ssafyworld.dto.RoomHasUserDTO;
+import com.ssafy.ssafyworld.dto.UserDTO;
 import com.ssafy.ssafyworld.service.MessageService;
 import com.ssafy.ssafyworld.service.RoomService;
 
@@ -58,8 +59,8 @@ public class RoomController {
 
 	@RequestMapping(value = "/room/{rid}", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<RoomDTO>selectRoom(@PathVariable("rid") int rid) throws Exception {
-		logger.info(rid+"방 선택 완료");
+	public ResponseEntity<List<UserDTO>>selectRoom(@PathVariable("rid") int rid) throws Exception {
+		logger.info(rid+"방에 속한 사람");
 		return ResponseEntity.ok().body(rService.selectRoom(rid));
 	}
 	
@@ -96,6 +97,25 @@ public class RoomController {
 		} catch (Exception e) {
 			logger.error("방 삭제 실패");
 			return ResponseEntity.badRequest().body("방 삭제 실패");
+		}
+	}
+	/**
+	 * 10-31 : 이규찬 
+	 * @기능 방입장
+	 * @호출방법 ssafywolrd/room/enter
+	 * @param RoomHasUserDTO
+	 * @return String
+	 * @throws Exception 
+	 */
+	@RequestMapping(value="/room/enter", method=RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<String> enterRoom(@RequestBody RoomHasUserDTO dto){
+		try {
+			rService.enterRoom(dto.getRid(), dto.getUid());
+			System.out.println("ok");
+			return ResponseEntity.ok().body("Room Enter!");
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body("Room Enter Fail!");
 		}
 	}
 }

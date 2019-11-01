@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.ssafyworld.dao.RoomDAO;
 import com.ssafy.ssafyworld.dto.RoomDTO;
+import com.ssafy.ssafyworld.dto.UserDTO;
 
 @Service
 public class RoomServiceImpl implements RoomService {
@@ -17,7 +18,7 @@ public class RoomServiceImpl implements RoomService {
     
 	
 	@Override
-	public RoomDTO selectRoom(int rid) throws Exception {
+	public List<UserDTO> selectRoom(int rid) throws Exception {
 		return dao.selectRoom(rid);
 	}
 
@@ -37,6 +38,12 @@ public class RoomServiceImpl implements RoomService {
 	@Override
 	public List<RoomDTO> selectRooms() throws Exception {
 		return dao.selectRooms();
+	}
+
+
+	@Override
+	public void enterRoom(int room, String user) throws Exception {
+		dao.enterRoom(room,user);
 	}
 
 }

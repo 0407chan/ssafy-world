@@ -3,7 +3,7 @@ package com.ssafy.ssafyworld.dto;
 import java.io.Serializable;
 
 public class UserDTO implements Serializable{
-	private String uidx;
+	private int uidx;
 	private String uid;
 	private String uname;
 	private String password;
@@ -11,10 +11,10 @@ public class UserDTO implements Serializable{
 	private int staff;
 	
 	
-	public String getUidx() {
+	public int getUidx() {
 		return uidx;
 	}
-	public void setUidx(String uidx) {
+	public void setUidx(int uidx) {
 		this.uidx = uidx;
 	}
 	public String getImg() {
@@ -52,7 +52,7 @@ public class UserDTO implements Serializable{
 		super();
 	}
 	
-	public UserDTO(String uidx, String uid, String uname, String password, String img, int staff) {
+	public UserDTO(int uidx, String uid, String uname, String password, String img, int staff) {
 		super();
 		this.uidx = uidx;
 		this.uid = uid;

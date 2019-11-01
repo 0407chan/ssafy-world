@@ -17,4 +17,6 @@
 <fullyQualifiedTypeName name="java.net.URI"/>
 <fullyQualifiedTypeName name="com.ssafy.ssafyworld.util.SHA256Util"/>
 <fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
+<fullyQualifiedTypeName name="com.ssafy.ssafyworld.dto.UserDTO"/>
 </qualifiedTypeNameHistroy>
