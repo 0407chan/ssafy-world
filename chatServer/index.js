@@ -91,7 +91,7 @@ io.on('connection', function(socket){
           msg: data.msg
         };
 
-        console.log(res + "/"+ data);
+        console.log(res.rid + "/"+ data);
         
   
         message.push({
@@ -120,7 +120,7 @@ io.on('connection', function(socket){
       msg: data.msg,
       time : data.time
     };
-    console.log("0,"+data);
+    console.log("0,"+msg);
     
     // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
     socket.broadcast.emit('/chatroom', msg);
@@ -146,11 +146,11 @@ io.on('connection', function(socket){
       // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
       socket.broadcast.emit('/chatroom/'+room[i].rid, msg);
 
-      console.log(room[i].rid+","+data);
+      console.log(room[i].rid+","+msg);
       
       api.postMessage({
         text:data.msg, 
-        uidx:data.uidx,
+        uid:data.name,
         rid:room[i].rid,
         time : data.time
       })

@@ -18,13 +18,19 @@ module.exports.getRoom=() =>{
 // 파라미터 : 메세지 테이블에 있는 전 목록
 // 리턴 : 성공() 실패
 module.exports.postMessage=(object)=>{
+    console.log(object.text, object.uid, object.rid, object.time);
+    
     axios.post(`${apiUrl}/message`,{ 
       "text":object.text, 
-      "uidx":object.uidx,
+      "uid":object.uid,
       "rid":object.rid,
-      "time":object.time }).then(res=>{
+      "time":'1994-10-31' }).then(res=>{
+        console.log("sucess");
+        
       }).catch(error=>{
-        console.log(error.status);
+        console.log(error);
+        console.log('error');
+        
       })
 }
 

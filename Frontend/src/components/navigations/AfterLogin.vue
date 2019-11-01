@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import FriendList from '@/components/navigations/FriendList'
 import ChatRoomList from '@/components/navigations/ChatRoomList'
 
@@ -81,11 +81,16 @@ export default {
             })
         }
     },
+    mounted(){
+        this.registChatroom()
+        this.registFriend()
+    },
     computed: {
         ...mapState('data', ['friend', 'chatlist', 'currUser']),
     },
     methods: {
         ...mapMutations('data', ['setMenu', 'clearUser', 'reverse']),
+        ...mapActions('data', ['registChatroom','registChatroom'])
     },
 }
 </script>
