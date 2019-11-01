@@ -83,11 +83,7 @@ export default {
   computed:{
     //userLogintoken 부분 수정 해야함
     ...mapState('data', ['chatlist', 'chatroomList','currUser']),
-<<<<<<< HEAD
     ...mapState('socket', ['msgDatas']),
-=======
-    ...mapState('socket', ['msgDatas'])
->>>>>>> feature/cjh
   },
   updated(){
     this.getRoomList()

@@ -8,11 +8,6 @@ import VueSession from 'vue-session'
 import '@/plugins/socket'
 import '@/assets/_common.scss'
 
-import firebaseApp from 'firebase/app'
-import firebaseMy from '@/plugins/FirebaseService'
-import firebase from 'firebase'
-
-
 Vue.config.productionTip = false
 Vue.config.devtools = true
 
