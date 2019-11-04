@@ -63,16 +63,6 @@ public class UserDTO implements Serializable{
 	}
 	
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((uid == null) ? 0 : uid.hashCode());
-		return result;
-	}
-	
-//  '{ "name":"John", "age":30, "city":"New York"}'
-	
-	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("{\"uid\":\"");
@@ -89,6 +79,13 @@ public class UserDTO implements Serializable{
 		return builder.toString();
 	}
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + uidx;
+		return result;
+	}
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -97,10 +94,7 @@ public class UserDTO implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		UserDTO other = (UserDTO) obj;
-		if (uid == null) {
-			if (other.uid != null)
-				return false;
-		} else if (!uid.equals(other.uid))
+		if (uidx != other.uidx)
 			return false;
 		return true;
 	}

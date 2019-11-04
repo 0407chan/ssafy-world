@@ -52,8 +52,8 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public List<RoomDTO> selectUserRooms(String uid) throws Exception {
-		List<RoomDTO> list = sqlSession.selectList(Namespace+".selectUserRooms", uid);
+	public List<RoomDTO> selectUserRooms(int uidx) throws Exception {
+		List<RoomDTO> list = sqlSession.selectList(Namespace+".selectUserRooms", uidx);
 		return list;
 	}
 
@@ -73,6 +73,14 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public void deleteUser(int uidx) throws Exception {
 		sqlSession.delete(Namespace+".deleteUser",uidx);
+	}
+
+	@Override
+	public UserDTO getUserLogin(String uid) throws Exception {
+		System.out.println("getUserLogin user = "+uid);
+		UserDTO dto = sqlSession.selectOne(Namespace+".getUserLogin",uid);
+		System.out.println("getUserLogin dto = "+dto);
+		return dto ;
 	}
  
 }

@@ -1,44 +1,46 @@
 package com.ssafy.ssafyworld.dto;
 
 public class FriendDTO {
-	private int fid;
-	private String uid;
-	private String friend;
+	private int fidx;
+	private int uidx;
+	private int friend;
 	
-	public FriendDTO(int fid, String uid, String friend) {
+	
+	public FriendDTO(int fidx, int uidx, int friend) {
 		super();
-		this.fid = fid;
-		this.uid = uid;
+		this.fidx = fidx;
+		this.uidx = uidx;
 		this.friend = friend;
 	}
-	
-	public int getFid() {
-		return fid;
+	public int getFidx() {
+		return fidx;
 	}
-	public void setFid(int fid) {
-		this.fid = fid;
+	public void setFidx(int fidx) {
+		this.fidx = fidx;
 	}
-	public String getUid() {
-		return uid;
+	public int getUidx() {
+		return uidx;
 	}
-	public void setUid(String uid) {
-		this.uid = uid;
+	public void setUidx(int uidx) {
+		this.uidx = uidx;
 	}
-	public String getFriend() {
+	public int getFriend() {
 		return friend;
 	}
-	public void setFriend(String friend) {
+	public void setFriend(int friend) {
 		this.friend = friend;
 	}
+	
 	@Override
 	public String toString() {
-		return "FriendDTO [fid=" + fid + ", uid=" + uid + ", friend=" + friend + "]";
+		return "FriendDTO [fidx=" + fidx + ", uidx=" + uidx + ", friend=" + friend + "]";
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + fid;
+		result = prime * result + fidx;
 		return result;
 	}
 	@Override
@@ -50,10 +52,9 @@ public class FriendDTO {
 		if (getClass() != obj.getClass())
 			return false;
 		FriendDTO other = (FriendDTO) obj;
-		if (fid != other.fid)
+		if (fidx != other.fidx)
 			return false;
 		return true;
 	}
-	
 	
 }

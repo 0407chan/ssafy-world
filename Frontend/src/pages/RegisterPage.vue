@@ -97,10 +97,12 @@ export default {
       console.log("registerAction",res)
       if (res.status == '200') {
         this.successAlert("WELCOME!","User Created successfully");
-        await this.login({
+        let logres = await this.login({
           id : params.uid,
           pw : params.password
         })
+        this.$session.start();
+        this.$session.set('token', logres.data);
         this.$router.push({ name: 'chatroom' })
       }
       else {

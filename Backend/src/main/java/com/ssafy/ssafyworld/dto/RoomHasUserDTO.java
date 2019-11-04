@@ -1,19 +1,18 @@
 package com.ssafy.ssafyworld.dto;
 
 public class RoomHasUserDTO {
-	private int rid;
-	private String uid;
-	
-	public int getRid() {
-		return rid;
+	private int ridx;
+	private int uidx;
+	public int getRidx() {
+		return ridx;
 	}
-	public void setRid(int rid) {
-		this.rid = rid;
+	public void setRidx(int ridx) {
+		this.ridx = ridx;
 	}
-	public String getUid() {
-		return uid;
+	public int getUidx() {
+		return uidx;
 	}
-	public void setUid(String uid) {
-		this.uid = uid;
+	public void setUid(int uidx) {
+		this.uidx = uidx;
 	}
 }
