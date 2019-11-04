@@ -16,9 +16,11 @@
     </v-list>
     <v-dialog
       v-model="dialog"
-      max-width="290">
+      max-width="480">
      <v-card>
         <v-card-title class="headline">Create Chenal</v-card-title>
+        <v-card-text>
+        </v-card-text>
         <v-card-text>
           <!-- 컨텐츠 확인 -->
           <v-text-field
@@ -29,7 +31,6 @@
             label="Invite User"
             v-model='insertuid'
           ></v-text-field>
-          
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -52,8 +53,9 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapMutations } from 'vuex';
+import { mapActions, mapState, mapMutations } from 'vuex'
 import api from '@/api'
+import MakeChatRoom from '@/components/room/MakeChatRoom'
 
 export default {
   name: 'ChatRoomList',
@@ -65,25 +67,17 @@ export default {
       }
     },
   components: {
-
+    MakeChatRoom,
   },
-  data () {
-      return {
-        dialog: false,
-        insertuid :'',
-        roomname :''
-      }
-    },
-
   computed:{
     //userLogintoken 부분 수정 해야함
     ...mapState('data', ['chatlist', 'chatroomList','currUser']),
     ...mapState('socket', ['msgDatas']),
   },
-  updated(){
+  mounted() {
     this.getRoomList()
   },
-  methods :{
+  methods: {
     ...mapActions('data', ['registChatroom']),
     ...mapActions('socket', ['getMsg']),
     ...mapMutations('socket', ['clearMsg']),
@@ -94,9 +88,8 @@ export default {
       arr.push(this.currUser.uidx)
       console.log(arr);
       // 룸 생성
-      this.createRoom(this.roomname)
       // 룸 참가
-
+      this.createRoom(this.roomname)
       // 룸 최신화
       this.getRoomList()
       this.dialog=false
@@ -108,9 +101,11 @@ export default {
       await this.getMsg(rid);
       this.$router.push('/chatroom/'+rid)
     },
+    //디비에서 내가 접속한 방들 다 가져옴
      getRoomList(){
        this.registChatroom(this.currUser.uid)
      },
+     //룸 생성, 참가
      createRoom(roomname){
        api.postRoom(this.roomname).then(res=>{
          let rid = res.data
@@ -118,9 +113,16 @@ export default {
            rid : rid,
            rname : roomname
            })
+          this.chatroomList.push({
+            rid : rid,
+            rname : roomname
+            })
+
+          api.postEnterRoom(this.currUser.uid,rid).then(res=>{
+            this.registChatroom()
+          })
        })
      }
-
   }
 };
 </script>

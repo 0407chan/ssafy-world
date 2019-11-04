@@ -91,7 +91,7 @@ io.on('connection', function(socket){
           msg: data.msg
         };
 
-        console.log(res + "/"+ data);
+        console.log(res.rid + "/"+ data);
         
   
         message.push({
@@ -114,31 +114,20 @@ io.on('connection', function(socket){
   // 클라이언트로부터의 메시지가 수신되면
   socket.on('/chatroom', function(data) {
     var msg = {
-      from: {
-        name: data.name,
-      },
+      user: data.user,
       msg: data.msg,
       time : data.time
     };
-    console.log("0,"+data);
+    console.log("0,"+msg);
     
     // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
     socket.broadcast.emit('/chatroom', msg);
-    
-    // api.postMessage({
-    //   text : data.msg, 
-    //   uid : data.name,
-    //   rid : 1,
-    //   time : data.time
-    // })
   })  
 
   for(let i =0;i<room.length;i++){
     socket.on('/chatroom/'+room[i].rid, function(data) {
       var msg = {
-        from: {
-          name: data.name,
-        },
+        user: data.user,
         msg: data.msg,
         time : data.time
       };
@@ -146,11 +135,11 @@ io.on('connection', function(socket){
       // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
       socket.broadcast.emit('/chatroom/'+room[i].rid, msg);
 
-      console.log(room[i].rid+","+data);
+      console.log(room[i].rid+","+msg);
       
       api.postMessage({
         text:data.msg, 
-        uidx:data.uidx,
+        uidx:data.user.uidx,
         rid:room[i].rid,
         time : data.time
       })

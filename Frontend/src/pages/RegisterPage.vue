@@ -53,7 +53,7 @@
           </v-flex>
         </v-flex>
         <v-flex text-sm-center ma-5>
-          <v-btn v-if="uid.length >= 4 && uname.length >= 2 && password.length >=4" rounded block color="green" @click="registerAction"><span class="btnText" >회원가입</span></v-btn>
+          <v-btn v-if="uid.length >= 4 && uname.length >= 2 && password.length >=4" rounded block :color="colorIndex" @click="registerAction"><span class="btnText" >회원가입</span></v-btn>
           <v-btn v-else rounded disabled block>회원가입</v-btn>
         </v-flex>
       </v-flex>
@@ -77,6 +77,7 @@ export default {
     uname: "",
     password: "",
     image: '',
+    colorIndex:"orange"
   }),
   methods: {
     ...mapActions('data', ['register','login']),
@@ -90,6 +91,7 @@ export default {
         uid: this.uid,
         uname : this.uname,
         password: this.password,
+        img: "https://i.imgur.com/PuEZpTi.png"
       };
       let res = await this.register(params);
       console.log("registerAction",res)

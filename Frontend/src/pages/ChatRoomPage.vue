@@ -1,55 +1,226 @@
 <template>
-  <v-container fluid>
-    <v-layout row>
-      <!-- <div class="message" v-for="(message,index) in msgs" :class="{own: message.from.name == username}"> -->
-      <v-col cols="12" id="messageBody" class="scrollable" no-gutters>
-        <v-flex class="message-line" v-for="(message, index) in msgDatas">
-          <v-col no-gutters>
-            <v-row align="center">
-              <div>
-                <v-avatar tile v-if=" (index-1 >= 0 && msgDatas[index-1].from.name != message.from.name) || index == 0">
-                  <v-img src="https://randomuser.me/api/portraits/women/75.jpg"></v-img>
-                </v-avatar>
-              </div>
-              <div class="message">
-                <div v-if=" (index-1 >= 0 && msgDatas[index-1].from.name != message.from.name) || index == 0">
-                  <span class="username">
-                    {{message.from.name}}
-                  </span>
-                  <span v-if="message.time">
-                    {{getTime(message.time)}}
-                  </span>
-                </div>
-                <div class="content">
-                  {{message.msg}}
-                  <chat-image v-if="message.image" :imgsrc="message.image" @imageLoad="imageLoad"></chat-image>
-                </div>
-              </div>
-              <div v-if="message.time && index > 0" :class="{time: index-1 >= 0 && message.time.getMinutes() == msgDatas[index-1].time.getMinutes()}">
-                {{getTime(message.time)}}
-              </div>
-            </v-row>
-          </v-col>
-        </v-flex>
-      </v-col>
+  <v-container fluid wrap>
+    <v-row id="messageBody" class="scrollable">
       <v-col cols="12">
-        <v-flex>
-          <v-text-field
-            v-model="msg"
-            label="chat"
-            placeholder="보낼 메세지를 입력하세요."
-            solo
-            hide-details
-            @keyup.13="sendMessage"
-          ></v-text-field>
-        </v-flex>
+        <div class="message-line" v-for="(message, index) in msgDatas" no-gutters>
+
+          <template v-if="message.user.uname != currUser.uname">
+            <v-row style="padding: 4px;">
+              <template v-if=" (index-1 >= 0 && msgDatas[index-1].user.uname != message.user.uname) || index == 0">
+                <div align-center justify-center style="padding: 6px; display: inline-block; width:48px">
+                  <v-menu bottom offset-y>
+                    <template v-slot:activator="{ on }">
+                      <v-btn tile icon large v-on="on">
+                        <v-avatar size="44px" tile>
+                          <v-img :src="message.user.img">
+                          </v-img>
+                        </v-avatar>
+                      </v-btn>
+                    </template>
+
+                    <v-card max-width="250" class="mx-auto">
+                      <v-img :src="message.user.img" height="200px" dark></v-img>
+
+                      <v-card-title>{{ message.user.uname }}</v-card-title>
+
+                      <v-card-text>
+                        <div>{{ getStaff(message.user.staff) }}</div>
+                        <div>{{ message.user.uid }}</div>
+                      </v-card-text>
+                      <v-divider class="mx-4"></v-divider>
+                      <v-list-item>
+                        <v-list-item-action>
+                          <v-btn color="deep-purple accent-4" outlined>
+                            Message
+                          </v-btn>
+                        </v-list-item-action>
+                      </v-list-item>
+                    </v-card>
+                  </v-menu>
+                </div>
+              </template>
+              <template v-else >
+                <div align ="end" class="time" v-if="message.time && index > 0" :class="{time: index-1 >= 0 && getMinute(message.time) == getMinute(msgDatas[index-1].time)}" style="padding: 4px; width:48px">
+                  {{getTime(message.time)}}
+                </div>
+              </template>
+
+              <template class="content" v-if=" (index-1 >= 0 && msgDatas[index-1].user.uname != message.user.uname) || index == 0">
+                <div style="display: inline-block" >
+                  <v-menu right offset-x>
+                    <template v-slot:activator="{ on }">
+                      <span class="username" v-on="on" style="padding : 4px; display: inline-block">
+                        {{message.user.uname}}
+                      </span>
+                    </template>
+                    <v-card max-width="250" class="mx-auto">
+                      <v-img :src="message.user.img" height="200px" dark></v-img>
+                      <v-card-title>{{ message.user.uname }}</v-card-title>
+                      <v-card-text>
+                        <div>{{ getStaff(message.user.staff) }}</div>
+                        <div>{{ message.user.uid }}</div>
+                      </v-card-text>
+                      <v-divider class="mx-4"></v-divider>
+                      <v-list-item>
+                        <v-list-item-action>
+                          <v-btn color="deep-purple accent-4" outlined>
+                            Message
+                          </v-btn>
+                        </v-list-item-action>
+                      </v-list-item>
+                    </v-card>
+                  </v-menu>
+                  <div class="profileTime" style="display: inline-block">
+                    {{getTime(message.time)}}
+                  </div>
+                  <br/>
+                  <div class="content" style=" margin-left: 4px; display: inline-block">
+                    {{message.msg}}
+                  </div>
+                </div>
+              </template>
+              <template v-else>
+                <div class="content" style=" margin-left: 4px; display: inline-block">
+                  {{message.msg}}
+                  <!-- <chat-image v-if="message.image" :imgsrc="message.image" @imageLoad="imageLoad"></chat-image> -->
+                </div>
+              </template>
+            </v-row>
+          </template>
+
+          <!-- 자기 채팅 -->
+          <template v-else>
+            <v-row style="padding: 4px;" justify="end">
+              <!-- 시간, 이름 메세지 -->
+              <template class="content" v-if=" (index-1 >= 0 && msgDatas[index-1].user.uname != message.user.uname) || index == 0">
+                <div style=" display: inline-block" align="end">
+                  <div class="profileTime" style="display: inline-block" >
+                    {{getTime(message.time)}}
+                  </div>
+                  <v-menu left offset-x>
+                    <template v-slot:activator="{ on }">
+                      <span class="username" v-on="on" style="padding : 4px; display: inline-block">
+                        {{message.user.uname}}
+                      </span>
+                    </template>
+                    <v-card max-width="250" class="mx-auto">
+                      <v-img :src="message.user.img" height="200px" dark></v-img>
+                      <v-card-title>{{ message.user.uname }}</v-card-title>
+                      <v-card-text>
+                        <div>{{ getStaff(message.user.staff) }}</div>
+                        <div>{{ message.user.uid }}</div>
+                      </v-card-text>
+                      <v-divider class="mx-4"></v-divider>
+                      <v-list-item>
+                        <v-list-item-action>
+                          <v-btn color="deep-purple accent-4" outlined>
+                            Message
+                          </v-btn>
+                        </v-list-item-action>
+                      </v-list-item>
+                    </v-card>
+                  </v-menu>
+
+                  <br/>
+                  <div class="content" style=" margin-right: 4px; display: inline-block">
+                    {{message.msg}}
+                  </div>
+                </div>
+              </template>
+              <template v-else>
+                <div class="content" style=" margin-right: 4px; display: inline-block">
+                  {{message.msg}}
+                </div>
+              </template>
+
+              <!-- 사진 -->
+              <template v-if=" (index-1 >= 0 && msgDatas[index-1].user.uname != message.user.uname) || index == 0">
+                <div align-center justify-center style="padding: 6px; display: inline-block; width:48px">
+                  <v-menu bottom offset-y>
+                    <template v-slot:activator="{ on }">
+                      <v-btn tile icon large v-on="on">
+                        <v-avatar size="44px" tile>
+                          <v-img :src="message.user.img">
+
+                          </v-img>
+                        </v-avatar>
+                      </v-btn>
+                    </template>
+
+                    <v-card max-width="250" class="mx-auto">
+                      <v-img :src="message.user.img" height="200px" dark></v-img>
+
+                      <v-card-title>{{ message.user.uname }}</v-card-title>
+
+                      <v-card-text>
+                        <div>{{ getStaff(message.user.staff) }}</div>
+                        <div>{{ message.user.uid }}</div>
+                      </v-card-text>
+                      <v-divider class="mx-4"></v-divider>
+                      <v-list-item>
+                        <v-list-item-action>
+                          <v-btn color="deep-purple accent-4" outlined>
+                            Message
+                          </v-btn>
+                        </v-list-item-action>
+                      </v-list-item>
+                    </v-card>
+                  </v-menu>
+                </div>
+              </template>
+              <template v-else >
+                <div class="time" v-if="message.time && index > 0" :class="{time: index-1 >= 0 && getMinute(message.time) == getMinute(msgDatas[index-1].time)}" style="padding: 4px; width:48px">
+                  {{getTime(message.time)}}
+                </div>
+              </template>
+            </v-row>
+          </template>
+
+        </div>
       </v-col>
-    </v-layout>
+    </v-row>
+
+    <v-row id="chatInput">
+      <v-col cols="12">
+        <v-row no-gutters class="inputBorder">
+          <v-col cols="12" >
+            <div>
+              <v-text-field
+                v-model="msg"
+                placeholder="보낼 메세지를 입력하세요."
+                hide-details
+                solo
+                @keyup.13="sendMessage"
+              >
+              <v-btn icon >
+                <v-icon class="chatInputImage">
+                  mdi-paperclip
+                </v-icon>
+              </v-btn>
+              </v-text-field>
+            </div>
+            <div>
+              <v-btn icon >
+                <v-icon class="chatInputImage">
+                  mdi-paperclip
+                </v-icon>
+              </v-btn>
+              <v-btn icon >
+                <v-icon class="chatInputEmoticon">
+                  mdi-emoticon-outline
+                </v-icon>
+              </v-btn>
+            </div>
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
+      <!-- <div class="message" v-for="(message,index) in msgs" :class="{own: message.from.name == username}"> -->
   </v-container>
 </template>
 
 <script>
-import { mapMutations, mapState, mapActions } from 'vuex' 
+import { mapMutations, mapState, mapActions } from 'vuex'
 
 export default {
   name: 'ChatRoomPage',
@@ -57,34 +228,45 @@ export default {
     return {
       datas: [],
       msg:'',
+      findPeople:false,
+      dialog:false,
+
+      windows: {
+        width: 0,
+        height: 0
+      },
     };
   },
   computed: {
     ...mapState({
-      'msgDatas': state => state.socket.msgDatas,
-      //아이디 vuex 링크 잡기
+      msgDatas: state => state.socket.msgDatas,
+      currUser: state => state.data.currUser,
     }),
-    ...mapState('data',['currUser']),
-    
   },
   mounted() {
     const $ths = this
     console.log("connect chatroom" , window.location.pathname);
-    if(window.location.pathname.split('/')[2]!=undefined)
+    if(window.location.pathname.split('/')[2]!=undefined){
       this.getMsg(window.location.pathname.split('/')[2])
-    this.$socket.on(window.location.pathname, (data) => {
+    }
+
+    this.$socket.on(window.location.pathname, async (data) => {
       var today = new Date(data.time);
       data.time = today;
-      this.pushMsgData(data)
+      await this.pushMsgData(data)
+      this.scrollToBottom();
     });
+    this.scrollToBottom();
   },
   methods: {
     ...mapActions('socket', ['getMsg']),
+
     ...mapMutations('socket',['pushMsgData']),
+
     setMessageList(data){
       console.log(data.uidx.length);
-      
-      let arr = [] 
+
+      let arr = []
       for(let i =0;i<data.uidx.length;i++){
         arr.push({
           'from' :{
@@ -100,50 +282,125 @@ export default {
     }
     ,
 
-    sendMessage() {
-      if (this.msg.length === 0) return false;
+    test(){
       var today = new Date();
-      this.pushMsgData({
-        from: {
-          name: this.currUser.uid,
-        },
+      console.log("이거",today)
+    },
+    getStaff(staff){
+      if(staff == 0){
+        return "학생"
+      }else if(staff == 1){
+        return "프로"
+      }else{
+        return "관리자"
+      }
+    },
+
+    goTo(path,uidx) {
+      this.$router.push({name: path, params:{ uidx: uidx}})
+    },
+
+    checkMsg(){
+      console.log(this.msg);
+    },
+
+    /* 2019.11.02 이찬호
+    기능 : 창 크기 실시간 감지
+
+    */
+    handleResize() {
+      this.windows.width = window.innerWidth;
+      this.windows.height = window.innerHeight;
+    },
+
+    async sendMessage() {
+      if (this.msg.length === 0) return false;
+
+      if(this.msg == '#점심'){
+        let params ={
+          uid: "ssafy@ssafy.com",
+          uidx: 0,
+          staff: 1,
+          img: "https://i.imgur.com/6woB3eO.png",
+          uname: "SSAFY"
+        }
+        this.pushMsgData({
+          user:params,
+          msg:"오늘의 점심입니다.",
+          time:this.getToday(),
+        });
+        return false;
+      }
+      await this.pushMsgData({
+        user: this.currUser,
         msg:this.msg,
-        time:today,
+        time:this.getToday(),
       });
-      this.$sendMessage({
+      await this.$sendMessage({
         rid:window.location.pathname,
-        name: this.currUser.uid,
+        user: this.currUser,
         msg:this.msg,
-        time:today.toString(),
+        time:this.getToday(),
       });
       this.msg = '';
       this.scrollToBottom();
     },
 
+    /* 2019.11.03 이찬호
+    기능 : 오늘 날짜 2019-04-05 11:23:03 형태로 리턴해줌
+    */
+    getToday(){
+      var today = new Date();
+      let day = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
+      var hour = today.getHours();
+      var min = today.getMinutes();
+      var sec = today.getSeconds();
+      if(hour < 10){
+        hour = "0"+hour
+      }
+      if(min < 10){
+        min = "0"+min;
+      }
+      if(sec < 10){
+        sec = "0"+sec;
+      }
+      return day +" "+ hour +":"+ min +":"+ sec
+    },
+
+    /* 2019.11.03 이찬호
+    기능 : 채팅방 스크롤 맨 밑으로 보내줌
+    */
     scrollToBottom(){
       var messageBody = document.getElementById('messageBody');
       messageBody.scrollTop = messageBody.scrollHeight;
     },
 
-    getTime(time){
-      let ampm = '';
-      let hour = time.getHours();
-      let min = time.getMinutes();
-      if(hour > 12){
-        ampm = 'PM'
-        hour -= 12;
-      }else{
-        ampm = 'AM'
-        if(hour < 10){
-          hour = "0"+hour
-        }
-      }
-      if(min < 10){
-        min = "0"+min;
-      }
+    /* 2019.11.03 이찬호
+    기능 : 우리 time 포멧에서 분 리턴 해줌
+    */
+    getMinute(time){
+      return time.split(':')[1];
+    },
 
-      return hour +":"+min+" "+ampm
+    /* 2019.11.03 이찬호
+    기능 : 우리 time 포멧에서 시:분 형태로 리턴해줌
+    */
+    getTime(time){
+      let date = time.split(' ')[0];
+      let tim = time.split(' ')[1];
+
+      return tim.substring(0,5);
     }
+  },
+  created() {
+    window.addEventListener('resize', this.handleResize)
+    this.handleResize();
+  },
+  destroyed() {
+    this.$socket.emit('disconnect', {
+        msg: 'disconnect'
+      }),
+      window.removeEventListener('resize', this.handleResize)
   },
 };
 </script>
@@ -165,6 +422,7 @@ export default {
 }
 .time{
   color : rgba(0,0,0,0);
+  font-size: 12px;
 }
 
 .message-line:hover .time {
@@ -177,9 +435,30 @@ export default {
 .username{
   font-weight: bold;
 }
+.username:hover{
+  text-decoration: underline;
+  cursor:pointer;
+}
 .content{
   border-radius: 5px;
   background-color: orange;
-  padding: 5px;
+  padding-left: 6px;
+  padding-right: 6px;
+  padding-top:2px;
+  padding-bottom: 2px;
 }
+.inputBorder{
+  border: 1px solid rgba(220,220,220,0.9);
+  border-radius: 5px;
+}
+#chatInput{
+  position: sticky;
+  bottom: 0px;
+  z-index: 1;
+
+}
+.profileTime{
+  font-size: 12px;
+}
+
 </style>

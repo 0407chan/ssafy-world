@@ -13,25 +13,34 @@ const state = {
   chatListRealTimeCheck : false,
 
   currUser: '',
+  navDrawer: false,
 }
 
 // actions
 const actions = {
 
-  refresh({commit},params){
-    if(params != null)
+  refresh({commit}, params) {
+    if (params != null)
       state.currUser = params;
-    if(state.currUser != ''){
+    if (state.currUser != '') {
       actions.registFriend()
       actions.registChatroom()
     }
+  },
+
+  /* 2019.11.03 이찬호
+    currUser 세팅
+  */
+  setCurrUser({commit,state},params){
+    commit('SET_CURRUSER', params)
+    return state.currUser
   },
 
   async login({ commit }, params) {
     return api.login(params).then(res =>{
       if (res.status == '200') {
         state.currUser = res.data;
-        console.log(state.currUser);
+        console.log("로그인 했냐 ",state.currUser);
 
         actions.registFriend()
         actions.registChatroom()
@@ -40,20 +49,26 @@ const actions = {
     });
   },
   // 로그인 후 친구목록 생성
-  registFriend(){
+  registFriend() {
     api.postFriend(state.currUser.uid).then(res=>{
-      state.friendList=res;
+      state.friendList = res;
     })
   },
+
   // 로그인 후 단체방 목록 생성
-  registChatroom(){
+  registChatroom() {
     api.getUserByRoom(state.currUser.uid).then(res=>{
-      state.chatroomList=res;
+      state.chatroomList = res;
     })
   },
 
   async register({ commit }, params) {
     const resp = await api.register(params);
+    return resp;
+  },
+
+  async update({ commit }, params) {
+    const resp = await api.update(params);
     return resp;
   },
 
@@ -71,6 +86,10 @@ const actions = {
     const resp = await api.getUser()
   },
 
+  async createChatRoom({ commit }, params) {
+    return await api.createChatRoom(params)
+  },
+
   async getRoomByUser({ commit }, params) {
     const resp = await api.getRoomByUser(params)
   },
@@ -79,11 +98,11 @@ const actions = {
 
 // mutations
 const mutations = {
-  reverse(state,string){
-    if(string=='friend')
-      state.friend=!state.friend
+  reverse(state, string) {
+    if (string == 'friend')
+      state.friend =! state.friend
     else
-      state.chatlist=!state.chatlist
+      state.chatlist =! state.chatlist
   },
 
   setClusterList(state, ratings) {
@@ -94,7 +113,16 @@ const mutations = {
     state.currUser = ''
     state.chatroomList=[]
     state.friendList=[]
-  }
+  },
+
+  toggleNav(state){
+    state.navDrawer = !state.navDrawer;
+  },
+
+  SET_CURRUSER(state, params){
+    state.currUser = params
+  },
+
 };
 
 export default {
