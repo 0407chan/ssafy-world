@@ -7,10 +7,30 @@ const apiUrl = 'http://localhost:8080/ssafyworld';
 
 export default {
 
-  // param 없는 경우
-  getUser() {
+  /**
+   * 2019.11.04 준범이
+   * 유저 목록 불러오기
+   * 유저 목록 
+   */
+  getUsers() {
     return axios.get(`${apiUrl}/user`)
   },
+  
+  adminUpdateUser(params) {
+    return axios.post(`${apiUrl}/user/admin/update`, {
+      uidx: params.uidx,
+      staff: params.staff,
+    })
+    .catch(error => {
+      console.log(error)
+      return error.response
+    });
+  },
+  
+  adminDeleteUser(param) {
+    axios.get(`${apiUrl}/user/delete/${param}`)
+  },
+
 
   /**
    *

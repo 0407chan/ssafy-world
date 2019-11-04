@@ -4,11 +4,8 @@
       <BeforeLogin />
     </v-list>
     <v-list dense v-show="currUser != ''">
-      <v-divider></v-divider>
       <AfterLogin />
     </v-list>
-
-
   </v-navigation-drawer>
 </template>
 
