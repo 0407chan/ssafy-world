@@ -1,6 +1,6 @@
 <template>
   <div v-show="friend">
-    <v-list v-for="i in friendList">
+    <v-list v-if="friendList>0" v-for="i in friendList">
       <v-list-item @click="goTo(i.path)">
         <v-list-item-title >
           {{ i.uid }}

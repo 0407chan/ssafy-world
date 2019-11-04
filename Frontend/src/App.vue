@@ -190,11 +190,9 @@ export default {
   },
 
   mounted() {
-    this.$session.start()
     if(this.$session.has('token')){
       let token = this.$session.get('token')
       this.setCurrUser(token);
-      this.currUser = token;
       this.refresh(token)
     }
   },

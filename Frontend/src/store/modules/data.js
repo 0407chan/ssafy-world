@@ -48,9 +48,9 @@ const actions = {
   async login({ commit }, params) {
     return api.login(params).then(res =>{
       if (res.status == '200') {
-        SET_CURRUSER(res.data);
+        commit('SET_CURRUSER', res.data);
 
-        actions.registFriend()
+        //actions.registFriend()
         actions.registChatroom()
       }
       return res
@@ -58,14 +58,14 @@ const actions = {
   },
   // 로그인 후 친구목록 생성
   registFriend() {
-    api.postFriend(state.currUser.uid).then(res=>{
+    api.postFriend(state.currUser.uidx).then(res=>{
       state.friendList = res;
     })
   },
 
   // 로그인 후 단체방 목록 생성
   registChatroom() {
-    api.getUserByRoom(state.currUser.uid).then(res=>{
+    api.getUserByRoom(state.currUser.uidx).then(res=>{
       state.chatroomList = res;
     })
   },
