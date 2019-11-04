@@ -1,9 +1,9 @@
 <template>
   <div v-show="friend">
     <v-list v-for="i in friendList">
-      <v-list-item @click="goTo(i.path)">
+      <v-list-item @click="goTo(i.uidx)">
         <v-list-item-title >
-          {{ i.uid }}
+          {{ i.uname }}
         </v-list-item-title>
       </v-list-item>
     </v-list>
@@ -25,11 +25,6 @@ export default {
   name: 'FriendList',
   components: {
 
-  },
-  data () {
-    return {
-      items: [],
-    }
   },
   computed:{
     //userLogintoken 부분 수정 해야함

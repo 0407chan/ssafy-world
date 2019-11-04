@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // const apiUrl = 'http://localhost:8080/ssafyworld';
 // const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
-const apiUrl = 'http://70.12.246.62:8080/ssafyworld'; // 9비니여보야의여보야
+const apiUrl = 'http://70.12.247.61:8080/ssafyworld'; // 9비니여보야의여보야
 
 export default {
 
@@ -73,8 +73,8 @@ export default {
   },
 
   /** 2019.10.25 이찬호
-  * 기능 : 로그인
-  * 파라미터 : params = uid, uname, password
+  * 기능 : 회원가입
+  * 파라미터 : params = uid, uname, password, img
   * 리턴 : 일치하는 유저 가져오기
   */
   register(params) {
@@ -84,42 +84,8 @@ export default {
       uid: params.uid,
       uname: params.uname,
       password: params.password,
-      img: params.img,
+      img: params.image,
     }).then(response => {
-      return response
-    })
-    .catch(error => {
-      return error.response
-    });
-  },
-
-
-  // 10-17 최재형
-  // 회원가입
-  // 파라미터 : 회원 obj (데이터 베이스 이름과 일치하게 넣어야 함)
-  // 리턴 : 없을듯 아마도...
-  getUserLogin(object) {
-    return axios.post('/user/regist',{ VO:object})
-                  .then(response => {
-                    console.warn(response)
-                  })
-                  .catch((ex) => {
-                      console.warn("ERROR!!!!! : ",ex)
-                  })
-  },
-
-  /**
-   *
-   *  19.10.30. 준범이
-   *  방만들기
-   *  내방에서 라면먹고갈래???
-   *
-   */
-  createChatRoom(params) {
-    return axios.post(`${apiUrl}/room/create`, {
-      rname: params.rname,
-    })
-    .then(response => {
       return response
     })
     .catch(error => {
@@ -139,26 +105,10 @@ export default {
   // 사용자가 가지고 있는 방 번호 가져오기
   // 파라미터 : 방 번호
   // 리턴 : 방 번호에 해당되는 리스트 (json)
-  getUserByRoom(param) {
-
+  getUserByRoom(uidx) {
     return axios.post(`${apiUrl}/user/rooms`,{
-      'uid' : param
+      'uidx' : uidx
     }).then(async res=>{
-        // let arr = []
-        // console.log(res);
-
-
-        // for(let i=0;i<res.data.length;i++){
-        //   let tmp = await this.getRoomName(res.data[i].rid)
-        //   console.log(tmp);
-
-        //   let data = {
-        //     'name' : tmp.data.rname,
-        //     'path' : '/chatroom/'+res.data[i].rid
-        //   }
-        //   arr.push(data)
-        // }
-
         return res.data
       })
   },
@@ -171,46 +121,41 @@ export default {
     return axios.get(`${apiUrl}/message/${param}`)
   },
 
-  // 10-17 최재형
+  // 11-4 최재형
   // 메세지 입력
   // 파라미터 : 메세지 테이블에 있는 전 목록(날짜 빼고)
-  // 리턴 : 없을듯 (아마도)
+  // 리턴 : 정상 전송 되었는지
   postMessage(object){
-    return axios.post('/message',{ mid:object.mid, text:object.text, uid:object.uid,rid:object.rid })
-                  .then(response => {
-                    console.warn(response)
-                  })
-                  .catch((ex) => {
-                      console.warn("ERROR!!!!! : ",ex)
-                  })
+    return axios.post('/message',{ 
+      text:object.text,
+      uidx:object.uidx,
+      ridx:object.ridx 
+    }).then(response => {
+      console.warn(response)
+    }).catch((ex) => {
+      console.warn("ERROR!!!!! : ",ex)
+    })
   },
 
-  // 10-17 최재형
-  // 메세지 입력
-  // 파라미터 : 메세지 테이블에 있는 전 목록(날짜 빼고)
+  // 11-4 최재형
+  // 친구 추가
+  // 파라미터 : 상대 uidx
   // 리턴 : 없을듯 (아마도)
-  postFriend(uid){
-    return axios.post(`${apiUrl}/friend/`, {
-      'uid': uid
-    }).then(res=>{
-      let data = []
-      for(let i=0;i<res.data.length;i++){
-        let tmp ={
-          'uid':res.data[i]
-        }
-        data.push(tmp)
-      }
-      return data
+  getFriend(uidx){
+    return axios.get(`${apiUrl}/friend/${uidx}`)
+    .then( res=>{
+      return res.data
+      //싹다 다시 구현해야함
     }).catch(error=>{
       return error
     })
   },
 
-  //11.1최재형
+  // 11.1 최재형
   // 새친구를 만든다
-  postAddFriend(uid){
+  postAddFriend(uidx){
     return axios.post(`${apiUrl}/friend/add`, {
-      'uid': uid
+      'uidx': uidx
     }).then(res=>{
       return res
     }).catch(error=>{
@@ -234,10 +179,10 @@ export default {
   //11.1 최재형
   //방에 유저가 접속한다
   // insert 문
-  postEnterRoom(uid,rid){
+  postEnterRoom(uidx,ridx){
     return axios.post(`${apiUrl}/room/enter`, {
-      'uid': uid,
-      'rid': rid
+      'uidx': uidx,
+      'ridx': ridx
     }).then(res=>{
       return res
     }).catch(error=>{
