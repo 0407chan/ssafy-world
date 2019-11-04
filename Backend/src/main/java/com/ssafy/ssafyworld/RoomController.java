@@ -59,9 +59,9 @@ public class RoomController {
 
 	@RequestMapping(value = "/room/{rid}", method = RequestMethod.GET, produces="application/json; charset=utf8")
 	@ResponseBody
-	public ResponseEntity<List<UserDTO>>selectRoom(@PathVariable("rid") int rid) throws Exception {
-		logger.info(rid+"방에 속한 사람");
-		return ResponseEntity.ok().body(rService.selectRoom(rid));
+	public ResponseEntity<List<UserDTO>>selectRoom(@PathVariable("ridx") int ridx) throws Exception {
+		logger.info(ridx+"방에 속한 사람");
+		return ResponseEntity.ok().body(rService.selectRoom(ridx));
 	}
 	
 	
@@ -93,8 +93,8 @@ public class RoomController {
 	@ResponseBody
 	public ResponseEntity<String> deleteRoom(@RequestBody RoomDTO room) throws Exception{
 		try {
-			rService.deleteRoom(room.getRid());
-			logger.info(room.getRid()+"번 방 삭제");
+			rService.deleteRoom(room.getRidx());
+			logger.info(room.getRidx()+"번 방 삭제");
 			return ResponseEntity.ok().body("방 삭제 완료");
 		} catch (Exception e) {
 			logger.error("방 삭제 실패");
@@ -113,8 +113,8 @@ public class RoomController {
 	@ResponseBody
 	public ResponseEntity<String> enterRoom(@RequestBody RoomHasUserDTO dto){
 		try {
-			System.out.println(dto.getRid()+" "+dto.getUid());
-			rService.enterRoom(dto.getRid(), dto.getUid());
+			System.out.println(dto.getRidx()+" "+dto.getUidx());
+			rService.enterRoom(dto.getRidx(), dto.getUidx());
 			System.out.println("ok");
 			return ResponseEntity.ok().body("Room Enter!");
 		} catch (Exception e) {

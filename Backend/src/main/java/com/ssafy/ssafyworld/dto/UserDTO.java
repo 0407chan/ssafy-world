@@ -63,30 +63,16 @@ public class UserDTO implements Serializable{
 	}
 	
 	@Override
+	public String toString() {
+		return "UserDTO [uidx=" + uidx + ", uid=" + uid + ", uname=" + uname + ", password=" + password + ", img=" + img
+				+ ", staff=" + staff + "]";
+	}
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((uid == null) ? 0 : uid.hashCode());
+		result = prime * result + uidx;
 		return result;
-	}
-	
-//  '{ "name":"John", "age":30, "city":"New York"}'
-	
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("{\"uid\":\"");
-		builder.append(uid);
-		builder.append("\", \"uidx\":\"");
-		builder.append(uidx);
-		builder.append("\", \"uname\":\"");
-		builder.append(uname);
-		builder.append("\", \"img\":\"");
-		builder.append(img);
-		builder.append("\", \"staff\":\"");
-		builder.append(staff);
-		builder.append("\"}");
-		return builder.toString();
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -97,10 +83,7 @@ public class UserDTO implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		UserDTO other = (UserDTO) obj;
-		if (uid == null) {
-			if (other.uid != null)
-				return false;
-		} else if (!uid.equals(other.uid))
+		if (uidx != other.uidx)
 			return false;
 		return true;
 	}

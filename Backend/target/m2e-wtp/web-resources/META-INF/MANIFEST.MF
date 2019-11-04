@@ -1,5 +1,9 @@
 Manifest-Version: 1.0
 Built-By: multicampus
+<<<<<<< HEAD
 Build-Jdk: 1.8.0_221
+=======
+Build-Jdk: 1.8.0_212
+>>>>>>> feature/kyoochan17
 Created-By: Maven Integration for Eclipse
 
