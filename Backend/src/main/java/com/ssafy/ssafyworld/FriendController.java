@@ -1,5 +1,6 @@
 package com.ssafy.ssafyworld;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.ssafyworld.dto.FriendDTO;
+import com.ssafy.ssafyworld.dto.UserDTO;
 import com.ssafy.ssafyworld.service.FriendService;
+import com.ssafy.ssafyworld.service.UserService;
 
 /**
  * Handles requests for the application home page.
@@ -27,6 +30,7 @@ public class FriendController {
 	
 	@Inject
 	private FriendService fService;
+	private UserService uService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(FriendController.class);
 
@@ -55,9 +59,14 @@ public class FriendController {
 	@RequestMapping(value = "/friend/{uidx}", method = RequestMethod.GET ,produces="application/json; charset=utf8" )
 	@ResponseBody
 	public ResponseEntity<List<String>> selectFriend(@PathVariable("uidx") int uidx) throws Exception {
-		logger.info("UID 해당 친구 출력");
+		logger.info("UID 해당 친구 출력"); 
 		System.out.println(uidx+"의 친구 출력");
-		return ResponseEntity.ok().body(fService.selectFriend(uidx));
+		List<String> list = fService.selectFriend(uidx);
+		List<String> temp = new ArrayList();
+		for(int i=0;i<list.size();i++) {
+			System.out.println(list.get(i));
+		}
+		return ResponseEntity.ok().body(temp);
 	}
 	
 	/**
