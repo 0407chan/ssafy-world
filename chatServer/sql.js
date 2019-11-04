@@ -1,7 +1,8 @@
 const axios = require('axios');
 // const apiUrl = 'http://localhost:8080/ssafyworld';
-const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
+// const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
 // const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
+const apiUrl = 'http://70.12.247.61:8080/ssafyworld';
 
 // 10-28 최재형
 // 디비에 있는 모든 방 갯수 세기
@@ -9,7 +10,13 @@ const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
 // 리턴 : 방 목록 전체
 module.exports.getRoom=() =>{
   return axios.get(`${apiUrl}/room`).then(response=>{
+    console.log("방 목록" , response);
+    
     return response
+  }).catch(error=>{
+    console.log("error", error);
+    
+    return error
   })
 }
 
@@ -18,12 +25,12 @@ module.exports.getRoom=() =>{
 // 파라미터 : 메세지 테이블에 있는 전 목록
 // 리턴 : 성공() 실패
 module.exports.postMessage=(object)=>{
-    console.log(object.text, object.uid, object.rid, object.time);
+    console.log(object.text, object.uidx, object.ridx, object.time);
     
     axios.post(`${apiUrl}/message`,{ 
       "text":object.text, 
-      "uid":object.uid,
-      "rid":object.rid,
+      "uidx":object.uidx,
+      "ridx":object.ridx,
       "time":object.time }).then(res=>{
         console.log("sucess");
         
