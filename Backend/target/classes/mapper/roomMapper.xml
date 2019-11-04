@@ -6,7 +6,7 @@
 <mapper namespace="com.ssafy.ssafyworld.mapper.roomMapper">
 	<!-- 방 선택-->
 	<select id="selectRoom" parameterType="int" resultType="UserDTO">
-		SELECT * FROM room_has_user where ridx=#{ridx};
+		SELECT * FROM room_has_user where ridx = #{ridx};
 	</select>
 	
 	<!-- 방 전체 선택 -->

@@ -52,12 +52,12 @@ public class RoomController {
 	/**
 	 * 10-18 : 박규빈 			10-24 수정 : 이규찬 
 	 * @기능 로그인
-	 * @호출방법 ssafywolrd/room/{rid}
+	 * @호출방법 ssafywolrd/room/{ridx}
 	 * @param rid
 	 * @return RoomDTO
 	 */
 
-	@RequestMapping(value = "/room/{rid}", method = RequestMethod.GET, produces="application/json; charset=utf8")
+	@RequestMapping(value = "/room/{ridx}", method = RequestMethod.GET, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<List<UserDTO>>selectRoom(@PathVariable("ridx") int ridx) throws Exception {
 		logger.info(ridx+"방에 속한 사람");
