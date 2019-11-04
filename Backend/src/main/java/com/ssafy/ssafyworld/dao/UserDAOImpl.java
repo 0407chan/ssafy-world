@@ -74,5 +74,13 @@ public class UserDAOImpl implements UserDAO {
 	public void deleteUser(int uidx) throws Exception {
 		sqlSession.delete(Namespace+".deleteUser",uidx);
 	}
+
+	@Override
+	public UserDTO getUserLogin(String uid) throws Exception {
+		System.out.println("getUserLogin user = "+uid);
+		UserDTO dto = sqlSession.selectOne(Namespace+".getUserLogin",uid);
+		System.out.println("getUserLogin dto = "+dto);
+		return dto ;
+	}
  
 }

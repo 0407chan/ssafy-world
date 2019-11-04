@@ -37,7 +37,11 @@ public class UserServiceImpl implements UserService {
 		System.out.println("UserServiceImpl getUser = "+user);
 		return dao.getUser(user);
 	}
-
+	@Override
+	public UserDTO getUserLogin(String uid) throws Exception {
+		System.out.println("UserServiceImpl getUserLogin = "+uid);
+		return dao.getUserLogin(uid);
+	}
 	@Override
 	public List<RoomDTO> selectUserRooms(int uidx) throws Exception {
 		return dao.selectUserRooms(uidx);
@@ -57,4 +61,6 @@ public class UserServiceImpl implements UserService {
 	public void deleteUser(int uidx) throws Exception {
 		dao.deleteUser(uidx);
 	}
+
+
 }
