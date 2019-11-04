@@ -64,8 +64,19 @@ public class UserDTO implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "UserDTO [uidx=" + uidx + ", uid=" + uid + ", uname=" + uname + ", password=" + password + ", img=" + img
-				+ ", staff=" + staff + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("{\"uid\":\"");
+		builder.append(uid);
+		builder.append("\", \"uidx\":\"");
+		builder.append(uidx);
+		builder.append("\", \"uname\":\"");
+		builder.append(uname);
+		builder.append("\", \"img\":\"");
+		builder.append(img);
+		builder.append("\", \"staff\":\"");
+		builder.append(staff);
+		builder.append("\"}");
+		return builder.toString();
 	}
 	@Override
 	public int hashCode() {

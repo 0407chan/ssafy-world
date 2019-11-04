@@ -103,8 +103,8 @@ public class UserController {
 	@ResponseBody
 	public ResponseEntity<String> login(@RequestBody UserDTO user) throws Exception {
 		user.setStaff(0);
-		UserDTO resultUser = uService.getUser(user);
-		System.out.println(resultUser); 
+		UserDTO resultUser = uService.getUserLogin(user.getUid());
+		System.out.println("도니"+resultUser); 
 		if (resultUser == null) {
 			logger.error("없는 유저");
 			ResponseEntity.badRequest().body("");
@@ -115,7 +115,7 @@ public class UserController {
 			return ResponseEntity.badRequest().body("비밀번호가 일치하지 않습니다.");
 		}
 		logger.info("로그인 성공");
-		return ResponseEntity.ok().body(uService.getUser(user).toString());
+		return ResponseEntity.ok().body(uService.getUserInfo(resultUser.getUidx()).toString());
 	}
 	
 	/**
