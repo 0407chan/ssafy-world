@@ -17,43 +17,43 @@ CREATE TABLE IF NOT EXISTS `ssafyworld`.`user` (
 -- Table `ssafyworld`.`room`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ssafyworld`.`room` (
-  `rid` INT AUTO_INCREMENT,
+  `ridx` INT AUTO_INCREMENT,
   `rname` VARCHAR(20) NULL,
-  PRIMARY KEY (`rid`));
+  PRIMARY KEY (`ridx`));
 
 -- -----------------------------------------------------
 -- Table `ssafyworld`.`friend`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ssafyworld`.`friend` (
-  `fid` INT AUTO_INCREMENT,
-  `uid` VARCHAR(50) NOT NULL,
-  `friend` VARCHAR(50) NOT NULL,
-  FOREIGN KEY (`uid`)
-  REFERENCES `ssafyworld`.`user` (`uid`)
+  `fidx` INT AUTO_INCREMENT,
+  `uidx` int(5) NOT NULL,
+  `friend` int(5) NOT NULL,
+  FOREIGN KEY (`uidx`)
+  REFERENCES `ssafyworld`.`user` (`uidx`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION,
   FOREIGN KEY (`friend`)
-  REFERENCES `ssafyworld`.`user` (`uid`)
+  REFERENCES `ssafyworld`.`user` (`uidx`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION,
-  PRIMARY KEY (`fid`)); 
+  PRIMARY KEY (`fidx`)); 
   
 -- -----------------------------------------------------
 -- Table `ssafyworld`.`message`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ssafyworld`.`message` (
-  `mid` INT AUTO_INCREMENT,
+  `midx` INT AUTO_INCREMENT,
   `text` VARCHAR(200) NULL,
-  `time` DATETIME NULL,
-  `uid` VARCHAR(50) NOT NULL,
-  `rid` INT NOT NULL,
-  PRIMARY KEY (`mid`),
-  FOREIGN KEY (`uid`)
-  REFERENCES `ssafyworld`.`user` (`uid`)
+  `time` VARCHAR(50) NULL,
+  `uidx` int(5) NOT NULL,
+  `ridx` INT NOT NULL,
+  PRIMARY KEY (`midx`),
+  FOREIGN KEY (`uidx`)
+  REFERENCES `ssafyworld`.`user` (`uidx`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION,
-  FOREIGN KEY (`rid`)
-  REFERENCES `ssafyworld`.`room` (`rid`)
+  FOREIGN KEY (`ridx`)
+  REFERENCES `ssafyworld`.`room` (`ridx`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION);
 
@@ -61,10 +61,10 @@ CREATE TABLE IF NOT EXISTS `ssafyworld`.`message` (
 -- Table `ssafyworld`.`room_has_user`
 -- -----------------------------------------------------
  CREATE TABLE IF NOT EXISTS `ssafyworld`.`room_has_user` (
-  `rid` INT NOT NULL,
-  `uid` VARCHAR(50) NOT NULL,
-  PRIMARY KEY (`rid`, `uid`),
-    FOREIGN KEY (`rid`)
-    REFERENCES `ssafyworld`.`room` (`rid`),
-    FOREIGN KEY (`uid`)
-    REFERENCES `ssafyworld`.`user` (`uid`) );
+  `ridx` INT NOT NULL,
+  `uidx` int(5) NOT NULL,
+  PRIMARY KEY (`ridx`, `uidx`),
+  FOREIGN KEY (`ridx`)
+  REFERENCES `ssafyworld`.`room` (`ridx`),
+  FOREIGN KEY (`uidx`)
+  REFERENCES `ssafyworld`.`user` (`uidx`) );

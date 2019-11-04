@@ -11,10 +11,10 @@
 	
 	<!-- 해당 방 메세지 출력 -->
 	<select id="roomMessages" parameterType="int" resultType="MessageDTO">
-		select * from message where rid=#{rid};	
+		select * from message where ridx=#{ridx};	
 	</select>
 	
 	<insert id="insertMessage" parameterType="MessageDTO">
-		INSERT INTO message (rid,text,time,uid) VALUES (#{rid},#{text},#{time},#{uid});
+		INSERT INTO message (ridx,text,time,uidx) VALUES (#{ridx},#{text},#{time},#{uidx});
 	</insert>
 </mapper>

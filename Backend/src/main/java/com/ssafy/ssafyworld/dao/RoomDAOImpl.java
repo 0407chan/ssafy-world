@@ -25,12 +25,12 @@ public class RoomDAOImpl implements RoomDAO {
 	public int createRoom(String rname) {
         sqlSession.insert(Namespace+".createRoom",rname);
         List<RoomDTO> list=sqlSession.selectList(Namespace+".selectRoomName",rname);
-        return list.get(list.size()-1).getRid();
+        return list.get(list.size()-1).getRidx();
     }
 
 	@Override
-	public void deleteRoom(int rid) throws Exception {
-		sqlSession.delete(Namespace+".deleteRoom",rid);
+	public void deleteRoom(int ridx) throws Exception {
+		sqlSession.delete(Namespace+".deleteRoom",ridx);
 	}
 
 	@Override
@@ -40,16 +40,16 @@ public class RoomDAOImpl implements RoomDAO {
 	}
 
 	@Override
-	public List<UserDTO> selectRoom(int rid) throws Exception {
-		List<UserDTO> list = sqlSession.selectList(Namespace+".selectRoom",rid);
+	public List<UserDTO> selectRoom(int ridx) throws Exception {
+		List<UserDTO> list = sqlSession.selectList(Namespace+".selectRoom",ridx);
 		return list;
 	}
 
 	@Override
-	public void enterRoom(int room, String user) throws Exception {
+	public void enterRoom(int room, int user) throws Exception {
 		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("rid", room);
-		parameters.put("uid", user);
+		parameters.put("ridx", room);
+		parameters.put("uidx", user);
 		sqlSession.insert(Namespace+".enterRoom",parameters);
 	}
 
