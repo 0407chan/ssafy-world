@@ -279,7 +279,7 @@ export default {
           'msg':data.messages[i]
         })
       }
-      this.msgDatas=arr
+      this.pushMsgData(arr)
       this.scrollToBottom();
     }
     ,
