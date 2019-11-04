@@ -1,14 +1,14 @@
 package com.ssafy.ssafyworld.dto;
 
 public class RoomDTO {
-	private int rid;
+	private int ridx;
 	private String rname;
 	
-	public int getRid() {
-		return rid;
+	public int getRidx() {
+		return ridx;
 	}
-	public void setRid(int rid) {
-		this.rid = rid;
+	public void setRidx(int ridx) {
+		this.ridx = ridx;
 	}
 	public String getRname() {
 		return rname;
@@ -19,13 +19,13 @@ public class RoomDTO {
 	
 	@Override
 	public String toString() {
-		return "RoomDTO [rid=" + rid + ", rname=" + rname + "]";
+		return "RoomDTO [ridx=" + ridx + ", rname=" + rname + "]";
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + rid;
+		result = prime * result + ridx;
 		return result;
 	}
 	@Override
@@ -37,7 +37,7 @@ public class RoomDTO {
 		if (getClass() != obj.getClass())
 			return false;
 		RoomDTO other = (RoomDTO) obj;
-		if (rid != other.rid)
+		if (ridx != other.ridx)
 			return false;
 		return true;
 	}

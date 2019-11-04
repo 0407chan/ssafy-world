@@ -18,8 +18,8 @@ public class RoomServiceImpl implements RoomService {
     
 	
 	@Override
-	public List<UserDTO> selectRoom(int rid) throws Exception {
-		return dao.selectRoom(rid);
+	public List<UserDTO> selectRoom(int ridx) throws Exception {
+		return dao.selectRoom(ridx);
 	}
 
 
@@ -30,8 +30,8 @@ public class RoomServiceImpl implements RoomService {
 
 
 	@Override
-	public void deleteRoom(int rid) throws Exception {
-		dao.deleteRoom(rid);
+	public void deleteRoom(int ridx) throws Exception {
+		dao.deleteRoom(ridx);
 	}
 
 
@@ -42,7 +42,7 @@ public class RoomServiceImpl implements RoomService {
 
 
 	@Override
-	public void enterRoom(int room, String user) throws Exception {
+	public void enterRoom(int room, int user) throws Exception {
 		dao.enterRoom(room,user);
 	}
 

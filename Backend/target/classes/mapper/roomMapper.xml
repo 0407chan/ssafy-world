@@ -6,7 +6,7 @@
 <mapper namespace="com.ssafy.ssafyworld.mapper.roomMapper">
 	<!-- 방 선택-->
 	<select id="selectRoom" parameterType="int" resultType="UserDTO">
-		SELECT * FROM room_has_user where rid=#{rid};
+		SELECT * FROM room_has_user where ridx=#{ridx};
 	</select>
 	
 	<!-- 방 전체 선택 -->
@@ -23,10 +23,10 @@
 	</insert>
 	
 	<delete id="deleteRoom" parameterType="int">
-		DELETE FROM room WHERE rid = #{rid};
+		DELETE FROM room WHERE ridx = #{ridx};
 	</delete>
 	
 	<insert id="enterRoom" parameterType="map">
-		INSERT INTO room_has_user (rid, uid) VALUES (#{rid},#{uid});
+		INSERT INTO room_has_user (ridx, uidx) VALUES (#{ridx},#{uidx});
 	</insert>
 </mapper>
