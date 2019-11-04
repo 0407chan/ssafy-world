@@ -21,8 +21,8 @@ public class FriendServiceImpl implements FriendService {
 	}
 
 	@Override
-	public List<String> selectFriend(String uid) throws Exception {
-		return dao.selectFriend(uid);
+	public List<String> selectFriend(int uidx) throws Exception {
+		return dao.selectFriend(uidx);
 	}
 	@Override
 	public FriendDTO getFriend(FriendDTO friend) throws Exception {

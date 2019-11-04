@@ -102,10 +102,9 @@ public class UserController {
 	@RequestMapping(value = "/user/login", method = RequestMethod.POST , produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<String> login(@RequestBody UserDTO user) throws Exception {
-		
 		user.setStaff(0);
-		UserDTO resultUser = uService.getUser(user);
-		System.out.println(resultUser); 
+		UserDTO resultUser = uService.getUserLogin(user.getUid());
+		System.out.println("도니"+resultUser); 
 		if (resultUser == null) {
 			logger.error("없는 유저");
 			ResponseEntity.badRequest().body("");
@@ -116,7 +115,7 @@ public class UserController {
 			return ResponseEntity.badRequest().body("비밀번호가 일치하지 않습니다.");
 		}
 		logger.info("로그인 성공");
-		return ResponseEntity.ok().body(uService.getUser(user).toString());
+		return ResponseEntity.ok().body(uService.getUserInfo(resultUser.getUidx()).toString());
 	}
 	
 	/**
@@ -139,12 +138,12 @@ public class UserController {
 	}
 	
 	/**
-	 * 10-29 : 이규찬    10-30 수정 : 박규빈
+	 * 11-01 : 박규빈 
 	 *
-	 * @기능 유저 전체 리스트를 가져옴
-	 * @호출방법 ssafywolrd/user/rooms
-	 * @param UserDTO
-	 * @return List<RoomDTO> 
+	 * @기능 유저삭제
+	 * @호출방법 ssafywolrd/user/delete
+	 * @param idx
+	 * @return 200 OK  
 	 */
 	@RequestMapping(value = "/user/delete/{uidx}", method = RequestMethod.GET , produces="application/json; charset=utf8")
 	@ResponseBody
@@ -154,18 +153,19 @@ public class UserController {
 		return ResponseEntity.ok().body("삭제 성공");
 	}
 	
+
 	/**
-	 * 11-01 : 박규빈 
+	 * 10-29 : 이규찬    10-30 수정 : 박규빈
 	 *
-	 * @기능 유저삭제
-	 * @호출방법 ssafywolrd/user/delete
-	 * @param idx
-	 * @return 200 OK  
+	 * @기능 유저 전체 리스트를 가져옴
+	 * @호출방법 ssafywolrd/user/rooms
+	 * @param UserDTO
+	 * @return List<RoomDTO> 
 	 */
 	@RequestMapping(value = "/user/rooms", method = RequestMethod.POST , produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<List<RoomDTO>> selectUserRooms(@RequestBody UserDTO user) throws Exception {
-		List<RoomDTO> list = uService.selectUserRooms(user.getUid());
+		List<RoomDTO> list = uService.selectUserRooms(user.getUidx());
 		logger.info("유저가 들어간 방 리스트 출력");
 		try {
 			return ResponseEntity.ok().body(list);

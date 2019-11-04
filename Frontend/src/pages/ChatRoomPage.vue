@@ -1,7 +1,7 @@
 <template>
-  <v-container fluid wrap>
-    <v-row id="messageBody" class="scrollable">
-      <v-col cols="12">
+  <v-container fluid fill-height>
+    <v-row >
+      <v-col cols="12" id="messageBody" class="scrollable">
         <div class="message-line" v-for="(message, index) in msgDatas" no-gutters>
 
           <template v-if="message.user.uname != currUser.uname">
@@ -178,12 +178,17 @@
 
         </div>
       </v-col>
-    </v-row>
 
-    <v-row id="chatInput">
-      <v-col cols="12">
+      <v-col cols="12" id="chatInput">
         <v-row no-gutters class="inputBorder">
           <v-col cols="12" >
+            <input
+              type="file"
+              style="display: none"
+              ref="image"
+              accept="image/*"
+              @change="onFilePicked"
+            />
             <div>
               <v-text-field
                 v-model="msg"
@@ -192,15 +197,10 @@
                 solo
                 @keyup.13="sendMessage"
               >
-              <v-btn icon >
-                <v-icon class="chatInputImage">
-                  mdi-paperclip
-                </v-icon>
-              </v-btn>
               </v-text-field>
             </div>
             <div>
-              <v-btn icon >
+              <v-btn icon click="pickFile">
                 <v-icon class="chatInputImage">
                   mdi-paperclip
                 </v-icon>
@@ -215,7 +215,8 @@
         </v-row>
       </v-col>
     </v-row>
-      <!-- <div class="message" v-for="(message,index) in msgs" :class="{own: message.from.name == username}"> -->
+
+  <!-- <div class="message" v-for="(message,index) in msgs" :class="{own: message.from.name == username}"> -->
   </v-container>
 </template>
 
@@ -235,6 +236,8 @@ export default {
         width: 0,
         height: 0
       },
+
+
     };
   },
   computed: {
@@ -242,6 +245,10 @@ export default {
       msgDatas: state => state.socket.msgDatas,
       currUser: state => state.data.currUser,
     }),
+
+    imageIcon () {
+      return this.icons[this.iconIndex]
+    },
   },
   mounted() {
     const $ths = this
@@ -251,8 +258,7 @@ export default {
     }
 
     this.$socket.on(window.location.pathname, async (data) => {
-      var today = new Date(data.time);
-      data.time = today;
+      data.time = this.getToday();
       await this.pushMsgData(data)
       this.scrollToBottom();
     });
@@ -260,7 +266,6 @@ export default {
   },
   methods: {
     ...mapActions('socket', ['getMsg']),
-
     ...mapMutations('socket',['pushMsgData']),
 
     setMessageList(data){
@@ -269,10 +274,7 @@ export default {
       let arr = []
       for(let i =0;i<data.uidx.length;i++){
         arr.push({
-          'from' :{
-            //추가 구현 해야함 (uidx 로 값 가져오는것)
-            'name': data.uidx[i]
-          },
+          'user' : data.user[i],
           'time': data.time[i],
           'msg':data.messages[i]
         })
@@ -306,7 +308,6 @@ export default {
 
     /* 2019.11.02 이찬호
     기능 : 창 크기 실시간 감지
-
     */
     handleResize() {
       this.windows.width = window.innerWidth;
@@ -315,7 +316,6 @@ export default {
 
     async sendMessage() {
       if (this.msg.length === 0) return false;
-
       if(this.msg == '#점심'){
         let params ={
           uid: "ssafy@ssafy.com",
@@ -390,7 +390,50 @@ export default {
       let tim = time.split(' ')[1];
 
       return tim.substring(0,5);
-    }
+    },
+
+    // 이미지 변경해서 imgur에 올리기
+    pickFile() {
+      console.log(this.$refs);
+      this.$refs.image.click();
+    },
+    setImageUrl(url){
+      this.modiImage = url;
+    },
+    onFilePicked(e) {
+      this.modiImage = '';
+      const files = e.target.files;
+      this.loading = true;
+      if (files[0] !== undefined) {
+        this.imageName = files[0].name;
+        if (this.imageName.lastIndexOf(".") <= 0) {
+          return;
+        }
+
+        let formData = new FormData();
+        formData.append('image', files[0]); //required
+
+        axios({
+           method: 'POST',
+           url: 'https://api.imgur.com/3/image',
+           data: formData,
+           headers: {
+           Authorization: "Client-ID aac995cb6f223ce"
+           },
+           mimeType: 'multipart/form-data'
+           }).then(res => {
+             this.modiImage = res.data.data.link;
+             this.loading = false;
+           }).catch(e => {
+             console.log(e)
+        });
+
+      } else {
+        this.imageName = "";
+        this.modiImage = "";
+      }
+    },
+
   },
   created() {
     window.addEventListener('resize', this.handleResize)
@@ -414,7 +457,7 @@ export default {
 }
 .scrollable {
   overflow-y: auto;
-  height: 80vh;
+  height: 70vh;
 }
 .message {
   margin: 5px;

@@ -1,28 +1,30 @@
 package com.ssafy.ssafyworld.dto;
 
 public class MessageDTO {
-	private int mid;
-	private int rid;
-	private String uid;
+	private int midx;
+	private int ridx;
+	private int uidx;
 	private String text;
 	private String time;
-	public int getMid() {
-		return mid;
+	
+
+	public int getMidx() {
+		return midx;
 	}
-	public void setMid(int mid) {
-		this.mid = mid;
+	public void setMidx(int midx) {
+		this.midx = midx;
 	}
-	public int getRid() {
-		return rid;
+	public int getRidx() {
+		return ridx;
 	}
-	public void setRid(int rid) {
-		this.rid = rid;
+	public void setRidx(int ridx) {
+		this.ridx = ridx;
 	}
-	public String getUid() {
-		return uid;
+	public int getUidx() {
+		return uidx;
 	}
-	public void setUid(String uid) {
-		this.uid = uid;
+	public void setUidx(int uidx) {
+		this.uidx = uidx;
 	}
 	public String getText() {
 		return text;
@@ -39,14 +41,14 @@ public class MessageDTO {
 	
 	@Override
 	public String toString() {
-		return "MessageDTO [mid=" + mid + ", rid=" + rid + ", uid=" + uid + ", text=" + text + ", time=" + time
+		return "MessageDTO [midx=" + midx + ", ridx=" + ridx + ", uidx=" + uidx + ", text=" + text + ", time=" + time
 				+ "]";
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + mid;
+		result = prime * result + midx;
 		return result;
 	}
 	@Override
@@ -58,7 +60,7 @@ public class MessageDTO {
 		if (getClass() != obj.getClass())
 			return false;
 		MessageDTO other = (MessageDTO) obj;
-		if (mid != other.mid)
+		if (midx != other.midx)
 			return false;
 		return true;
 	}

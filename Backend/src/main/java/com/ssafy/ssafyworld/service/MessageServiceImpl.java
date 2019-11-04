@@ -21,8 +21,8 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public List<MessageDTO> roomMessages(int rid) throws Exception {
-		return dao.roomMessages(rid);
+	public List<MessageDTO> roomMessages(int ridx) throws Exception {
+		return dao.roomMessages(ridx);
 	}
 
 	@Override

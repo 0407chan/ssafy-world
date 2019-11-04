@@ -12,8 +12,8 @@
 	<!-- 회원가입 -->
 	<insert id="register" parameterType="UserDTO">
 		INSERT
-		INTO user (uid, uname, password,staff,img)
-		VALUES (#{uid}, #{uname}, #{password},#{staff},#{img});
+		INTO user (uidx, uid, uname, password, img, staff)
+		VALUES (#{uidx}, #{uid}, #{uname}, #{password},#{img},#{staff});
 	</insert>
 
 	<!-- 유저수정 -->
@@ -33,10 +33,17 @@
 		SELECT * FROM user Where uidx=#{uidx};
 	</select>
 	<!-- 유저의 방정보 출력 -->
-	<select id="selectUserRooms" parameterType="String" resultType="RoomDTO">
-		SELECT R.rid, R.rname
+	
+	<!-- getUserLogin -->
+	<select id="getUserLogin" parameterType="String" resultType="UserDTO">
+		SELECT * FROM user Where uid=#{uid};
+	</select>
+	<!-- 유저의 방정보 출력 -->
+	
+	<select id="selectUserRooms" parameterType="int" resultType="RoomDTO">
+		SELECT R.ridx, R.rname
 		FROM room R, room_has_user H
-		WHERE H.uid = #{uid} AND R.rid = H.rid;
+		WHERE H.uidx = #{uidx} AND R.ridx = H.ridx;
 	</select>
 	<select id="getUserInfo" parameterType="int" resultType="UserDTO">
 		SELECT *
