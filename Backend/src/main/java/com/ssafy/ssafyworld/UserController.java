@@ -126,7 +126,7 @@ public class UserController {
 	 * @param uidx, uname, password
 	 * @return 성공 200 OK , 실패 400 BAD REQUEST, UserDTO JSON형태로 보냄
 	 */
-	@RequestMapping(value = "/user/update", method = RequestMethod.POST , produces="application/json; charset=utf8")
+	@RequestMapping(value = "/user/update/{uidx}", method = RequestMethod.POST , produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<String> update(@RequestBody UserDTO user) throws Exception {
 		logger.info("유저 수정");
@@ -134,6 +134,23 @@ public class UserController {
 		user.setPassword(hashPw);
 		System.out.println("들어온"+user);
 		uService.update(user);
+		System.out.println(uService.getUserInfo(user.getUidx()).toString());
+		return ResponseEntity.ok().body(uService.getUserInfo(user.getUidx()).toString());
+	}
+	
+	/**
+	 * 2019.11.04 준범이 
+	 * @기능 어드민 유저수정
+	 * @호출방법 ssafywolrd/user/admin/update
+	 * @param uidx, staff
+	 * @return 성공 200 OK , 실패 400 BAD REQUEST, UserDTO JSON형태로 보냄
+	 */
+	@RequestMapping(value = "/user/admin/update", method = RequestMethod.POST , produces="application/json; charset=utf8")
+	@ResponseBody
+	public ResponseEntity<String> adminUpdate(@RequestBody UserDTO user) throws Exception {
+		logger.info("유저 수정");
+		System.out.println("들어온 " + user);
+		uService.adminUpdate(user);
 		System.out.println(uService.getUserInfo(user.getUidx()).toString());
 		return ResponseEntity.ok().body(uService.getUserInfo(user.getUidx()).toString());
 	}

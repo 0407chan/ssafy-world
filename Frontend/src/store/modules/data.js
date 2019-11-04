@@ -28,10 +28,22 @@ const actions = {
     }
   },
 
+  async getUsers({ commit }) {
+    return await api.getUsers()
+  },
+  
+  async adminUpdateUser({ commit }, params) {
+    return await api.adminUpdateUser(params)
+  },
+
+  async adminDeleteUser({ commit }, param) {
+    await api.adminDeleteUser(param)
+  },
+
   /* 2019.11.03 이찬호
     currUser 세팅
   */
-  setCurrUser({commit,state},params){
+  setCurrUser({commit, state}, params){
     commit('SET_CURRUSER', params)
     return state.currUser
   },
@@ -70,10 +82,6 @@ const actions = {
   async update({ commit }, params) {
     const resp = await api.update(params);
     return resp;
-  },
-
-  async getUser({ commit }, params) {
-    const resp = await api.getUser()
   },
 
   async getUserInfo({ commit }, params) {

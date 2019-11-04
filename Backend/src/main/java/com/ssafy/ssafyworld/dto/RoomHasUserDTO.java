@@ -3,6 +3,7 @@ package com.ssafy.ssafyworld.dto;
 public class RoomHasUserDTO {
 	private int rid;
 	private String uid;
+	
 	public int getRid() {
 		return rid;
 	}

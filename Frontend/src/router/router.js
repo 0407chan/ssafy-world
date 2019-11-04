@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import LoginPage from "@/pages/LoginPage.vue"
-import RegisterPage from "@/pages/RegisterPage.vue"
-import ChatRoomPage from "@/pages/ChatRoomPage.vue"
-import UserPage from "@/pages/UserPage.vue"
-import UserDetailPage from "@/pages/UserDetailPage"
+import LoginPage from '@/pages/LoginPage.vue'
+import AdminPage from '@/pages/AdminPage.vue'
+import RegisterPage from '@/pages/RegisterPage.vue'
+import ChatRoomPage from '@/pages/ChatRoomPage.vue'
+import UserDetailPage from '@/pages/UserDetailPage'
+
 Vue.use(Router)
 
 export default new Router({
@@ -14,6 +15,11 @@ export default new Router({
             path: '/',
             name: 'login',
             component: LoginPage
+        },
+        {
+            path: '/admin',
+            name: 'admin',
+            component: AdminPage
         },
         {
             path: '/register',
