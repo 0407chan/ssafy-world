@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDTO getUser(UserDTO user) throws Exception {
+		System.out.println("UserServiceImpl getUser = "+user);
 		return dao.getUser(user);
 	}
 

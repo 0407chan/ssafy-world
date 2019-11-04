@@ -23,4 +23,4 @@ const SocketPlugin = {
   },
 };
 
-Vue.use(SocketPlugin);
+//Vue.use(SocketPlugin);

@@ -33,7 +33,8 @@ export default {
         },
         logout() {
             this.clearUser()
-            this.$session.set('token', '')
+            this.$session.destroy();
+            this.$store.state.currUser = ''
             this.$router.push({ name: 'login' });
         },
     },
