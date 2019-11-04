@@ -8,11 +8,47 @@
       </v-list-item>
     </v-list>
     <v-list>
-      <MakeChatRoom />
-      <v-list-item @click="enterChatroom">
-        <v-list-item-title />
+      <v-list-item @click.stop="dialog = true">
+        <v-list-item-title>
+          Create Chenal
+        </v-list-item-title>
       </v-list-item>
     </v-list>
+    <v-dialog
+      v-model="dialog"
+      max-width="480">
+     <v-card>
+        <v-card-title class="headline">Create Chenal</v-card-title>
+        <v-card-text>
+        </v-card-text>
+        <v-card-text>
+          <!-- 컨텐츠 확인 -->
+          <v-text-field
+            label="Room Name"
+            v-model='roomname'
+          ></v-text-field>
+          <v-text-field
+            label="Invite User"
+            v-model='insertuid'
+          ></v-text-field>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="addChatroom()">
+            확인
+          </v-btn>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dialog = false" >
+            취소
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -23,30 +59,74 @@ import MakeChatRoom from '@/components/room/MakeChatRoom'
 
 export default {
   name: 'ChatRoomList',
-  data() {
-    return {
-      
-    }
-  },
+  data () {
+      return {
+        dialog: false,
+        insertuid :'',
+        roomname :''
+      }
+    },
   components: {
     MakeChatRoom,
   },
   computed:{
     //userLogintoken 부분 수정 해야함
-    ...mapState('data', ['chatlist', 'chatroomList']),
-    ...mapState('socket', ['msgDatas'])
+    ...mapState('data', ['chatlist', 'chatroomList','currUser']),
+    ...mapState('socket', ['msgDatas']),
   },
-  methods : {
+  mounted() {
+    this.getRoomList()
+  },
+  methods: {
+    ...mapActions('data', ['registChatroom']),
     ...mapActions('socket', ['getMsg']),
     ...mapMutations('socket', ['clearMsg']),
-    enterChatroom() {
-      console.log("구현해야함");
+    addChatroom() {
+      console.log(this.insertuid);
+      console.log(this.roomname);
+      let arr = []
+      arr.push(this.currUser.uidx)
+      console.log(arr);
+      // 룸 생성
+      // 룸 참가
+      this.createRoom(this.roomname)
+      // 룸 최신화
+      this.getRoomList()
+      this.dialog=false
+      this.insertuid=''
+      this.insertuid=''
     },
     async goTo(rid) {
       await this.clearMsg();
       await this.getMsg(rid);
       this.$router.push('/chatroom/'+rid)
-    }
+    },
+    //디비에서 내가 접속한 방들 다 가져옴
+     getRoomList(){
+       this.registChatroom(this.currUser.uid)
+     },
+     //룸 생성, 참가
+     createRoom(roomname){
+       api.postRoom(this.roomname).then(res=>{
+         let rid = res.data
+         this.$socket.emit('create',{
+           rid : rid,
+           rname : roomname
+           })
+          this.chatroomList.push({
+            rid : rid,
+            rname : roomname
+            })
+            
+          api.postEnterRoom(this.currUser.uid,rid).then(res=>{
+            this.registChatroom()
+          })
+       })
+<<<<<<< HEAD
+     }
+=======
+     },
+>>>>>>> ae604d233eea5556bfcf0fd90bb352243a815ad4
   }
 };
 </script>

@@ -8,16 +8,20 @@ const state = {
   chatlist : false, // user가 가지고 있는 단체방 목록 토글 (실시간 동기화 때문에 VueX 사용)
   friendList : [],  // user가 가지고 있는 친구 목록
   chatroomList : [],  // user가 접속해있는 단체방 목록
+
+  newMessage :false,
+  chatListRealTimeCheck : false,
+
   currUser: '',
 }
 
 // actions
 const actions = {
 
-  refresh({commit},params){
-    if(params != null)
+  refresh({commit}, params) {
+    if (params != null)
       state.currUser = params;
-    if(state.currUser != ''){
+    if (state.currUser != '') {
       actions.registFriend()
       actions.registChatroom()
     }
@@ -36,20 +40,26 @@ const actions = {
     });
   },
   // 로그인 후 친구목록 생성
-  registFriend(){
+  registFriend() {
     api.postFriend(state.currUser.uid).then(res=>{
-      state.friendList=res;
+      state.friendList = res;
     })
   },
+
   // 로그인 후 단체방 목록 생성
-  registChatroom(){
+  registChatroom() {
     api.getUserByRoom(state.currUser.uid).then(res=>{
-      state.chatroomList=res;
+      state.chatroomList = res;
     })
   },
 
   async register({ commit }, params) {
     const resp = await api.register(params);
+    return resp;
+  },
+
+  async update({ commit }, params) {
+    const resp = await api.update(params);
     return resp;
   },
 

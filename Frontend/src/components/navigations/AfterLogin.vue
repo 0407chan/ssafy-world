@@ -19,7 +19,7 @@
             </v-list-item-title>
         </v-list-item>
         <FriendList />
-        
+
         <!-- 대화방 열기 -->
         <v-list-item @click="reverse('chatlist')">
             <v-list-item-action>
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import FriendList from '@/components/navigations/FriendList'
 import ChatRoomList from '@/components/navigations/ChatRoomList'
 
@@ -57,7 +57,7 @@ export default {
         // 이미 접속한 이력이 있을 경우
         this.$socket.on('check', (data) => {
             if (data.msg === 'already connect') {
-                if (confirm("이미 접속한 브라우져가 존재합니다. \n 지금 브라우져를 사용하시겠습니까?")) {
+                if (confirm("이미 접속한 브라우져가 존재합니다.\n 지금 브라우져를 사용하시겠습니까?")) {
                     this.$socket.emit('change', {
                         msg: 'yes'
                     })
@@ -69,11 +69,11 @@ export default {
                 }
             }
         })
-        
+
         this.$socket.on('disc', (data) => {
             this.$socket.disconnect()
         })
-        
+
         if (this.currUser != '') {
             this.login(this.currUser.uid).then(res => {
                 if (res.status == '200')
@@ -81,11 +81,16 @@ export default {
             })
         }
     },
+    mounted(){
+        this.registChatroom()
+        this.registFriend()
+    },
     computed: {
         ...mapState('data', ['friend', 'chatlist', 'currUser']),
     },
     methods: {
         ...mapMutations('data', ['setMenu', 'clearUser', 'reverse']),
+        ...mapActions('data', ['registChatroom','registFriend','login'])
     },
 }
 </script>

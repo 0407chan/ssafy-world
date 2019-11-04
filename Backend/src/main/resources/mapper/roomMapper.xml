@@ -25,4 +25,8 @@
 	<delete id="deleteRoom" parameterType="int">
 		DELETE FROM room WHERE rid = #{rid};
 	</delete>
+	
+	<insert id="enterRoom" parameterType="map">
+		INSERT INTO room_has_user (rid, uid) VALUES (#{rid},#{uid});
+	</insert>
 </mapper>

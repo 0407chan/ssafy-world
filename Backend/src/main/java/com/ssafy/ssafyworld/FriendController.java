@@ -53,7 +53,7 @@ public class FriendController {
 	 * @param uid
 	 * @return List<FriendDTO>
 	 */
-	@RequestMapping(value = "/friend", method = RequestMethod.POST)
+	@RequestMapping(value = "/friend", method = RequestMethod.POST,produces="application/json; charset=utf8" )
 	@ResponseBody
 	public ResponseEntity<List<String>> selectFriend(@RequestBody FriendDTO friend) throws Exception {
 		logger.info("UID 해당 친구 출력");

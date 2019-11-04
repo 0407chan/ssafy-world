@@ -60,5 +60,15 @@ public class UserDAOImpl implements UserDAO {
 		UserDTO dto = sqlSession.selectOne(Namespace+".getUserInfo", uidx);
 		return dto;
 	}
+
+	@Override
+	public void update(UserDTO user) throws Exception {
+		sqlSession.update(Namespace+".update", user);
+	}
+
+	@Override
+	public void deleteUser(int uidx) throws Exception {
+		sqlSession.delete(Namespace+".deleteUser",uidx);
+	}
  
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.ssafyworld.dto.RoomDTO;
+import com.ssafy.ssafyworld.dto.RoomHasUserDTO;
 import com.ssafy.ssafyworld.dto.UserDTO;
 import com.ssafy.ssafyworld.service.MessageService;
 import com.ssafy.ssafyworld.service.RoomService;
@@ -56,12 +57,13 @@ public class RoomController {
 	 * @return RoomDTO
 	 */
 
-	@RequestMapping(value = "/room/{rid}", method = RequestMethod.GET)
+	@RequestMapping(value = "/room/{rid}", method = RequestMethod.GET, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<List<UserDTO>>selectRoom(@PathVariable("rid") int rid) throws Exception {
 		logger.info(rid+"방에 속한 사람");
 		return ResponseEntity.ok().body(rService.selectRoom(rid));
 	}
+	
 	
 	/**
 	 * 10-23 : 이규찬 
@@ -71,10 +73,11 @@ public class RoomController {
 	 * @return Integer
 	 * @throws Exception 
 	 */
-	@RequestMapping(value="/room/create", method=RequestMethod.POST)
+	@RequestMapping(value="/room/create", method=RequestMethod.POST, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<Integer> createRoom(@RequestBody RoomDTO room) throws Exception {
 		logger.info(room.getRname()+" 방 생성");
+		System.out.println(room);
 		return ResponseEntity.ok().body(rService.createRoom(room.getRname()));
 	}
 	
@@ -96,6 +99,26 @@ public class RoomController {
 		} catch (Exception e) {
 			logger.error("방 삭제 실패");
 			return ResponseEntity.badRequest().body("방 삭제 실패");
+		}
+	}
+	/**
+	 * 10-31 : 이규찬 
+	 * @기능 방입장
+	 * @호출방법 ssafywolrd/room/enter
+	 * @param RoomHasUserDTO
+	 * @return String
+	 * @throws Exception 
+	 */
+	@RequestMapping(value="/room/enter", method=RequestMethod.POST, produces="application/json; charset=utf8")
+	@ResponseBody
+	public ResponseEntity<String> enterRoom(@RequestBody RoomHasUserDTO dto){
+		try {
+			System.out.println(dto.getRid()+" "+dto.getUid());
+			rService.enterRoom(dto.getRid(), dto.getUid());
+			System.out.println("ok");
+			return ResponseEntity.ok().body("Room Enter!");
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body("Room Enter Fail!");
 		}
 	}
 }

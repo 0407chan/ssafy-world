@@ -22,7 +22,7 @@
                 </div>
                 <div class="content">
                   {{message.msg}}
-                  <!-- <chat-image v-if="message.image" :imgsrc="message.image" @imageLoad="imageLoad"></chat-image> -->
+                  <chat-image v-if="message.image" :imgsrc="message.image" @imageLoad="imageLoad"></chat-image>
                 </div>
               </div>
               <div v-if="message.time && index > 0" :class="{time: index-1 >= 0 && message.time.getMinutes() == msgDatas[index-1].time.getMinutes()}">
@@ -64,12 +64,14 @@ export default {
       'msgDatas': state => state.socket.msgDatas,
       //아이디 vuex 링크 잡기
     }),
-    ...mapState('data',['currUser'])
+    ...mapState('data',['currUser']),
+    
   },
   mounted() {
     const $ths = this
     console.log("connect chatroom" , window.location.pathname);
-    this.getMsg(window.location.pathname.split('/')[2])
+    if(window.location.pathname.split('/')[2]!=undefined)
+      this.getMsg(window.location.pathname.split('/')[2])
     this.$socket.on(window.location.pathname, (data) => {
       var today = new Date(data.time);
       data.time = today;
@@ -79,6 +81,24 @@ export default {
   methods: {
     ...mapActions('socket', ['getMsg']),
     ...mapMutations('socket',['pushMsgData']),
+    setMessageList(data){
+      console.log(data.uidx.length);
+      
+      let arr = [] 
+      for(let i =0;i<data.uidx.length;i++){
+        arr.push({
+          'from' :{
+            //추가 구현 해야함 (uidx 로 값 가져오는것)
+            'name': data.uidx[i]
+          },
+          'time': data.time[i],
+          'msg':data.messages[i]
+        })
+      }
+      this.msgDatas=arr
+      this.scrollToBottom();
+    }
+    ,
 
     async sendMessage() {
       if (this.msg.length === 0) return false;
@@ -100,11 +120,7 @@ export default {
       this.scrollToBottom();
     },
 
-    test(){
-      console.log(this.msgs);
-    },
-
-    scrollToBottom() {
+    scrollToBottom(){
       var messageBody = document.getElementById('messageBody');
       messageBody.scrollTop = messageBody.scrollHeight;
     },

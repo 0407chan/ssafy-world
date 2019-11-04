@@ -40,4 +40,10 @@ public class RoomServiceImpl implements RoomService {
 		return dao.selectRooms();
 	}
 
+
+	@Override
+	public void enterRoom(int room, String user) throws Exception {
+		dao.enterRoom(room,user);
+	}
+
 }
