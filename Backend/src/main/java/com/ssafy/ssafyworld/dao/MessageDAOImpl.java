@@ -27,8 +27,8 @@ public class MessageDAOImpl implements MessageDAO {
 
 
 	@Override
-	public List<MessageDTO> roomMessages(int rid) throws Exception {
-		List<MessageDTO> list=sqlSession.selectList(Namespace+".roomMessages",rid);
+	public List<MessageDTO> roomMessages(int ridx) throws Exception {
+		List<MessageDTO> list=sqlSession.selectList(Namespace+".roomMessages",ridx);
     	return list;
 	}
 

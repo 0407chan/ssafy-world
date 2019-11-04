@@ -45,35 +45,35 @@ public class FriendController {
 		logger.info("전체 친구 출력");
 		return ResponseEntity.ok().body(fService.selectFriends());
 	}
-	
+
 	/**
 	 * 10-28 : 박규빈 
 	 * @기능 uid 해당하는 친구 리스트
 	 * @호출방법 ssafywolrd/friend
-	 * @param uid
+	 * @param uidx
 	 * @return List<FriendDTO>
 	 */
-	@RequestMapping(value = "/friend", method = RequestMethod.POST)
+	@RequestMapping(value = "/friend/{uidx}", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<List<String>> selectFriend(@RequestBody FriendDTO friend) throws Exception {
+	public ResponseEntity<List<String>> selectFriend(@PathVariable("uidx") int uidx) throws Exception {
 		logger.info("UID 해당 친구 출력");
-		System.out.println(friend);
-		return ResponseEntity.ok().body(fService.selectFriend(friend.getUid()));
+		System.out.println(uidx+"의 친구 출력");
+		return ResponseEntity.ok().body(fService.selectFriend(uidx));
 	}
 	
 	/**
 	 * 10-28 : 박규빈 
 	 * @기능 친구삭제
 	 * @호출방법 ssafywolrd/friend/delete
-	 * @param friend
+	 * @param FriendDTO
 	 * @return 200 OK 400 BAD REQUEST
 	 * @throws Exception 
 	 */
 	@RequestMapping(value="/friend/delete", method=RequestMethod.POST, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<String> deleteFriend(@RequestBody FriendDTO friend) throws Exception{
-		String person1 = friend.getUid();
-		String person2 = friend.getFriend();
+		int person1 = friend.getUidx();
+		int person2 = friend.getFriend();
 		FriendDTO temp = new FriendDTO(0,person2,person1);
 		System.out.println(temp);
 		try {
@@ -98,8 +98,8 @@ public class FriendController {
 	@RequestMapping(value="/friend/add", method=RequestMethod.POST, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<String> addFriend(@RequestBody FriendDTO friend) throws Exception{
-		String person1 = friend.getUid();
-		String person2 = friend.getFriend();
+		int person1 = friend.getUidx();
+		int person2 = friend.getFriend();
 		FriendDTO temp = new FriendDTO(0,person2,person1);
 		System.out.println(temp);
 		try {
@@ -112,4 +112,5 @@ public class FriendController {
 			return ResponseEntity.badRequest().body("친구 추가 실패");
 		}
 	}
+	
 }

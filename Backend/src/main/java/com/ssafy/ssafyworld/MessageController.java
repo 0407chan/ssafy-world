@@ -1,7 +1,5 @@
 package com.ssafy.ssafyworld;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -51,29 +49,28 @@ public class MessageController {
 	/**
 	 * 10-21 : 박규빈 
 	 * @기능 해당 방의 메세지 모두 가져오기
-	 * @호출방법 ssafywolrd/message/{rid}
-	 * @param rid
+	 * @호출방법 ssafywolrd/message/{ridx}
+	 * @param ridx
 	 * @return List<MessageDTO>
 	 */
-	@RequestMapping(value = "/message/{rid}", method = RequestMethod.GET, produces="application/json; charset=utf8")
+	@RequestMapping(value = "/message/{ridx}", method = RequestMethod.GET, produces="application/json; charset=utf8")
 	@ResponseBody
-	public ResponseEntity<List<MessageDTO>> roomMessages(@PathVariable("rid") int rid) throws Exception {
-		logger.info(rid+"번 방 메세지 추출 완료");
-		return new ResponseEntity<List<MessageDTO>>(mService.roomMessages(rid),HttpStatus.OK);
+	public ResponseEntity<List<MessageDTO>> roomMessages(@PathVariable("ridx") int ridx) throws Exception {
+		logger.info(ridx+"번 방 메세지 추출 완료");
+		return new ResponseEntity<List<MessageDTO>>(mService.roomMessages(ridx),HttpStatus.OK);
 	}
 	
 	/**
 	 * 10-28 : 박규빈 
 	 * @기능 해당 방에
 	 * @호출방법 ssafywolrd/message
-	 * @param rid, uid , text
+	 * @param rixd, uidx , text , time
 	 * @return 200 OK
 	 */
 	@RequestMapping(value = "/message", method = RequestMethod.POST, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<String> insertMessage(@RequestBody MessageDTO message) throws Exception {
 		mService.insertMessage(message);
-		
 		return new ResponseEntity<String>("메세지 입력 완료",HttpStatus.OK);
 	}
 }

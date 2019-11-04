@@ -10,8 +10,8 @@
 	</select>
 	
 	<!-- 친구 출력-->
-	<select id="selectFriend" parameterType="String" resultType="String">
-		SELECT friend FROM friend where uid=#{uid};
+	<select id="selectFriend" parameterType="int" resultType="String">
+		SELECT friend FROM friend where uidx=#{uidx};
 	</select>
 	
 	<!-- 친구 찾기 -->
@@ -21,11 +21,11 @@
 	
 	<!-- 친구 추가 -->
 	<insert id="addFriend" parameterType="friendDTO">
-		INSERT INTO friend (uid,friend) VALUES (#{uid},#{friend});
+		INSERT INTO friend (uidx,friend) VALUES (#{uidx},#{friend});
 	</insert>
 	
 	<!-- 친구 삭제 -->
 	<delete id="deleteFriend" parameterType="friendDTO">
-		DELETE FROM friend where uid=#{uid} and friend=#{friend};
+		DELETE FROM friend where uidx=#{uidx} and friend=#{friend};
 	</delete>
 </mapper>
