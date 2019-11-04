@@ -117,16 +117,12 @@ export default {
             rid : rid,
             rname : roomname
             })
-            
+
           api.postEnterRoom(this.currUser.uid,rid).then(res=>{
             this.registChatroom()
           })
        })
-<<<<<<< HEAD
      }
-=======
-     },
->>>>>>> ae604d233eea5556bfcf0fd90bb352243a815ad4
   }
 };
 </script>

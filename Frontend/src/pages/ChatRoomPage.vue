@@ -250,7 +250,7 @@ export default {
       this.getMsg(window.location.pathname.split('/')[2])
     }
 
-    this.$socket.on(window.location.pathname, (data) => {
+    this.$socket.on(window.location.pathname, async (data) => {
       var today = new Date(data.time);
       data.time = today;
       await this.pushMsgData(data)
