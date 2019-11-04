@@ -54,7 +54,7 @@
 
       <v-flex text-sm-center ma-5>
         <!-- <v-btn rounded block :color="index" @click="login"><span class="btnText">Log in</span></v-btn> -->
-        <v-btn v-if="idLen >= 4 && passwordLen >= 4" rounded block color="green" @click="loginAction"><span class="btnText">Log in</span></v-btn>
+        <v-btn v-if="idLen >= 4 && passwordLen >= 4" rounded block :color="colorIndex" @click="loginAction"><span class="btnText">Log in</span></v-btn>
         <v-btn v-else rounded disabled block>Log in</v-btn>
       </v-flex>
       <v-flex text-sm-center ma-5>
@@ -80,6 +80,7 @@ export default {
       id:'',
       pw:'',
     },
+    colorIndex:"orange"
   }),
   computed:{
     idLen() {

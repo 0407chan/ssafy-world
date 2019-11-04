@@ -57,7 +57,7 @@ export default {
         // 이미 접속한 이력이 있을 경우
         this.$socket.on('check', (data) => {
             if (data.msg === 'already connect') {
-                if (confirm("이미 접속한 브라우져가 존재합니다. \n 지금 브라우져를 사용하시겠습니까?")) {
+                if (confirm("이미 접속한 브라우져가 존재합니다.\n 지금 브라우져를 사용하시겠습니까?")) {
                     this.$socket.emit('change', {
                         msg: 'yes'
                     })

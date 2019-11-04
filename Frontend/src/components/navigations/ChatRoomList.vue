@@ -53,8 +53,9 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapMutations } from 'vuex';
+import { mapActions, mapState, mapMutations } from 'vuex'
 import api from '@/api'
+import MakeChatRoom from '@/components/room/MakeChatRoom'
 
 export default {
   name: 'ChatRoomList',
@@ -66,22 +67,17 @@ export default {
       }
     },
   components: {
-
+    MakeChatRoom,
   },
-  data () {
-      return {
-        dialog: false,
-        insertuid :'',
-        roomname :''
-      }
-    },
-
   computed:{
     //userLogintoken 부분 수정 해야함
     ...mapState('data', ['chatlist', 'chatroomList','currUser']),
     ...mapState('socket', ['msgDatas']),
   },
-  methods :{
+  mounted() {
+    this.getRoomList()
+  },
+  methods: {
     ...mapActions('data', ['registChatroom']),
     ...mapActions('socket', ['getMsg']),
     ...mapMutations('socket', ['clearMsg']),
@@ -121,12 +117,12 @@ export default {
             rid : rid,
             rname : roomname
             })
-            
+
           api.postEnterRoom(this.currUser.uid,rid).then(res=>{
             this.registChatroom()
           })
        })
-     },
+     }
   }
 };
 </script>
