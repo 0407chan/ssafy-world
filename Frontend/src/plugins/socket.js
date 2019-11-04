@@ -13,7 +13,7 @@ const SocketPlugin = {
       // socket.emit('/chatroom'+$payload.rid, {
       socket.emit($payload.rid, {
         msg: $payload.msg,
-        name: $payload.name,
+        user: $payload.user,
         time: $payload.time,
       });
     };
@@ -23,4 +23,4 @@ const SocketPlugin = {
   },
 };
 
-//Vue.use(SocketPlugin);
+Vue.use(SocketPlugin);
