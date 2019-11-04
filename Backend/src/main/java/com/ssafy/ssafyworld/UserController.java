@@ -66,6 +66,24 @@ public class UserController {
 			return ResponseEntity.badRequest().body(null);
 		}
 	}
+	
+	   /**
+     * 2019.11.04 준범이 
+     * @기능 어드민 유저수정
+     * @호출방법 ssafywolrd/user/admin/update
+     * @param uidx, staff
+     * @return 성공 200 OK , 실패 400 BAD REQUEST, UserDTO JSON형태로 보냄
+     */
+    @RequestMapping(value = "/user/admin/update", method = RequestMethod.POST , produces="application/json; charset=utf8")
+    @ResponseBody
+    public ResponseEntity<String> adminUpdate(@RequestBody UserDTO user) throws Exception {
+        logger.info("유저 수정");
+        System.out.println("들어온 " + user);
+        uService.adminUpdate(user);
+        System.out.println(uService.getUserInfo(user.getUidx()).toString());
+        return ResponseEntity.ok().body(uService.getUserInfo(user.getUidx()).toString());
+    }
+	
 	/**
 	 * 2019.10.25 이찬호
 	 *
@@ -149,6 +167,7 @@ public class UserController {
 	@ResponseBody
 	public ResponseEntity<String> deleteUser(@PathVariable("uidx") int uidx) throws Exception {
 		logger.info("유저 삭제");
+		System.out.println(uidx);
 		uService.deleteUser(uidx);
 		return ResponseEntity.ok().body("삭제 성공");
 	}

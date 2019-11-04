@@ -16,4 +16,5 @@ public interface UserService {
 	public List<RoomDTO> selectUserRooms(int uidx) throws Exception;
 	public void update(UserDTO user) throws Exception;
 	public void deleteUser(int uidx) throws Exception;
+	public void adminUpdate(UserDTO user) throws Exception;
 }

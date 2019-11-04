@@ -15,7 +15,15 @@
 		INTO user (uidx, uid, uname, password, img, staff)
 		VALUES (#{uidx}, #{uid}, #{uname}, #{password},#{img},#{staff});
 	</insert>
+	
 
+	<!-- 권한수정 -->
+	<update id="adminUpdate" parameterType="UserDTO">
+		UPDATE USER
+		SET staff=#{staff}
+		WHERE uidx = #{uidx};
+	</update>
+	
 	<!-- 유저수정 -->
 	<update id="update" parameterType="UserDTO">
 		UPDATE USER
