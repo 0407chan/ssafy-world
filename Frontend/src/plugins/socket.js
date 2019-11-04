@@ -2,7 +2,7 @@ import Vue from 'vue'
 import io from 'socket.io-client'
 
 //const socket = io('http://70.12.247.78:3000');
-const socket = io('http://13.124.121.215:3000',{forceNew : true});
+//const socket = io('http://13.124.121.215:3000',{forceNew : true});
 
 const SocketPlugin = {
   install(vue) {
@@ -23,4 +23,4 @@ const SocketPlugin = {
   },
 };
 
-Vue.use(SocketPlugin);
+//Vue.use(SocketPlugin);

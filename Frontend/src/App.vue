@@ -2,7 +2,7 @@
 <v-app xs12>
   <!-- <Navigation /> -->
   <template v-if="windows.width < 600">
-    <v-navigation-drawer v-model="drawer" disable-resize-watcher app>
+    <v-navigation-drawer v-model="drawer" disable-resize-watcher width="200px" app>
       <v-list dense v-show="currUser == ''">
         <BeforeLogin />
       </v-list>
@@ -13,13 +13,23 @@
     </v-navigation-drawer>
   </template>
   <template v-else>
-    <v-navigation-drawer v-model="drawer" disable-resize-watcher app permanent>
+    <v-navigation-drawer v-model="drawer" disable-resize-watcher width="200px" app permanent>
       <v-list dense v-show="currUser == ''">
         <BeforeLogin />
       </v-list>
       <v-list dense v-show="currUser != ''">
         <v-divider></v-divider>
         <AfterLogin />
+      </v-list>
+
+      <v-list dense>
+        <v-list-item @click="goTo('chatroom')">
+            <v-list-item-title>
+                <span>
+                채팅방 ㄱㄱㄱ
+              </span>
+            </v-list-item-title>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
   </template>
@@ -32,7 +42,17 @@
       </v-btn>
     </template>
 
+
+
     <v-spacer />
+
+    <!-- 집에서 테스트하기위한 -->
+    <v-btn icon @click="setProfile">
+      <v-icon>mdi-account</v-icon>
+    </v-btn>
+    <v-btn icon @click="setProfile2">
+      <v-icon>mdi-account</v-icon>
+    </v-btn>
 
     <div v-if="currUser">
       <v-menu offset-y>
@@ -55,7 +75,7 @@
 
           <v-divider></v-divider>
 
-          <v-list-item @click="goTo('user')">
+          <v-list-item @click="goTo('userinfo')">
             <v-list-item-avatar>
               <v-icon >mdi-account</v-icon>
             </v-list-item-avatar>
@@ -107,7 +127,7 @@ export default {
   data() {
     return {
       drawer: true,
-
+      currUser:'',
       windows: {
         width: 0,
         height: 0
@@ -116,13 +136,14 @@ export default {
   },
   computed: {
     ...mapState({
-      currUser: state => state.data.currUser,
+      //currUser: state => state.data.currUser,
     }),
 
   },
   methods: {
     ...mapActions('data', ['refresh']),
     ...mapMutations('data',['clearUser']),
+    ...mapActions('data', ['setCurrUser']),
 
     handleResize() {
       this.windows.width = window.innerWidth;
@@ -147,17 +168,44 @@ export default {
         this.$store.state.currUser = ''
         this.$router.push({ name: 'login' });
     },
+
+    setProfile(){
+      let params={
+        uidx :1,
+        uname : "이찬호",
+        img: "https://i.imgur.com/WiBTxG7.jpg",
+        uid:"0407chan@naver.com",
+        staff: 0
+      }
+      this.$session.set('token',params)
+      this.setCurrUser(params);
+    },
+    setProfile2(){
+      let params={
+        uidx :2,
+        uname : "엔젤릭버스터",
+        img: "https://i.imgur.com/oqTAGYt.png",
+        uid:"1004ej@maple.com",
+        staff: 1
+      }
+      this.$session.set('token',params)
+      this.setCurrUser(params);
+    }
+  },
+
+  mounted() {
+    this.$session.start()
+    if(this.$session.has('token')){
+      let token = this.$session.get('token')
+      this.$store.state.currUser = token;
+      this.currUser = token;
+      this.refresh(token)
+    }
   },
 
   created() {
     window.addEventListener('resize', this.handleResize)
     this.handleResize();
-  },
-
-  mounted() {
-    this.$session.start()
-    let token = this.$session.get('token')
-    this.refresh(token)
   },
   destroyed() {
     this.$socket.emit('disconnect', {

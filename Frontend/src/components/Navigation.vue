@@ -7,6 +7,8 @@
       <v-divider></v-divider>
       <AfterLogin />
     </v-list>
+
+    
   </v-navigation-drawer>
 </template>
 
@@ -29,6 +31,11 @@ export default {
     ...mapState({
       currUser: state => state.data.currUser,
     }),
+  },
+  methods:{
+    goTo(path) {
+      this.$router.push({name: path})
+    },
   }
 };
 </script>

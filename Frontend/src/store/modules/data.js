@@ -8,6 +8,7 @@ const state = {
   chatlist : false, // user가 가지고 있는 단체방 목록 토글 (실시간 동기화 때문에 VueX 사용)
   friendList : [],  // user가 가지고 있는 친구 목록
   chatroomList : [],  // user가 접속해있는 단체방 목록
+  
   currUser: '',
   navDrawer: false,
 }
@@ -22,6 +23,14 @@ const actions = {
       actions.registFriend()
       actions.registChatroom()
     }
+  },
+
+  /* 2019.11.03 이찬호
+    currUser 세팅
+  */
+  setCurrUser({commit,state},params){
+    commit('SET_CURRUSER', params)
+    return state.currUser
   },
 
   async login({ commit }, params) {
@@ -95,7 +104,12 @@ const mutations = {
 
   toggleNav(state){
     state.navDrawer = !state.navDrawer;
-  }
+  },
+
+  SET_CURRUSER(state, params){
+    state.currUser = params
+  },
+
 };
 
 export default {
