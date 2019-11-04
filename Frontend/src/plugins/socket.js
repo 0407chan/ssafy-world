@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import io from 'socket.io-client'
 
-//const socket = io('http://70.12.247.78:3000');
-const socket = io('http://13.124.121.215:3000');
+const socket = io('http://70.12.247.108:3000');
+// const socket = io('http://13.124.121.215:3000');
 
 const SocketPlugin = {
   install(vue) {
@@ -13,7 +13,7 @@ const SocketPlugin = {
       // socket.emit('/chatroom'+$payload.rid, {
       socket.emit($payload.rid, {
         msg: $payload.msg,
-        name: $payload.name,
+        user: $payload.user,
         time: $payload.time,
       });
     };
@@ -23,4 +23,4 @@ const SocketPlugin = {
   },
 };
 
-//Vue.use(SocketPlugin);
+Vue.use(SocketPlugin);
