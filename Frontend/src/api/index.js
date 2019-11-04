@@ -12,13 +12,13 @@ export default {
   },
 
   /**
-   * 
+   *
    * 2019.10.29 준범이
    * 자소서도 안돼
    * 면접도 안돼
    * 이 안에 배신자가 있다
    * 이게 내 결론이다
-   *  
+   *
    */
   getUserInfo(param) {
     return axios.get(`${apiUrl}/user/info/${param}`)
@@ -32,13 +32,13 @@ export default {
   },
 
   /**
-   * 
+   *
    * 2019.11.01 준범이
    * 기능: 회원정보수정
    * 파라미터: param = uidx
    * 리턴: 없음
    * 특징: 이건 백문제
-   *  
+   *
    */
   update(params) {
     return axios.post(`${apiUrl}/user/update`, {
@@ -84,8 +84,8 @@ export default {
       uid: params.uid,
       uname: params.uname,
       password: params.password,
-    })
-    .then(response => {
+      img: params.img,
+    }).then(response => {
       return response
     })
     .catch(error => {
@@ -109,11 +109,11 @@ export default {
   },
 
   /**
-   * 
+   *
    *  19.10.30. 준범이
    *  방만들기
    *  내방에서 라면먹고갈래???
-   * 
+   *
    */
   createChatRoom(params) {
     return axios.post(`${apiUrl}/room/create`, {
@@ -140,25 +140,25 @@ export default {
   // 파라미터 : 방 번호
   // 리턴 : 방 번호에 해당되는 리스트 (json)
   getUserByRoom(param) {
-    
+
     return axios.post(`${apiUrl}/user/rooms`,{
       'uid' : param
     }).then(async res=>{
         // let arr = []
         // console.log(res);
-        
-        
+
+
         // for(let i=0;i<res.data.length;i++){
         //   let tmp = await this.getRoomName(res.data[i].rid)
         //   console.log(tmp);
-          
+
         //   let data = {
         //     'name' : tmp.data.rname,
         //     'path' : '/chatroom/'+res.data[i].rid
         //   }
         //   arr.push(data)
         // }
-        
+
         return res.data
       })
   },

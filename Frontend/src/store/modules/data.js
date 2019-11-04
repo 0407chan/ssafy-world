@@ -13,6 +13,7 @@ const state = {
   chatListRealTimeCheck : false,
 
   currUser: '',
+  navDrawer: false,
 }
 
 // actions
@@ -27,11 +28,19 @@ const actions = {
     }
   },
 
+  /* 2019.11.03 이찬호
+    currUser 세팅
+  */
+  setCurrUser({commit,state},params){
+    commit('SET_CURRUSER', params)
+    return state.currUser
+  },
+
   async login({ commit }, params) {
     return api.login(params).then(res =>{
       if (res.status == '200') {
         state.currUser = res.data;
-        console.log(state.currUser);
+        console.log("로그인 했냐 ",state.currUser);
 
         actions.registFriend()
         actions.registChatroom()
@@ -104,7 +113,16 @@ const mutations = {
     state.currUser = ''
     state.chatroomList=[]
     state.friendList=[]
-  }
+  },
+
+  toggleNav(state){
+    state.navDrawer = !state.navDrawer;
+  },
+
+  SET_CURRUSER(state, params){
+    state.currUser = params
+  },
+
 };
 
 export default {
