@@ -3,7 +3,7 @@
     <v-list v-show="friendList.length>0" v-for="i in friendList">
       <v-list-item @click="goTo(i.uidx)">
         <v-list-item-title >
-          {{ i.uid }}
+          {{ i.uname }}
         </v-list-item-title>
       </v-list-item>
     </v-list>
@@ -24,15 +24,6 @@ import api from '@/api'
 export default {
   name: 'FriendList',
   components: {
-
-  },updated(){
-    this.friendList
-  },
-  mounted(){
-    console.log('friendvue 생성');
-    this.registFriend()
-    console.log("gdgdgd",this.friendList);
-    
   },
   computed:{
     //userLogintoken 부분 수정 해야함

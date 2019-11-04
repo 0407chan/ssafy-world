@@ -67,7 +67,6 @@ const actions = {
         let tmp =await api.getUserInfo(res[i])
         data.push(tmp.data)
       }
-      console.log("data", data);
       state.friendList=data
     })
   },
@@ -77,7 +76,6 @@ const actions = {
     api.getUserByRoom(state.currUser.uidx).then(res=>{
       console.log('단톡방 목록' , res);
       state.chatroomList=res
-      
     })
   },
 
