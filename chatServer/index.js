@@ -14,7 +14,7 @@ let message = []
 
 api.getRoom().then(res=>{
   room=res.data;
-  console.log(room);
+  console.log("서버에 room변수에 값:",room);
 })
 
 function timeType(data){
@@ -79,25 +79,24 @@ io.on('connection', function(socket){
   //              그리고 룸 리스트에 추가해 줍니다.
   socket.on('create',(res)=>{
     room.push({
-      rid : res.rid,
+      ridx : res.ridx,
       rname : res.rname
     })
-      socket.on('/chatroom/'+res.rid, function(data) {
+      socket.on('/chatroom/'+res.ridx, function(data) {
         console.log('Message from %s: %s', data.name, data.msg);
         var msg = {
-          from: {
-            name: data.name,
-          },
-          msg: data.msg
+          user: data.user,
+          msg: data.msg,
+          time : data.time
         };
 
-        console.log(res.rid + "/"+ data);
+        console.log(res.ridx + "/"+ data);
         
-  
-        message.push({
+        api.postMessage({
           text:data.msg, 
-          uid:data.name,
-          rid:res.rid
+          uidx:data.user.uidx,
+          ridx:res.ridx,
+          time : data.time
         })
 
         // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
@@ -125,7 +124,7 @@ io.on('connection', function(socket){
   })  
 
   for(let i =0;i<room.length;i++){
-    socket.on('/chatroom/'+room[i].rid, function(data) {
+    socket.on('/chatroom/'+room[i].ridx, function(data) {
       var msg = {
         user: data.user,
         msg: data.msg,
@@ -133,14 +132,16 @@ io.on('connection', function(socket){
       };
       
       // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
-      socket.broadcast.emit('/chatroom/'+room[i].rid, msg);
+      socket.broadcast.emit('/chatroom/'+room[i].ridx, msg);
 
-      console.log(room[i].rid+","+msg);
+      console.log(room[i].ridx+","+msg);
+      
+      console.log("여기 139줄 " ,data.msg , data.user.uidx, room[i].ridx, data.time);
       
       api.postMessage({
         text:data.msg, 
         uidx:data.user.uidx,
-        rid:room[i].rid,
+        ridx:room[i].ridx,
         time : data.time
       })
     });

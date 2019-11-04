@@ -1,9 +1,9 @@
 <template>
   <div v-show="friend">
-    <v-list v-for="i in friendList">
-      <v-list-item @click="goTo(i.path)">
+    <v-list v-show="friendList.length>0" v-for="i in friendList">
+      <v-list-item @click="goTo(i.uidx)">
         <v-list-item-title >
-          {{ i.uid }}
+          {{ i.uname }}
         </v-list-item-title>
       </v-list-item>
     </v-list>
@@ -24,18 +24,16 @@ import api from '@/api'
 export default {
   name: 'FriendList',
   components: {
-
-  },
-  data () {
-    return {
-      items: [],
-    }
   },
   computed:{
     //userLogintoken 부분 수정 해야함
-    ...mapState('data', ['friend', 'friendList'])
+    ...mapState({
+      friendList: state => state.data.friendList,
+      friend : state => state.data.friend
+    }),
   },
   methods :{
+    ...mapActions('data',['registFriend']),
     addFriend() {
       console.log("친구 추가 구현해야함");
     }

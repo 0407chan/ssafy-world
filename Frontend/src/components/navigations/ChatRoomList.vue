@@ -1,7 +1,7 @@
 <template>
   <div v-show="chatlist">
     <v-list v-for="i in chatroomList">
-      <v-list-item @click="goTo(i.rid)">
+      <v-list-item @click="goTo(i.ridx)">
         <v-list-item-title>
           {{ i.rname }}
         </v-list-item-title>
@@ -74,9 +74,6 @@ export default {
     ...mapState('data', ['chatlist', 'chatroomList','currUser']),
     ...mapState('socket', ['msgDatas']),
   },
-  mounted() {
-    this.getRoomList()
-  },
   methods: {
     ...mapActions('data', ['registChatroom']),
     ...mapActions('socket', ['getMsg']),
@@ -93,7 +90,7 @@ export default {
       // 룸 최신화
       this.getRoomList()
       this.dialog=false
-      this.insertuid=''
+      this.roomname=''
       this.insertuid=''
     },
     async goTo(rid) {
@@ -103,22 +100,22 @@ export default {
     },
     //디비에서 내가 접속한 방들 다 가져옴
      getRoomList(){
-       this.registChatroom(this.currUser.uid)
+       this.registChatroom(this.currUser.uidx)
      },
      //룸 생성, 참가
      createRoom(roomname){
-       api.postRoom(this.roomname).then(res=>{
+       api.postRoom(roomname).then(res=>{
          let rid = res.data
          this.$socket.emit('create',{
-           rid : rid,
+           ridx : rid,
            rname : roomname
            })
           this.chatroomList.push({
-            rid : rid,
+            ridx : rid,
             rname : roomname
             })
 
-          api.postEnterRoom(this.currUser.uid,rid).then(res=>{
+          api.postEnterRoom(this.currUser.uidx,rid).then(res=>{
             this.registChatroom()
           })
        })

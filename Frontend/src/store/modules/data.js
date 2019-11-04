@@ -19,28 +19,50 @@ const state = {
 // actions
 const actions = {
 
-  refresh({commit}, params) {
-    if (params != null)
-      state.currUser = params;
+  refresh({commit,state}, params) {
+    if (params != null){
+      commit('SET_CURRUSER', params)
+    }
     if (state.currUser != '') {
+      console.log("refresh 함수 확인");
+      
       actions.registFriend()
       actions.registChatroom()
     }
   },
 
+  async getUsers({ commit }) {
+    return await api.getUsers()
+  },
+  
+  async adminUpdateUser({ commit }, params) {
+    return await api.adminUpdateUser(params)
+  },
+
+  async adminDeleteUser({ commit }, param) {
+    await api.adminDeleteUser(param)
+  },
+
   /* 2019.11.03 이찬호
     currUser 세팅
   */
-  setCurrUser({commit,state},params){
+  setCurrUser({commit, state}, params){
     commit('SET_CURRUSER', params)
     return state.currUser
   },
 
+  /* 2019.11.04 이찬호
+    currUser 삭제
+  */
+  clearCurrUser({commit,state}){
+    commit('clearUser')
+  },
+
+
   async login({ commit }, params) {
     return api.login(params).then(res =>{
       if (res.status == '200') {
-        state.currUser = res.data;
-        console.log("로그인 했냐 ",state.currUser);
+        commit('SET_CURRUSER', res.data);
 
         actions.registFriend()
         actions.registChatroom()
@@ -50,15 +72,22 @@ const actions = {
   },
   // 로그인 후 친구목록 생성
   registFriend() {
-    api.postFriend(state.currUser.uid).then(res=>{
-      state.friendList = res;
+    api.getFriend(state.currUser.uidx).then(async res=>{
+      console.log('친구 목록' , res);
+      let data = []
+      for(let i =0;i<res.length;i++){
+        let tmp =await api.getUserInfo(res[i])
+        data.push(tmp.data)
+      }
+      state.friendList=data
     })
   },
-
+  
   // 로그인 후 단체방 목록 생성
   registChatroom() {
-    api.getUserByRoom(state.currUser.uid).then(res=>{
-      state.chatroomList = res;
+    api.getUserByRoom(state.currUser.uidx).then(res=>{
+      console.log('단톡방 목록' , res);
+      state.chatroomList=res
     })
   },
 
@@ -70,10 +99,6 @@ const actions = {
   async update({ commit }, params) {
     const resp = await api.update(params);
     return resp;
-  },
-
-  async getUser({ commit }, params) {
-    const resp = await api.getUser()
   },
 
   async getUserInfo({ commit }, params) {
@@ -105,15 +130,22 @@ const mutations = {
       state.chatlist =! state.chatlist
   },
 
+  setFriendList(state, res) {
+    state.friendList = res
+  },
+  setChatRoomList(state, res) {
+    state.chatroomList = res
+  },
   setClusterList(state, ratings) {
     state.ratingList = ratings.map(m => m)
   },
-  //
+
   clearUser(state){
     state.currUser = ''
     state.chatroomList=[]
     state.friendList=[]
   },
+
 
   toggleNav(state){
     state.navDrawer = !state.navDrawer;

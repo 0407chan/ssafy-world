@@ -37,6 +37,7 @@
 import { mapState, mapMutations, mapActions } from 'vuex'
 import FriendList from '@/components/navigations/FriendList'
 import ChatRoomList from '@/components/navigations/ChatRoomList'
+import api from '@/api'
 
 export default {
     name: 'AfterLogin',
@@ -74,19 +75,16 @@ export default {
             this.$socket.disconnect()
         })
 
-        if (this.currUser != '') {
-            this.login(this.currUser.uid).then(res => {
-                if (res.status == '200')
-                    this.$router.push({ name: 'chatroom' })
-            })
-        }
-    },
-    mounted(){
-        this.registChatroom()
-        this.registFriend()
+        // if (this.currUser != '') {
+        //     this.
+        //     this.login(this.currUser.uidx).then(res => {
+        //         if (res.status == '200')
+        //             this.$router.push({ name: 'chatroom' })
+        //     })
+        // }
     },
     computed: {
-        ...mapState('data', ['friend', 'chatlist', 'currUser']),
+        ...mapState('data', ['friend', 'chatlist', 'currUser','friendList','chatroomList']),
     },
     methods: {
         ...mapMutations('data', ['setMenu', 'clearUser', 'reverse']),

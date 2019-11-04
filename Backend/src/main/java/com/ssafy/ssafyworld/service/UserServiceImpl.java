@@ -58,6 +58,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public void adminUpdate(UserDTO user) throws Exception {
+		dao.update(user);
+	}
+
+	@Override
 	public void deleteUser(int uidx) throws Exception {
 		dao.deleteUser(uidx);
 	}

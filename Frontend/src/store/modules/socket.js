@@ -10,20 +10,21 @@ const getters = {
 
 // actions
 const actions = {
-  getMsg({commit},params){
-    api.getRoomMessage(params).then(res=>{
+  getMsg({commit,state},params){
+    api.getRoomMessage(params).then(async res=>{
       console.log(res.data);
       for(let i =0;i<res.data.length;i++){
-        state.msgDatas.push({
-          from:{
-            name : res.data[i].uid
-          },
+        let user = await api.getUserInfo(res.data[i].uidx)
+        console.log(user.data);
+        let params ={
+          user : user.data,
           msg : res.data[i].text,
-          time : new Date(res.data[i].time),
-        })
+          time : res.data[i].time,
+        }
+        commit('pushMsgData2',params)
       }
       console.log(state.msgDatas);
-      
+
     })
   }
 };
@@ -31,16 +32,21 @@ const actions = {
 // mutations
 const mutations = {
   pushMsgData(state, $payload) {
-    state.msgDatas.push($payload);
+    if(state.msgDatas.indexOf($payload) == -1){
+      state.msgDatas.push($payload);
+    }
+  },
+  pushMsgData2(state, params) {
+    state.msgDatas.push(params);
   },
   clearMsg(state){
     state.msgDatas=[]
   },
-  
+
 
 };
 
-export default { 
+export default {
   namespaced: true,
   state,
   getters,

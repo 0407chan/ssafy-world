@@ -7,7 +7,6 @@
         <BeforeLogin />
       </v-list>
       <v-list dense v-show="currUser != ''">
-        <v-divider></v-divider>
         <AfterLogin />
       </v-list>
     </v-navigation-drawer>
@@ -18,7 +17,6 @@
         <BeforeLogin />
       </v-list>
       <v-list dense v-show="currUser != ''">
-        <v-divider></v-divider>
         <AfterLogin />
       </v-list>
 
@@ -114,7 +112,6 @@ import AfterLogin from '@/components/navigations/AfterLogin'
 import {
   mapState,
   mapActions,
-  mapMutations,
 } from 'vuex'
 
 export default {
@@ -127,7 +124,6 @@ export default {
   data() {
     return {
       drawer: true,
-      currUser:'',
       windows: {
         width: 0,
         height: 0
@@ -136,13 +132,12 @@ export default {
   },
   computed: {
     ...mapState({
-      //currUser: state => state.data.currUser,
+      currUser: state => state.data.currUser,
     }),
-
   },
   methods: {
     ...mapActions('data', ['refresh']),
-    ...mapMutations('data',['clearUser']),
+    ...mapActions('data',['clearCurrUser']),
     ...mapActions('data', ['setCurrUser']),
 
     handleResize() {
@@ -163,9 +158,8 @@ export default {
      - login page로 돌아가기
     */
     logout() {
-        this.clearUser()
+        this.clearCurrUser()
         this.$session.destroy();
-        this.$store.state.currUser = ''
         this.$router.push({ name: 'login' });
     },
 
@@ -194,11 +188,10 @@ export default {
   },
 
   mounted() {
-    this.$session.start()
     if(this.$session.has('token')){
       let token = this.$session.get('token')
-      this.$store.state.currUser = token;
-      this.currUser = token;
+      console.log("App.vue Mounted")
+      this.setCurrUser(token);
       this.refresh(token)
     }
   },
