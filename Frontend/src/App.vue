@@ -192,6 +192,7 @@ export default {
   mounted() {
     if(this.$session.has('token')){
       let token = this.$session.get('token')
+      console.log("App.vue Mounted")
       this.setCurrUser(token);
       this.refresh(token)
     }

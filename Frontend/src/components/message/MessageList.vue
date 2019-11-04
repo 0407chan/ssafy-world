@@ -6,14 +6,14 @@
         <v-col no-gutters>
           <v-row align="center">
             <div>
-              <v-avatar tile v-if=" (index-1 >= 0 && msgs[index-1].from.name != message.from.name) || index == 0">
+              <v-avatar tile v-if=" (index-1 >= 0 && msgs[index-1].user.uname != message.user.uname) || index == 0">
                 <v-img src="https://randomuser.me/api/portraits/women/75.jpg"></v-img>
               </v-avatar>
             </div>
             <div class="message">
-              <div v-if=" (index-1 >= 0 && msgs[index-1].from.name != message.from.name) || index == 0">
+              <div v-if=" (index-1 >= 0 && msgs[index-1].user.uname != message.user.uname) || index == 0">
                 <span class="username">
-                  {{message.from.name}}
+                  {{message.user.uname}}
                 </span>
                 <span v-if="message.time">
                   {{message.time.getHours() +":"+message.time.getMinutes() }}
@@ -44,22 +44,6 @@
     </v-col>
   </v-layout>
 
-  <!-- <v-list v-auto-bottom="msgs">
-    <transition-group name="list" >
-      <div v-for="(msg,index) in msgs" v-bind:key="index">
-        <v-list>
-            <v-list-item-avatar>
-              <v-img src="https://randomuser.me/api/portraits/women/75.jpg"></v-img>
-            </v-list-item-avatar>
-            <div style="display: inline-block;">
-                {{msg.from.name}}
-                <br>
-                {{msg.msg}}
-            </div>
-        </v-list>
-      </div>
-    </transition-group>
-  </v-list> -->
 </template>
 
 <script>
