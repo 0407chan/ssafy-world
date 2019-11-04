@@ -206,6 +206,8 @@ export default {
     })
   },
 
+  //11.1최재형
+  // 새친구를 만든다
   postAddFriend(uid){
     return axios.post(`${apiUrl}/friend/add`, {
       'uid': uid
@@ -216,9 +218,26 @@ export default {
     })
   },
 
+  //11.1 최재형
+  // 새로운 방을 만든다
+  // insert
   postRoom(rname){
     return axios.post(`${apiUrl}/room/create`, {
       'rname': rname
+    }).then(res=>{
+      return res
+    }).catch(error=>{
+      return error
+    })
+  },
+
+  //11.1 최재형
+  //방에 유저가 접속한다
+  // insert 문
+  postEnterRoom(uid,rid){
+    return axios.post(`${apiUrl}/room/enter`, {
+      'uid': uid,
+      'rid': rid
     }).then(res=>{
       return res
     }).catch(error=>{

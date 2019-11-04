@@ -21,7 +21,7 @@ const actions = {
   refresh({commit}, params) {
     if (params != null)
       state.currUser = params;
-    if (state.currUser != ''){
+    if (state.currUser != '') {
       actions.registFriend()
       actions.registChatroom()
     }

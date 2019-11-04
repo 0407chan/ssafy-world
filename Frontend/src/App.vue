@@ -30,6 +30,8 @@ export default {
     mounted() {
         this.$session.start()
         let token = this.$session.get('token')
+        console.log(token);
+        
         this.refresh(token)
     },
     destroyed() {
