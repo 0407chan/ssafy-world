@@ -114,7 +114,6 @@ import AfterLogin from '@/components/navigations/AfterLogin'
 import {
   mapState,
   mapActions,
-  mapMutations,
 } from 'vuex'
 
 export default {
@@ -127,7 +126,6 @@ export default {
   data() {
     return {
       drawer: true,
-      currUser:'',
       windows: {
         width: 0,
         height: 0
@@ -136,13 +134,12 @@ export default {
   },
   computed: {
     ...mapState({
-      //currUser: state => state.data.currUser,
+      currUser: state => state.data.currUser,
     }),
-
   },
   methods: {
     ...mapActions('data', ['refresh']),
-    ...mapMutations('data',['clearUser']),
+    ...mapActions('data',['clearCurrUser']),
     ...mapActions('data', ['setCurrUser']),
 
     handleResize() {
@@ -163,9 +160,8 @@ export default {
      - login page로 돌아가기
     */
     logout() {
-        this.clearUser()
+        this.clearCurrUser()
         this.$session.destroy();
-        this.$store.state.currUser = ''
         this.$router.push({ name: 'login' });
     },
 
@@ -197,7 +193,7 @@ export default {
     this.$session.start()
     if(this.$session.has('token')){
       let token = this.$session.get('token')
-      this.$store.state.currUser = token;
+      this.setCurrUser(token);
       this.currUser = token;
       this.refresh(token)
     }

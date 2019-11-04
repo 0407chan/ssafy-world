@@ -19,9 +19,10 @@ const state = {
 // actions
 const actions = {
 
-  refresh({commit}, params) {
-    if (params != null)
-      state.currUser = params;
+  refresh({commit,state}, params) {
+    if (params != null){
+      commit('SET_CURRUSER', params)
+    }
     if (state.currUser != '') {
       actions.registFriend()
       actions.registChatroom()
@@ -36,11 +37,18 @@ const actions = {
     return state.currUser
   },
 
+  /* 2019.11.04 이찬호
+    currUser 삭제
+  */
+  clearCurrUser({commit,state}){
+    commit('clearUser')
+  },
+
+
   async login({ commit }, params) {
     return api.login(params).then(res =>{
       if (res.status == '200') {
-        state.currUser = res.data;
-        console.log("로그인 했냐 ",state.currUser);
+        SET_CURRUSER(res.data);
 
         actions.registFriend()
         actions.registChatroom()
@@ -108,12 +116,13 @@ const mutations = {
   setClusterList(state, ratings) {
     state.ratingList = ratings.map(m => m)
   },
-  //
+
   clearUser(state){
     state.currUser = ''
     state.chatroomList=[]
     state.friendList=[]
   },
+
 
   toggleNav(state){
     state.navDrawer = !state.navDrawer;

@@ -1,7 +1,7 @@
 <template>
-  <v-container fluid wrap>
-    <v-row id="messageBody" class="scrollable">
-      <v-col cols="12">
+  <v-container fluid fill-height>
+    <v-row >
+      <v-col cols="12" id="messageBody" class="scrollable">
         <div class="message-line" v-for="(message, index) in msgDatas" no-gutters>
 
           <template v-if="message.user.uname != currUser.uname">
@@ -178,10 +178,7 @@
 
         </div>
       </v-col>
-    </v-row>
-
-    <v-row id="chatInput">
-      <v-col cols="12">
+      <v-col cols="12" id="chatInput">
         <v-row no-gutters class="inputBorder">
           <v-col cols="12" >
             <div>
@@ -215,7 +212,8 @@
         </v-row>
       </v-col>
     </v-row>
-      <!-- <div class="message" v-for="(message,index) in msgs" :class="{own: message.from.name == username}"> -->
+
+  <!-- <div class="message" v-for="(message,index) in msgs" :class="{own: message.from.name == username}"> -->
   </v-container>
 </template>
 
@@ -260,7 +258,6 @@ export default {
   },
   methods: {
     ...mapActions('socket', ['getMsg']),
-
     ...mapMutations('socket',['pushMsgData']),
 
     setMessageList(data){
@@ -269,10 +266,7 @@ export default {
       let arr = []
       for(let i =0;i<data.uidx.length;i++){
         arr.push({
-          'from' :{
-            //추가 구현 해야함 (uidx 로 값 가져오는것)
-            'name': data.uidx[i]
-          },
+          'user' : data.user[i],
           'time': data.time[i],
           'msg':data.messages[i]
         })
@@ -414,7 +408,7 @@ export default {
 }
 .scrollable {
   overflow-y: auto;
-  height: 80vh;
+  height: 70vh;
 }
 .message {
   margin: 5px;
