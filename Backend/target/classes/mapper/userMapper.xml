@@ -19,7 +19,7 @@
 	<!-- 유저수정 -->
 	<update id="update" parameterType="UserDTO">
 		UPDATE USER
-		SET password = #{password},uname = #{uname}
+		SET password = #{password},uname = #{uname},staff=#{staff}
 		WHERE uidx = #{uidx};
 	</update>
 
