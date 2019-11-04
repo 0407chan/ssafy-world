@@ -27,7 +27,7 @@ export default {
     methods :{
         ...mapActions('data', ['refresh']),
     },
-    mounted(){
+    mounted() {
         this.$session.start()
         let token = this.$session.get('token')
         this.refresh(token)

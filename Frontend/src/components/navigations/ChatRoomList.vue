@@ -8,16 +8,10 @@
       </v-list-item>
     </v-list>
     <v-list>
-<<<<<<< HEAD
-      <MakeChatRoom />
-      <v-list-item @click="enterChatroom">
-        <v-list-item-title />
-=======
       <v-list-item @click.stop="dialog = true">
         <v-list-item-title>
           Create Chenal
         </v-list-item-title>
->>>>>>> eb79a145e65cf20c6f9072df040b6f93bbaa81b0
       </v-list-item>
     </v-list>
     <v-dialog
@@ -79,10 +73,10 @@ export default {
     ...mapState('data', ['chatlist', 'chatroomList','currUser']),
     ...mapState('socket', ['msgDatas']),
   },
-  updated(){
+  mounted() {
     this.getRoomList()
   },
-  methods :{
+  methods: {
     ...mapActions('data', ['registChatroom']),
     ...mapActions('socket', ['getMsg']),
     ...mapMutations('socket', ['clearMsg']),
@@ -119,7 +113,6 @@ export default {
            })
        })
      }
-
   }
 };
 </script>

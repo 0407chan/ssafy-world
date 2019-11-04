@@ -8,12 +8,7 @@
                             <v-row justify="center">
                                 <v-col cols="12">
                                     <v-row justify="center">
-                                        <v-img :src="modiImage" aspect-ratio="1.8" contain></v-img>
-                                    </v-row>
-                                    <v-row justify="center" style="width:290px; margin: auto">
-                                        <v-text-field label="Select Image" @click="pickFile" v-model="imageName" prepend-icon="mdi-paperclip">
-                                        </v-text-field>
-                                        <input type="file" style="display: none" ref="image" accept="image/*" @change="onFilePicked" />
+                                        <v-img :src="{ imageName }" aspect-ratio="1.8" contain></v-img>
                                     </v-row>
                                 </v-col>
                             </v-row>
@@ -35,7 +30,7 @@
                                 </v-dialog>
                             </v-col>
                             <v-col>
-                                <UpdateInfo :user="[uidx, desserts[2].value, desserts[1].value]" />
+                                <UpdateInfo :user="[uidx, desserts[2].value, desserts[1].value]" v-on:return="getUserInfoActiongit" />
                             </v-col>
                             <v-col>
                                 <v-dialog v-model="dialog" persistent max-width="600px">
@@ -54,7 +49,6 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
-import axios from "axios"
 import Swal from 'sweetalert2'
 import UpdateInfo from '@/components/user/UpdateInfo'
 
@@ -112,12 +106,17 @@ export default {
   },
   methods: {
 
+    /**
+     *  2019.11.01. 준범이
+     *  회원 정보 띄워주기
+     */
     ...mapActions("data", ['getUserInfo']),
     async getUserInfoAction() {
       let user = await this.getUserInfo(this.$session.get('token').uidx)
       console.log(user)
 
       this.uidx = user.data.uidx
+      this.imageName = user.data.img
       this.desserts[0].value = user.data.staff
       this.desserts[1].value = user.data.uname
       this.desserts[2].value = user.data.uid
@@ -141,7 +140,7 @@ export default {
     /* 2019.10.08 이찬호
     * 수정된 정보를 DB에 저장한다.
     */
-    async modifyAction(){
+    async modifyAction() {
       this.isModify = !this.isModify;
       var params = {
         id: this.id,
@@ -152,11 +151,11 @@ export default {
         image: this.modiImage,
       };
       console.log(params)
-      const res = await api.modifyUser(params);
+      const res = await api.modifyUser(params)
       params = {
         id: this.id,
-      };
-      this.userDetail(params);
+      }
+      this.userDetail(params)
       Swal.fire({
         type: 'success',
         title: '수정되었습니다.',
@@ -169,48 +168,6 @@ export default {
       router.go(-1)
     },
 
-    // 이미지 변경해서 imgur에 올리기
-    pickFile() {
-      this.$refs.image.click();
-    },
-
-    setImageUrl(url) {
-      this.modiImage = url;
-    },
-
-    onFilePicked(e) {
-      this.modiImage = '';
-      const files = e.target.files;
-      this.loading = true;
-      if (files[0] !== undefined) {
-        this.imageName = files[0].name;
-        if (this.imageName.lastIndexOf(".") <= 0) {
-          return;
-        }
-
-        let formData = new FormData();
-        formData.append('image', files[0]); //required
-
-        axios({
-           method: 'POST',
-           url: 'https://api.imgur.com/3/image',
-           data: formData,
-           headers: {
-           Authorization: "Client-ID aac995cb6f223ce"
-           },
-           mimeType: 'multipart/form-data'
-           }).then(res => {
-             this.modiImage = res.data.data.link;
-             this.loading = false;
-           }).catch(e => {
-             console.log(e)
-        });
-
-      } else {
-        this.imageName = "";
-        this.modiImage = "";
-      }
-    },
   }
 }
 </script>

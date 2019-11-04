@@ -18,10 +18,10 @@ const state = {
 // actions
 const actions = {
 
-  refresh({commit},params){
-    if(params != null)
+  refresh({commit}, params) {
+    if (params != null)
       state.currUser = params;
-    if(state.currUser != ''){
+    if (state.currUser != ''){
       actions.registFriend()
       actions.registChatroom()
     }
@@ -40,15 +40,16 @@ const actions = {
     });
   },
   // 로그인 후 친구목록 생성
-  registFriend(){
+  registFriend() {
     api.postFriend(state.currUser.uid).then(res=>{
-      state.friendList=res;
+      state.friendList = res;
     })
   },
+
   // 로그인 후 단체방 목록 생성
-  registChatroom(){
+  registChatroom() {
     api.getUserByRoom(state.currUser.uid).then(res=>{
-      state.chatroomList=res;
+      state.chatroomList = res;
     })
   },
 

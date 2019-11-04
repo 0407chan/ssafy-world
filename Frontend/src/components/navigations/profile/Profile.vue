@@ -33,7 +33,7 @@ export default {
         },
         logout() {
             this.clearUser()
-            this.$session.set('token','')
+            this.$session.set('token', '')
             this.$router.push({ name: 'login' });
         },
     },
