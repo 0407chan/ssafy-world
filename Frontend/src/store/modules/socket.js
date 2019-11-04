@@ -23,7 +23,7 @@ const actions = {
         })
       }
       console.log(state.msgDatas);
-      
+
     })
   }
 };
@@ -31,16 +31,18 @@ const actions = {
 // mutations
 const mutations = {
   pushMsgData(state, $payload) {
-    state.msgDatas.push($payload);
+    if(state.msgDatas.indexOf($payload) == -1){
+      state.msgDatas.push($payload);
+    }
   },
   clearMsg(state){
     state.msgDatas=[]
   },
-  
+
 
 };
 
-export default { 
+export default {
   namespaced: true,
   state,
   getters,

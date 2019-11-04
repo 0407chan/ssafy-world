@@ -259,8 +259,11 @@ export default {
 
     this.$socket.on(window.location.pathname, async (data) => {
       data.time = this.getToday();
+      console.log("여기냐33",data) 
+
       await this.pushMsgData(data)
       this.scrollToBottom();
+
     });
     this.scrollToBottom();
   },
@@ -273,6 +276,7 @@ export default {
 
       let arr = []
       for(let i =0;i<data.uidx.length;i++){
+
         arr.push({
           'user' : data.user[i],
           'time': data.time[i],
