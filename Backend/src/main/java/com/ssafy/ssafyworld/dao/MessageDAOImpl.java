@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ssafy.ssafyworld.dto.MessageDTO;
+import com.ssafy.ssafyworld.dto.imgDTO;
 
 @Repository
 public class MessageDAOImpl implements MessageDAO {
@@ -37,6 +38,19 @@ public class MessageDAOImpl implements MessageDAO {
 	public int insertMessage(MessageDTO message) throws Exception {
 		return sqlSession.insert(Namespace+".insertMessage",message);
 				
+	}
+
+
+	@Override
+	public void insertImg(imgDTO img) throws Exception {
+		sqlSession.insert(Namespace+".insertImg",img);
+	}
+
+
+	@Override
+	public List<imgDTO> roomImgs(int ridx) throws Exception {
+		List<imgDTO> list = sqlSession.selectList(Namespace+".roomImgs",ridx); 
+		return list;
 	}
 	
 	
