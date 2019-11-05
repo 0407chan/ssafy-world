@@ -259,7 +259,7 @@ export default {
 
     this.$socket.on(window.location.pathname, async (data) => {
       data.time = this.getToday();
-      console.log("여기냐33",data) 
+      console.log("여기냐33",data)
 
       await this.pushMsgData(data)
       this.scrollToBottom();

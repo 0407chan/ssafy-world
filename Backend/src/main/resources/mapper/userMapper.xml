@@ -27,7 +27,10 @@
 	<!-- 유저수정 -->
 	<update id="update" parameterType="UserDTO">
 		UPDATE USER
-		SET password = #{password},uname = #{uname},staff=#{staff}
+		SET password = #{password},
+			uname = #{uname},
+			staff=#{staff},
+			img=#{img}
 		WHERE uidx = #{uidx};
 	</update>
 
