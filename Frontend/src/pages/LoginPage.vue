@@ -4,7 +4,7 @@
       <v-flex xs12 text-xs-center mx-5>
         <v-row justify="space-between">
           <v-col>
-            <v-flex style="color:black">로그인</v-flex>
+            <v-flex class="loginInputs">로그인</v-flex>
           </v-col>
           <v-col>
             <!-- <v-flex>비밀번호를 잊어버리셨나요?</v-flex> -->
@@ -55,14 +55,14 @@
       <v-flex text-sm-center ma-5>
         <!-- <v-btn rounded block :color="index" @click="login"><span class="btnText">Log in</span></v-btn> -->
         <v-btn v-if="idLen >= 4 && passwordLen >= 4" rounded block :color="colorIndex" @click="loginAction"><span class="btnText">Log in</span></v-btn>
-        <v-btn v-else rounded disabled block>Log in</v-btn>
+        <v-btn v-else rounded disabled block dark>Log in</v-btn>
       </v-flex>
       <v-flex text-sm-center ma-5>
         <v-divider style="background:gray"></v-divider>
       </v-flex>
 
       <v-flex xs12 text-xs-center mx-5>
-        <v-flex my-5 style="color:black">아이디가 없으신가요?</v-flex>
+        <v-flex my-5 class="loginInputs">아이디가 없으신가요?</v-flex>
         <v-btn rounded block color="primary" :to="{name:'register'}">회원가입</v-btn>
       </v-flex>
     </v-flex>
@@ -143,40 +143,11 @@ export default {
         timer: 1000
       })
     },
-
-    async logins() {
-      if (this.credentials.username && this.credentials.password) {
-        axios.post('http://localhost:8000/auth/', this.credentials).then(async res => {
-          this.$session.start();
-          this.$session.set('token', res.data.token);
-          this.userCheck = true;
-          this.getUser();
-          this.getUserInfo();
-          await this.postMatrix()
-          this.$router.push({ name: 'login' });
-          const Toast = Swal.mixin({
-              toast: true,
-              position: 'bottom-end',
-              showConfirmButton: false,
-              timer: 3000
-            });
-
-            Toast.fire({
-              type: 'success',
-              title: 'Signed in successfully.'
-            })
-
-        }).catch(e => {
-          console.log(e);
-          Swal.fire({
-            title: 'Error!',
-            text: '다시 입력해주세요.',
-            type: 'error',
-            confirmButtonText: 'Ok'
-          })
-        })
-      }
-    },
   }
 };
 </script>
+<style>
+.loginInputs{
+  color:white
+}
+</style>

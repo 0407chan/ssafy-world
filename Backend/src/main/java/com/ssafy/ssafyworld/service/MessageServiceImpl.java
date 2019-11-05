@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.ssafyworld.dao.MessageDAO;
 import com.ssafy.ssafyworld.dto.MessageDTO;
+import com.ssafy.ssafyworld.dto.imgDTO;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -28,6 +29,16 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public int insertMessage(MessageDTO message) throws Exception {
 		return dao.insertMessage(message);
+	}
+
+	@Override
+	public void insertImg(imgDTO img) throws Exception {
+		dao.insertImg(img);
+	}
+
+	@Override
+	public List<imgDTO> roomImgs(int ridx) throws Exception {
+		return dao.roomImgs(ridx);
 	}
 
 }

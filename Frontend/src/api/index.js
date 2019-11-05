@@ -96,6 +96,35 @@ export default {
     });
   },
 
+  /* 2019.11.05 이찬호
+    이미지 업로드 하기
+  */
+  postRoomImage(params){
+    return axios.post(`${apiUrl}/message/img`, {
+      ridx: params.ridx,
+      img: params.img,
+    }).then(response => {
+      return response
+    })
+    .catch(error => {
+      console.log(error);
+      return error.response
+    });
+  },
+
+  /* 2019.11.05 이찬호
+    해당 방 이미지 다 가져오기
+  */
+  getRoomImage(params){
+    return axios.get(`${apiUrl}/message/getImg/${params}`)
+    .then(response => {
+      return response
+    })
+    .catch(error => {
+      console.log(error);
+      return error.response
+    });
+  },
   /** 2019.10.25 이찬호
   * 기능 : 회원가입
   * 파라미터 : params = uid, uname, password, img

@@ -17,4 +17,12 @@
 	<insert id="insertMessage" parameterType="MessageDTO">
 		INSERT INTO message (ridx,text,time,uidx) VALUES (#{ridx},#{text},#{time},#{uidx});
 	</insert>
+	
+	<insert id="insertImg" parameterType="imgDTO">
+		INSERT INTO img (ridx,img) VALUES (#{ridx},#{img});
+	</insert>
+	
+	<select id="roomImgs" parameterType="int" resultType="imgDTO">
+		select * from img where ridx=#{ridx};	
+	</select>
 </mapper>
