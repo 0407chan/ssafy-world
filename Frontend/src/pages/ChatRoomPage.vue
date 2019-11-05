@@ -4,9 +4,9 @@
       <v-col cols="12" id="messageBody" class="scrollable">
         <div class="message-line" v-for="(message, index) in msgDatas" no-gutters>
 
-          <template v-if="message.user.uname != currUser.uname">
+          <template v-if="message.user.uidx != currUser.uidx">
             <v-row style="padding: 4px;">
-              <template v-if=" (index-1 >= 0 && msgDatas[index-1].user.uname != message.user.uname) || index == 0">
+              <template v-if=" (index-1 >= 0 && msgDatas[index-1].user.uidx != message.user.uidx) || index == 0">
                 <div align-center justify-center style="padding: 6px; display: inline-block; width:48px">
                   <v-menu bottom offset-y>
                     <template v-slot:activator="{ on }">
@@ -45,7 +45,7 @@
                 </div>
               </template>
 
-              <template class="content" v-if=" (index-1 >= 0 && msgDatas[index-1].user.uname != message.user.uname) || index == 0">
+              <template class="content" v-if=" (index-1 >= 0 && msgDatas[index-1].user.uidx != message.user.uidx) || index == 0">
                 <div style="display: inline-block" >
                   <v-menu right offset-x>
                     <template v-slot:activator="{ on }">
@@ -92,7 +92,7 @@
           <template v-else>
             <v-row style="padding: 4px;" justify="end">
               <!-- 시간, 이름 메세지 -->
-              <template class="content" v-if=" (index-1 >= 0 && msgDatas[index-1].user.uname != message.user.uname) || index == 0">
+              <template class="content" v-if=" (index-1 >= 0 && msgDatas[index-1].user.uidx != message.user.uidx) || index == 0">
                 <div style=" display: inline-block" align="end">
                   <div class="profileTime" style="display: inline-block" >
                     {{getTime(message.time)}}
@@ -100,15 +100,15 @@
                   <v-menu left offset-x>
                     <template v-slot:activator="{ on }">
                       <span class="username" v-on="on" style="padding : 4px; display: inline-block">
-                        {{message.user.uname}}
+                        {{currUser.uname}}
                       </span>
                     </template>
                     <v-card max-width="250" class="mx-auto">
-                      <v-img :src="message.user.img" height="200px" dark></v-img>
-                      <v-card-title>{{ message.user.uname }}</v-card-title>
+                      <v-img :src="currUser.img" height="200px" dark></v-img>
+                      <v-card-title>{{ currUser.uname }}</v-card-title>
                       <v-card-text>
-                        <div>{{ getStaff(message.user.staff) }}</div>
-                        <div>{{ message.user.uid }}</div>
+                        <div>{{ getStaff(currUser.staff) }}</div>
+                        <div>{{ currUser.uid }}</div>
                       </v-card-text>
                       <v-divider class="mx-4"></v-divider>
                       <v-list-item>
@@ -134,13 +134,13 @@
               </template>
 
               <!-- 사진 -->
-              <template v-if=" (index-1 >= 0 && msgDatas[index-1].user.uname != message.user.uname) || index == 0">
+              <template v-if=" (index-1 >= 0 && msgDatas[index-1].user.uidx != message.user.uidx) || index == 0">
                 <div align-center justify-center style="padding: 6px; display: inline-block; width:48px">
                   <v-menu bottom offset-y>
                     <template v-slot:activator="{ on }">
                       <v-btn tile icon large v-on="on">
                         <v-avatar size="44px" tile>
-                          <v-img :src="message.user.img">
+                          <v-img :src="currUser.img">
 
                           </v-img>
                         </v-avatar>
@@ -148,13 +148,13 @@
                     </template>
 
                     <v-card max-width="250" class="mx-auto">
-                      <v-img :src="message.user.img" height="200px" dark></v-img>
+                      <v-img :src="currUser.img" height="200px" dark></v-img>
 
-                      <v-card-title>{{ message.user.uname }}</v-card-title>
+                      <v-card-title>{{ currUser.uname }}</v-card-title>
 
                       <v-card-text>
-                        <div>{{ getStaff(message.user.staff) }}</div>
-                        <div>{{ message.user.uid }}</div>
+                        <div>{{ getStaff(currUser.staff) }}</div>
+                        <div>{{ currUser.uid }}</div>
                       </v-card-text>
                       <v-divider class="mx-4"></v-divider>
                       <v-list-item>
@@ -179,6 +179,9 @@
         </div>
       </v-col>
 
+      <v-btn @click="test">
+
+      </v-btn>
       <v-col cols="12" id="chatInput">
         <v-row no-gutters class="inputBorder">
           <v-col cols="12" >
@@ -250,26 +253,75 @@ export default {
       return this.icons[this.iconIndex]
     },
   },
-  mounted() {
-    const $ths = this
+  async mounted() {
     console.log("connect chatroom" , window.location.pathname);
-    if(window.location.pathname.split('/')[2]!=undefined){
-      this.getMsg(window.location.pathname.split('/')[2])
-    }
-
-    this.$socket.on(window.location.pathname, async (data) => {
-      data.time = this.getToday();
-      console.log("여기냐33",data) 
-
-      await this.pushMsgData(data)
-      this.scrollToBottom();
-
-    });
+    this.startSocket();
+    this.getChatRoomMsgAction();
+    this.setCurrChatRoomInfo();
     this.scrollToBottom();
+
+  },
+
+  watch: {
+    '$route'(to, from) {
+      this.setCurrChatRoomInfo();
+      this.getChatRoomMsgAction();
+      this.scrollToBottom();
+    },
   },
   methods: {
-    ...mapActions('socket', ['getMsg']),
-    ...mapMutations('socket',['pushMsgData']),
+    ...mapActions('data', ['setCurrChatRoom']),
+    ...mapActions('data', ['getRoom']),
+    ...mapActions('data', ['getRoomPeople']),
+
+    ...mapActions('socket',['getMsg']),
+    ...mapActions('socket',['pushMsg']),
+
+
+    test(){
+      this.setCurrChatRoomInfo();
+    },
+
+    async startSocket(){
+      const $ths = this
+      await this.$socket.on(window.location.pathname, async (data) => {
+        data.time = this.getToday();
+        await this.pushMsg(data);
+        this.scrollToBottom();
+      });
+    },
+
+    /* 2019.11.05 이찬호
+    기능 : 해당 방의 메세지를 가져옵니다.
+    */
+    async getChatRoomMsgAction(){
+      console.log("읽어보자!")
+      if(window.location.pathname.split('/')[2]!=undefined){
+        await this.getMsg(window.location.pathname.split('/')[2])
+      }
+    },
+
+    /* 2019.11.05 이찬호
+    기능 : 현재 방 정보를 vuex에 저장합니다.
+    */
+    async setCurrChatRoomInfo(){
+      let room = null;
+      let roomPeople = null;
+      if(window.location.pathname.split('/')[2]!= undefined){
+        room = await this.getRoom(window.location.pathname.split('/')[2]);
+        roomPeople = await this.getRoomPeople(window.location.pathname.split('/')[2]);
+      }
+
+      if(room != null && roomPeople != null){
+        let params = {
+          ridx : room.data.ridx,
+          rname : room.data.rname,
+          rPeople : roomPeople.data,
+        }
+        this.setCurrChatRoom(params);
+      }
+    },
+
 
     setMessageList(data){
       console.log(data.uidx.length);
@@ -283,15 +335,11 @@ export default {
           'msg':data.messages[i]
         })
       }
-      this.pushMsgData(arr)
+      this.pushMsg(arr)
       this.scrollToBottom();
-    }
-    ,
-
-    test(){
-      var today = new Date();
-      console.log("이거",today)
     },
+
+
     getStaff(staff){
       if(staff == 0){
         return "학생"
@@ -328,14 +376,14 @@ export default {
           img: "https://i.imgur.com/6woB3eO.png",
           uname: "SSAFY"
         }
-        this.pushMsgData({
+        this.pushMsg({
           user:params,
           msg:"오늘의 점심입니다.",
           time:this.getToday(),
         });
         return false;
       }
-      await this.pushMsgData({
+      await this.pushMsg({
         user: this.currUser,
         msg:this.msg,
         time:this.getToday(),

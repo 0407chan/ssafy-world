@@ -1,21 +1,22 @@
 import axios from 'axios'
 
-const apiUrl = 'http://localhost:8080/ssafyworld';
+const apiUrl = 'http://70.12.247.76:8080/ssafyworld';
 // const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
 // const apiUrl = 'http://70.12.246.62:8080/ssafyworld'; // 9비니여보야의여보야
 // const apiUrl = 'http://70.12.247.61:8080/ssafyworld';
+// const apiUrl = 'http://70.12.247.108:8080/ssafyworld';
 
 export default {
 
   /**
    * 2019.11.04 준범이
    * 유저 목록 불러오기
-   * 유저 목록 
+   * 유저 목록
    */
   getUsers() {
     return axios.get(`${apiUrl}/user`)
   },
-  
+
   adminUpdateUser(params) {
     return axios.post(`${apiUrl}/user/admin/update`, {
       uidx: params.uidx,
@@ -26,11 +27,10 @@ export default {
       return error.response
     });
   },
-  
+
   adminDeleteUser(param) {
     axios.get(`${apiUrl}/user/delete/${param}`)
   },
-
 
   /**
    *
@@ -63,9 +63,11 @@ export default {
    */
   update(params) {
     return axios.post(`${apiUrl}/user/update`, {
-      uidx: params.uidx,
-      uname: params.uname,
-      password: params.password
+        uidx: params.uidx,
+        uid: params.uid,
+        staff: params.staff,
+        uname: params.uname,
+        img: params.img,
     })
     .catch(error => {
       console.log(error)
@@ -105,7 +107,7 @@ export default {
       uid: params.uid,
       uname: params.uname,
       password: params.password,
-      img: params.image,
+      img: params.img,
     }).then(response => {
       return response
     })
@@ -114,12 +116,19 @@ export default {
     });
   },
 
-  // 10-17 최재형
-  // 방 번호에 해당되는 이름 가져오기
-  // 파라미터 : 방 번호
-  // 리턴 : 방 번호에 해당되는 리스트 (json)
-  getRoomName(param) {
-    return axios.get(`${apiUrl}/room/name/${param}`)
+  /* 2019.11.05 이찬호
+    해당 방 정보 가져오기
+  */
+  getRoom(param) {
+    return axios.get(`${apiUrl}/room/${param}`)
+  },
+
+
+  /* 2019.11.05 이찬호
+    해당 방에 있는 사람들 가져오기
+  */
+  getRoomPeople(param) {
+    return axios.get(`${apiUrl}/room/people/${param}`)
   },
 
   // 10-28 최재형
@@ -147,10 +156,10 @@ export default {
   // 파라미터 : 메세지 테이블에 있는 전 목록(날짜 빼고)
   // 리턴 : 정상 전송 되었는지
   postMessage(object){
-    return axios.post('/message',{ 
+    return axios.post('/message',{
       text:object.text,
       uidx:object.uidx,
-      ridx:object.ridx 
+      ridx:object.ridx
     }).then(response => {
       console.warn(response)
     }).catch((ex) => {
@@ -165,6 +174,8 @@ export default {
   getFriend(uidx){
     return axios.get(`${apiUrl}/friend/${uidx}`)
     .then( res=>{
+      console.log(res);
+
       return res.data
       //싹다 다시 구현해야함
     }).catch(error=>{
@@ -174,9 +185,10 @@ export default {
 
   // 11.1 최재형
   // 새친구를 만든다
-  postAddFriend(uidx){
+  postAddFriend(uidx,fidx){
     return axios.post(`${apiUrl}/friend/add`, {
-      'uidx': uidx
+      'uidx': uidx,
+      'friend' :fidx
     }).then(res=>{
       return res
     }).catch(error=>{
@@ -204,6 +216,19 @@ export default {
     return axios.post(`${apiUrl}/room/enter`, {
       'uidx': uidx,
       'ridx': ridx
+    }).then(res=>{
+      return res
+    }).catch(error=>{
+      return error
+    })
+  },
+
+  //11.4 최재형
+  // 글자가 들어간 모든 유저 탐색
+  // insert 문
+  searchUserAll(uid){
+    return axios.post(`${apiUrl}/user/search`, {
+      'uid': uid,
     }).then(res=>{
       return res
     }).catch(error=>{

@@ -14,6 +14,8 @@ const state = {
 
   currUser: '',
   navDrawer: false,
+
+  currChatRoom:'',
 }
 
 // actions
@@ -23,9 +25,10 @@ const actions = {
     if (params != null){
       commit('SET_CURRUSER', params)
     }
+
     if (state.currUser != '') {
       console.log("refresh 함수 확인");
-      
+
       actions.registFriend()
       actions.registChatroom()
     }
@@ -34,7 +37,9 @@ const actions = {
   async getUsers({ commit }) {
     return await api.getUsers()
   },
-  
+
+
+
   async adminUpdateUser({ commit }, params) {
     return await api.adminUpdateUser(params)
   },
@@ -58,6 +63,12 @@ const actions = {
     commit('clearUser')
   },
 
+  /* 2019.11.05 이찬호
+    현재 채팅방 표시
+  */
+  setCurrChatRoom({commit,state},params){
+    commit('SET_CURRCHATROOM', params)
+  },
 
   async login({ commit }, params) {
     return api.login(params).then(res =>{
@@ -72,35 +83,46 @@ const actions = {
   },
   // 로그인 후 친구목록 생성
   registFriend() {
-    api.getFriend(state.currUser.uidx).then(async res=>{
+    api.getFriend(state.currUser.uidx).then(res=>{
       console.log('친구 목록' , res);
       let data = []
       for(let i =0;i<res.length;i++){
-        let tmp =await api.getUserInfo(res[i])
-        data.push(tmp.data)
+        api.getUserInfo(res[i]).then(res=>{
+          data.push(res.data)
+        })
       }
-      console.log("data", data);
       state.friendList=data
     })
   },
-  
+
   // 로그인 후 단체방 목록 생성
   registChatroom() {
     api.getUserByRoom(state.currUser.uidx).then(res=>{
       console.log('단톡방 목록' , res);
       state.chatroomList=res
-      
     })
   },
-
   async register({ commit }, params) {
     const resp = await api.register(params);
     return resp;
   },
 
-  async update({ commit }, params) {
-    const resp = await api.update(params);
+
+  async getRoom({ commit }, params) {
+    const resp = await api.getRoom(params);
     return resp;
+  },
+
+  async getRoomPeople({ commit }, params) {
+    const resp = await api.getRoomPeople(params);
+    return resp;
+  },
+
+  async update({ commit }, params) {
+    const res = await api.update(params);
+    commit('SET_CURRUSER', res.data);
+
+    return res;
   },
 
   async getUserInfo({ commit }, params) {
@@ -157,6 +179,9 @@ const mutations = {
     state.currUser = params
   },
 
+  SET_CURRCHATROOM(state,params){
+    state.currChatRoom = params
+  },
 };
 
 export default {

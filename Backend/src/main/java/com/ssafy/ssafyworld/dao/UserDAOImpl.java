@@ -82,5 +82,16 @@ public class UserDAOImpl implements UserDAO {
 		System.out.println("getUserLogin dto = "+dto);
 		return dto ;
 	}
+
+	@Override
+	public void adminUpdate(UserDTO user) throws Exception {
+		sqlSession.update(Namespace+".adminUpdate",user);
+	}
+
+	@Override
+	public List<UserDTO> searchUserAll(String uid) {
+		List<UserDTO> list = sqlSession.selectList(Namespace+".searchUserAll", uid);
+		return list;
+	}
  
 }

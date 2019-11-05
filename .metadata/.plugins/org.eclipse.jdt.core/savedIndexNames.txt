@@ -45,7 +45,6 @@ INDEX VERSION 1.131+C:\Users\multicampus\Desktop\project\SSAFY_WORLD\.metadata\.
 1388285740.index
 3697950171.index
 3981215296.index
-1721226388.index
 3130988147.index
 76469905.index
 2983897002.index

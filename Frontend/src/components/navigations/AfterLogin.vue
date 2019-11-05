@@ -83,10 +83,6 @@ export default {
         //     })
         // }
     },
-    mounted(){
-        this.registChatroom()
-        this.registFriend()
-    },
     computed: {
         ...mapState('data', ['friend', 'chatlist', 'currUser','friendList','chatroomList']),
     },

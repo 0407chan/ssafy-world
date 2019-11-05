@@ -56,12 +56,21 @@ public class RoomController {
 	 * @param rid
 	 * @return RoomDTO
 	 */
-
-	@RequestMapping(value = "/room/{ridx}", method = RequestMethod.GET, produces="application/json; charset=utf8")
+	@RequestMapping(value = "/room/people/{ridx}", method = RequestMethod.GET, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<List<UserDTO>>selectRoom(@PathVariable("ridx") int ridx) throws Exception {
 		logger.info(ridx+"방에 속한 사람");
 		return ResponseEntity.ok().body(rService.selectRoom(ridx));
+	}
+	
+	/* 2019.11.05 이찬호
+	 * @기능 ridx로 room 정보 가져옴
+	 * */
+	@RequestMapping(value = "/room/{ridx}", method = RequestMethod.GET, produces="application/json; charset=utf8")
+	@ResponseBody
+	public ResponseEntity<RoomDTO>getRoom(@PathVariable("ridx") int ridx) throws Exception {
+		logger.info(ridx+"방을 가져온다");
+		return ResponseEntity.ok().body(rService.getRoom(ridx));
 	}
 	
 	
