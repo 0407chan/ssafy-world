@@ -55,7 +55,7 @@
     <v-btn icon @click="invite()">
       <v-icon>mdi-account-multiple-plus</v-icon>
     </v-btn>
-    <Invite :user="allUser" :display="display" />
+    <Invite :user="allUser" :display="inviteDisplay" />
 
     <div v-if="currUser">
       <v-menu offset-y>
@@ -137,7 +137,7 @@ export default {
         height: 0
       },
       allUser : [],
-      display : false
+      inviteDisplay : false
     };
   },
   computed: {
@@ -175,7 +175,7 @@ export default {
         console.log(this.currRoom.rPeople);
         
         this.allUser=data
-        this.display=true
+        this.inviteDisplay=true
       })
     },
 
@@ -228,6 +228,7 @@ export default {
   },
 
   mounted() {
+    this.inviteDisplay=false
     if(this.$session.has('token')){
       let token = this.$session.get('token')
       console.log("App.vue Mounted")

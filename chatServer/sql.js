@@ -1,8 +1,9 @@
 const axios = require('axios');
-const apiUrl = 'http://localhost:8080/ssafyworld';
-// const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
+// const apiUrl = 'http://localhost:8080/ssafyworld';
+const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
 // const apiUrl = 'http://70.12.246.62:8080/ssafyworld';
 // const apiUrl = 'http://70.12.247.61:8080/ssafyworld';
+// const apiUrl = 'http://70.12.247.76:8080/ssafyworld';
 
 // 10-28 최재형
 // 디비에 있는 모든 방 갯수 세기
@@ -10,7 +11,7 @@ const apiUrl = 'http://localhost:8080/ssafyworld';
 // 리턴 : 방 목록 전체
 module.exports.getRoom=() =>{
   return axios.get(`${apiUrl}/room`).then(response=>{
-    console.log("방 목록" , response);
+    console.log("방 목록" , response.data);
     
     return response
   }).catch(error=>{
