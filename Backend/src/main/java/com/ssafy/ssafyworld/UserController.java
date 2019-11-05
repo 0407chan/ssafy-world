@@ -144,16 +144,25 @@ public class UserController {
 	 * @param uidx, uname, password
 	 * @return 성공 200 OK , 실패 400 BAD REQUEST, UserDTO JSON형태로 보냄
 	 */
-	@RequestMapping(value = "/user/update/{uidx}", method = RequestMethod.POST , produces="application/json; charset=utf8")
+	@RequestMapping(value = "/user/update", method = RequestMethod.POST , produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<String> update(@RequestBody UserDTO user) throws Exception {
 		logger.info("유저 수정");
+		System.out.println(user);
+		//비밀 번호 변경 시
 		String hashPw = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 		user.setPassword(hashPw);
+		
+		uService.update(user);
+		return ResponseEntity.ok().body(uService.getUserInfo(user.getUidx()).toString());
+		
+		/*
+		
 		System.out.println("들어온"+user);
 		uService.update(user);
 		System.out.println(uService.getUserInfo(user.getUidx()).toString());
 		return ResponseEntity.ok().body(uService.getUserInfo(user.getUidx()).toString());
+		*/
 	}
 	
 	

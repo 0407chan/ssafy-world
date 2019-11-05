@@ -26,7 +26,7 @@ const actions = {
 
     if (state.currUser != '') {
       console.log("refresh 함수 확인");
-      
+
       actions.registFriend()
       actions.registChatroom()
     }
@@ -35,7 +35,7 @@ const actions = {
   async getUsers({ commit }) {
     return await api.getUsers()
   },
-  
+
   async adminUpdateUser({ commit }, params) {
     return await api.adminUpdateUser(params)
   },
@@ -84,7 +84,7 @@ const actions = {
       state.friendList=data
     })
   },
-  
+
   // 로그인 후 단체방 목록 생성
   registChatroom() {
     api.getUserByRoom(state.currUser.uidx).then(res=>{
@@ -92,15 +92,16 @@ const actions = {
       state.chatroomList=res
     })
   },
-
   async register({ commit }, params) {
     const resp = await api.register(params);
     return resp;
   },
 
   async update({ commit }, params) {
-    const resp = await api.update(params);
-    return resp;
+    const res = await api.update(params);
+    commit('SET_CURRUSER', res.data);
+    
+    return res;
   },
 
   async getUserInfo({ commit }, params) {

@@ -144,6 +144,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions('data', ['update']),
 
     /* 2019.10.08 이찬호
     * 프로필 수정 할 수 있게 된다.
@@ -165,22 +166,40 @@ export default {
 
       //수정부분
       var params = {
+        uidx: this.currUser.uidx,
+        uid: this.currUser.uid,
+        staff: this.currUser.staff,
         uname: this.modiName,
         img: this.modiImage,
       };
-      const res = await api.modifyUser(params);
-
-      // 다시 유저정보 불러오기
-      params = {
-        id: this.id,
-      };
-      this.userDetail(params);
-      Swal.fire({
-        type: 'success',
-        title: '수정되었습니다.',
-        showConfirmButton: false,
-        timer: 1000
-      })
+      console.log("가자",params)
+      const res = await this.update(params);
+      this.$session.set('token',res.data);
+      
+      if (res.status == '200') {
+        Swal.fire({
+          type: 'success',
+          title: '수정되었습니다.',
+          showConfirmButton: false,
+          timer: 1000
+        })
+      }else if(res.status == '500'){
+        Swal.fire({
+          title: '서버가 준비중입니다.',
+          text: '이용에 불편을 드려 죄송합니다.',
+          type: 'error',
+          showConfirmButton: false,
+          timer: 1000
+        })
+      }else if(res.status =='400'){
+        Swal.fire({
+          title: '잘못된 요청입니다.',
+          text: '다시 시도해주세요.',
+          type: 'error',
+          showConfirmButton: false,
+          timer: 1000
+        })
+      }
     },
 
     getStaff(staff){

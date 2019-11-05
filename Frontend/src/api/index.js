@@ -10,12 +10,12 @@ export default {
   /**
    * 2019.11.04 준범이
    * 유저 목록 불러오기
-   * 유저 목록 
+   * 유저 목록
    */
   getUsers() {
     return axios.get(`${apiUrl}/user`)
   },
-  
+
   adminUpdateUser(params) {
     return axios.post(`${apiUrl}/user/admin/update`, {
       uidx: params.uidx,
@@ -26,11 +26,10 @@ export default {
       return error.response
     });
   },
-  
+
   adminDeleteUser(param) {
     axios.get(`${apiUrl}/user/delete/${param}`)
   },
-
 
   /**
    *
@@ -63,9 +62,11 @@ export default {
    */
   update(params) {
     return axios.post(`${apiUrl}/user/update`, {
-      uidx: params.uidx,
-      uname: params.uname,
-      password: params.password
+        uidx: params.uidx,
+        uid: params.uid,
+        staff: params.staff,
+        uname: params.uname,
+        img: params.img,
     })
     .catch(error => {
       console.log(error)
@@ -105,7 +106,7 @@ export default {
       uid: params.uid,
       uname: params.uname,
       password: params.password,
-      img: params.image,
+      img: params.img,
     }).then(response => {
       return response
     })
@@ -147,10 +148,10 @@ export default {
   // 파라미터 : 메세지 테이블에 있는 전 목록(날짜 빼고)
   // 리턴 : 정상 전송 되었는지
   postMessage(object){
-    return axios.post('/message',{ 
+    return axios.post('/message',{
       text:object.text,
       uidx:object.uidx,
-      ridx:object.ridx 
+      ridx:object.ridx
     }).then(response => {
       console.warn(response)
     }).catch((ex) => {
@@ -166,7 +167,7 @@ export default {
     return axios.get(`${apiUrl}/friend/${uidx}`)
     .then( res=>{
       console.log(res);
-      
+
       return res.data
       //싹다 다시 구현해야함
     }).catch(error=>{
