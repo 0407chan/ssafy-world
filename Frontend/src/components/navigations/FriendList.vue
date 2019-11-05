@@ -1,14 +1,14 @@
 <template>
   <div v-show="friend">
     <v-list v-show="friendList.length>0" v-for="i in friendList">
-      <v-list-item @click="goTo(i.uidx)">
+      <v-list-item @click="profile(i.uidx)">
         <v-list-item-title >
           {{ i.uname }}
         </v-list-item-title>
       </v-list-item>
     </v-list>
     <v-list>
-      <v-list-item @click.stop="dialog = true">
+      <v-list-item @click="search()">
         <v-list-item-title>
           친구 추가
         </v-list-item-title>
@@ -35,7 +35,7 @@
           <v-btn
             color="green darken-1"
             text
-            @click="addChatroom()">
+            @click="addFriend()">
             확인
           </v-btn>
           <v-btn
@@ -47,12 +47,14 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <FriendProfile :user ="selectedUser" :display="selectedDisplay" />
   </div>
 </template>
 
 <script>
 import { mapActions, mapState, mapMutations } from 'vuex';
 import api from '@/api'
+import FriendProfile from '@/components/friend/FriendProfile'
 
 export default {
   name: 'FriendList',
@@ -61,33 +63,61 @@ export default {
       dialog: false,
       friendUid : '',
       searchFriend :[],
-      selected : []
+      selected : [],
+      selectedDisplay : false,
+      selectedUser : '',
     }
   },
-  mounted(){
-    this.findUser()
-  },
   components: {
+    FriendProfile
+  },mounted(){
+    this.selectedUser = this.currUser
   },
   computed:{
     //userLogintoken 부분 수정 해야함
     ...mapState({
       friendList: state => state.data.friendList,
-      friend : state => state.data.friend
+      friend : state => state.data.friend,
+      currUser : state => state.data.currUser
     }),
   },
   methods :{
     ...mapActions('data',['registFriend']),
-    addFriend() {
-      console.log("친구 추가 구현해야함");
+    search(){
+      this.dialog=true
+      this.findUser()
     },
-    goTo(friendUidx){
-      console.log(friendUidx);
+    addFriend() {
+      for(let i=0;i<this.selected.length;i++){
+        api.postAddFriend(this.currUser.uidx,this.selected[i])
+      }
+      this.dialog=false
+      this.registFriend()
+    },
+    profile(friendUidx){
+      api.getUserInfo(friendUidx).then(res=>{
+        this.selectedUser= res.data
+        this.selectedDisplay=true
+      })
       
     },
     findUser(){
       api.searchUserAll(this.friendUid).then(res=>{
-        this.searchFriend=res.data
+        let data = []
+        for(let i = 0;i<res.data.length;i++){
+          if(res.data[i].uidx!=this.currUser.uidx){
+            let flag = true
+            for(let l =0;l<this.friendList.length;l++){
+              if(res.data[i].uidx==this.friendList[l].uidx){
+                flag = false
+                break;
+              }
+            }
+            if(flag==true)
+              data.push(res.data[i])
+          }
+        }
+        this.searchFriend=data
       })
     }
   }
