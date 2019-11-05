@@ -23,6 +23,7 @@ const actions = {
     if (params != null){
       commit('SET_CURRUSER', params)
     }
+
     if (state.currUser != '') {
       console.log("refresh 함수 확인");
       
@@ -31,10 +32,22 @@ const actions = {
     }
   },
 
+  async getUsers({ commit }) {
+    return await api.getUsers()
+  },
+  
+  async adminUpdateUser({ commit }, params) {
+    return await api.adminUpdateUser(params)
+  },
+
+  async adminDeleteUser({ commit }, param) {
+    await api.adminDeleteUser(param)
+  },
+
   /* 2019.11.03 이찬호
     currUser 세팅
   */
-  setCurrUser({commit,state},params){
+  setCurrUser({commit, state}, params){
     commit('SET_CURRUSER', params)
     return state.currUser
   },
@@ -60,14 +73,14 @@ const actions = {
   },
   // 로그인 후 친구목록 생성
   registFriend() {
-    api.getFriend(state.currUser.uidx).then(async res=>{
+    api.getFriend(state.currUser.uidx).then(res=>{
       console.log('친구 목록' , res);
       let data = []
       for(let i =0;i<res.length;i++){
-        let tmp =await api.getUserInfo(res[i])
-        data.push(tmp.data)
+        api.getUserInfo(res[i]).then(res=>{
+          data.push(res.data)
+        })
       }
-      console.log("data", data);
       state.friendList=data
     })
   },
@@ -77,7 +90,6 @@ const actions = {
     api.getUserByRoom(state.currUser.uidx).then(res=>{
       console.log('단톡방 목록' , res);
       state.chatroomList=res
-      
     })
   },
 
@@ -89,10 +101,6 @@ const actions = {
   async update({ commit }, params) {
     const resp = await api.update(params);
     return resp;
-  },
-
-  async getUser({ commit }, params) {
-    const resp = await api.getUser()
   },
 
   async getUserInfo({ commit }, params) {

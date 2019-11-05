@@ -58,9 +58,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public void adminUpdate(UserDTO user) throws Exception {
+		dao.adminUpdate(user);
+	}
+
+	@Override
 	public void deleteUser(int uidx) throws Exception {
 		dao.deleteUser(uidx);
 	}
 
+	@Override
+	public List<UserDTO> searchUserAll(String uid) throws Exception {
+		return dao.searchUserAll(uid);
+	}
 
 }

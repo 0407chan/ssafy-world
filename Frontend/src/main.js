@@ -15,11 +15,11 @@ Vue.use(directives)
 Vue.use(VueSession)
 
 new Vue({
-  el: '#app',
-  router,
-  store,
-  vuetify,
-  render: h => h(App),
-  components: { App },
-  template: '<App />'
+    el: '#app',
+    router,
+    store,
+    vuetify,
+    render: h => h(App),
+    components: { App },
+    template: '<App />'
 })

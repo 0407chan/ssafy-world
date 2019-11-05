@@ -95,7 +95,7 @@ io.on('connection', function(socket){
         api.postMessage({
           text:data.msg, 
           uidx:data.user.uidx,
-          ridx:room[i].ridx,
+          ridx:res.ridx,
           time : data.time
         })
 

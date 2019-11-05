@@ -7,7 +7,6 @@
         <BeforeLogin />
       </v-list>
       <v-list dense v-show="currUser != ''">
-        <v-divider></v-divider>
         <AfterLogin />
       </v-list>
     </v-navigation-drawer>
@@ -18,7 +17,6 @@
         <BeforeLogin />
       </v-list>
       <v-list dense v-show="currUser != ''">
-        <v-divider></v-divider>
         <AfterLogin />
       </v-list>
 
@@ -193,8 +191,9 @@ export default {
     if(this.$session.has('token')){
       let token = this.$session.get('token')
       console.log("App.vue Mounted")
-      this.setCurrUser(token);
-      this.refresh(token)
+      this.setCurrUser(token).then(res=>{
+        this.refresh(token)
+      })
     }
   },
 
