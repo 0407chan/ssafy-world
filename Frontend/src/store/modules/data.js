@@ -15,7 +15,11 @@ const state = {
   currUser: '',
   navDrawer: false,
 
-  currChatRoom:'',
+  currChatRoom:{
+    rname:'',
+    ridx:'',
+    rPeople:[],
+  },
 }
 
 // actions
