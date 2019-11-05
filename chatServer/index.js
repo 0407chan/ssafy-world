@@ -90,7 +90,7 @@ io.on('connection', function(socket){
           time : data.time
         };
 
-        console.log(res.ridx + "/"+ data);
+        console.log("새로 생성된 챗룸 " ,data.msg , data.user.uidx, res.ridx, data.time);
         
         api.postMessage({
           text:data.msg, 
@@ -133,10 +133,7 @@ io.on('connection', function(socket){
       
       // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
       socket.broadcast.emit('/chatroom/'+room[i].ridx, msg);
-
-      console.log(room[i].ridx+","+msg);
-      
-      console.log("여기 139줄 " ,data.msg , data.user.uidx, room[i].ridx, data.time);
+      console.log("서버에 들어온 데이터 " ,data.msg , data.user.uidx, room[i].ridx, data.time);
       
       api.postMessage({
         text:data.msg, 

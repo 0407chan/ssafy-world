@@ -88,11 +88,12 @@ export default {
       this.selectedDisplay=false
       this.findUser()
     },
-    addFriend() {
+    async addFriend() {
       for(let i=0;i<this.selected.length;i++){
-        api.postAddFriend(this.currUser.uidx,this.selected[i])
+        await api.postAddFriend(this.currUser.uidx,this.selected[i])
       }
       this.dialog=false
+      this.selected = []
       this.registFriend()
     },
     profile(friendUidx){
@@ -100,7 +101,6 @@ export default {
         this.selectedUser= res.data
         this.selectedDisplay=true
       })
-      
     },
     findUser(){
       api.searchUserAll(this.friendUid).then(res=>{
@@ -118,6 +118,7 @@ export default {
               data.push(res.data[i])
           }
         }
+        this.selected = []
         this.searchFriend=data
       })
     }

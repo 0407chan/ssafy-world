@@ -70,6 +70,7 @@ public class MessageController {
 	@RequestMapping(value = "/message", method = RequestMethod.POST, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<String> insertMessage(@RequestBody MessageDTO message) throws Exception {
+		System.out.println(message);
 		mService.insertMessage(message);
 		return new ResponseEntity<String>("메세지 입력 완료",HttpStatus.OK);
 	}
