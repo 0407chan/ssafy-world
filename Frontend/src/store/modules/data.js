@@ -11,7 +11,7 @@ const state = {
 
   newMessage :false,
   chatListRealTimeCheck : false,
-
+ 
   currUser: '',
   navDrawer: false,
 }
