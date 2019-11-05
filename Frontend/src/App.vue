@@ -43,10 +43,21 @@
     <v-toolbar-title>{{currRoom.rname}}</v-toolbar-title>
     <div>
       <template v-if="currRoom.rPeople.length>0">
-        <v-icon>
-          mdi-account
-        </v-icon>
-        {{currRoom.rPeople.length}}
+        <v-badge
+          color="primary"
+          overlap
+          class="align-self-center"
+        >
+          <template v-slot:badge>
+            <span>{{currRoom.rPeople.length}}</span>
+          </template>
+          <v-icon large>
+            mdi-account
+          </v-icon>
+        </v-badge>
+
+
+
       </template>
     </div>
 

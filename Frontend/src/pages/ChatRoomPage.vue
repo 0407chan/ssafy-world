@@ -87,9 +87,13 @@
               </template>
               <template v-else>
                 <div class="contentOther" style=" margin-left: 4px; display: inline-block" :class="{contentSsafy: message.user.uname == 'SSAFY'}">
+                  <div>
                   {{message.msg}}
-                  <v-img v-if="message.img" :src="message.img" width="300px"></v-img>
-                  <!-- <chat-image v-if="message.image" :imgsrc="message.image" @imageLoad="imageLoad"></chat-image> -->
+                  </div>
+                  <div v-if="message.img">
+                    <v-img class="contentImage" @click="viewImage" :src="message.img" width="300px">
+                    </v-img>
+                  </div>
                 </div>
               </template>
             </v-row>
@@ -225,6 +229,45 @@
           </v-col>
         </v-row>
       </v-col>
+
+      <v-dialog
+        v-model="dialog"
+        fullscreen
+        hide-overlay
+        scrollable
+      >
+
+
+        <v-card >
+          <v-toolbar flat dark>
+            <v-toolbar-title>Images</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-divider
+              class="mx-4"
+              inset
+              vertical
+            ></v-divider>
+
+            <v-btn
+              icon
+              dark
+              @click="dialog = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+
+          </v-toolbar>
+
+          <v-container fill-height>
+            <v-img v-if="images.length>0"
+              :max-height="windows.height" :max-width="windows.width"
+
+              :src="images[0].img"
+              :aspect-ratio="ratio"
+              contain
+            ></v-img>
+          </v-container>
+        </v-card>
+      </v-dialog>
     </v-row>
 
   </v-container>
@@ -241,7 +284,9 @@ export default {
       msg:'',
       findPeople:false,
       dialog:false,
-
+      images:[],
+      ratio: 2,
+      dialog: false,
       windows: {
         width: 0,
         height: 0
@@ -254,6 +299,7 @@ export default {
     ...mapState({
       msgDatas: state => state.socket.msgDatas,
       currUser: state => state.data.currUser,
+      currRoom: state => state.data.currChatRoom,
     }),
 
     imageIcon () {
@@ -266,20 +312,24 @@ export default {
     this.getChatRoomMsgAction();
     this.setCurrChatRoomInfo();
     this.scrollToBottom();
-
+    this.getRoomImageAction();
   },
 
   watch: {
     '$route'(to, from) {
+      this.startSocket();
       this.setCurrChatRoomInfo();
       this.getChatRoomMsgAction();
       this.scrollToBottom();
+      this.getRoomImageAction();
     },
   },
   methods: {
     ...mapActions('data', ['setCurrChatRoom']),
     ...mapActions('data', ['getRoom']),
     ...mapActions('data', ['getRoomPeople']),
+    ...mapActions('data', ['postRoomImage']),
+    ...mapActions('data', ['getRoomImage']),
 
     ...mapActions('socket',['getMsg']),
     ...mapActions('socket',['pushMsg']),
@@ -287,6 +337,22 @@ export default {
 
     test(){
       this.setCurrChatRoomInfo();
+    },
+
+    async getRoomImageAction(){
+
+      let res = await this.getRoomImage(this.currRoom.ridx);
+      if(res.status==500){
+        console.log("서버에러", res.status)
+      }else{
+        this.images = res.data;
+      }
+    },
+
+    viewImage(){
+      this.dialog = true;
+      console.log(this.images);
+      this.getRoomImageAction();
     },
 
     async startSocket(){
@@ -389,6 +455,9 @@ export default {
           time:this.getToday(),
           img:"https://i.imgur.com/fBjay1B.png"
         });
+        console.log("되고")
+        await this.postRoomImageAction("https://i.imgur.com/fBjay1B.png");
+        console.log("되냐",this.currRoom)
         this.msg='';
         this.scrollToBottom();
         return false;
@@ -454,11 +523,16 @@ export default {
       return tim.substring(0,5);
     },
 
+
     /* 2019.11.05 이찬호
-      이미지 확대해서 보기
+      이미지 있으면 이미지 디비에 저장하기
     */
-    viewImage(){
-      console.log("가자")
+    async postRoomImageAction(img){
+      let params={
+        ridx : this.currRoom.ridx,
+        img : img
+      }
+      await this.postRoomImage(params);
     },
 
     // 이미지 변경해서 imgur에 올리기
