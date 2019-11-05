@@ -1,9 +1,10 @@
 import axios from 'axios'
 
-const apiUrl = 'http://localhost:8080/ssafyworld';
+const apiUrl = 'http://70.12.247.76:8080/ssafyworld';
 // const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
 // const apiUrl = 'http://70.12.246.62:8080/ssafyworld'; // 9비니여보야의여보야
 // const apiUrl = 'http://70.12.247.61:8080/ssafyworld';
+// const apiUrl = 'http://70.12.247.108:8080/ssafyworld';
 
 export default {
 
@@ -115,12 +116,19 @@ export default {
     });
   },
 
-  // 10-17 최재형
-  // 방 번호에 해당되는 이름 가져오기
-  // 파라미터 : 방 번호
-  // 리턴 : 방 번호에 해당되는 리스트 (json)
-  getRoomName(param) {
-    return axios.get(`${apiUrl}/room/name/${param}`)
+  /* 2019.11.05 이찬호
+    해당 방 정보 가져오기
+  */
+  getRoom(param) {
+    return axios.get(`${apiUrl}/room/${param}`)
+  },
+
+
+  /* 2019.11.05 이찬호
+    해당 방에 있는 사람들 가져오기
+  */
+  getRoomPeople(param) {
+    return axios.get(`${apiUrl}/room/people/${param}`)
   },
 
   // 10-28 최재형

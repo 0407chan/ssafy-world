@@ -11,9 +11,11 @@ const state = {
 
   newMessage :false,
   chatListRealTimeCheck : false,
- 
+
   currUser: '',
   navDrawer: false,
+
+  currChatRoom:'',
 }
 
 // actions
@@ -35,6 +37,8 @@ const actions = {
   async getUsers({ commit }) {
     return await api.getUsers()
   },
+
+
 
   async adminUpdateUser({ commit }, params) {
     return await api.adminUpdateUser(params)
@@ -59,6 +63,12 @@ const actions = {
     commit('clearUser')
   },
 
+  /* 2019.11.05 이찬호
+    현재 채팅방 표시
+  */
+  setCurrChatRoom({commit,state},params){
+    commit('SET_CURRCHATROOM', params)
+  },
 
   async login({ commit }, params) {
     return api.login(params).then(res =>{
@@ -94,6 +104,17 @@ const actions = {
   },
   async register({ commit }, params) {
     const resp = await api.register(params);
+    return resp;
+  },
+
+
+  async getRoom({ commit }, params) {
+    const resp = await api.getRoom(params);
+    return resp;
+  },
+
+  async getRoomPeople({ commit }, params) {
+    const resp = await api.getRoomPeople(params);
     return resp;
   },
 
@@ -158,6 +179,9 @@ const mutations = {
     state.currUser = params
   },
 
+  SET_CURRCHATROOM(state,params){
+    state.currChatRoom = params
+  },
 };
 
 export default {

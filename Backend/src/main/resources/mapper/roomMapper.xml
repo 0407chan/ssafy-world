@@ -9,10 +9,16 @@
 		SELECT * FROM room_has_user where ridx = #{ridx};
 	</select>
 	
+	<select id="getRoom" parameterType="int" resultType="RoomDTO">
+		SELECT * FROM room where ridx = #{ridx};
+	</select>
+	
 	<!-- 방 전체 선택 -->
 	<select id="selectRooms" resultType="RoomDTO">
 		SELECT * FROM room ;
 	</select>
+	
+	
 	
 	<select id="selectRoomName" parameterType="String" resultType="RoomDTO">
 		SELECT * FROM room where rname=#{rname};

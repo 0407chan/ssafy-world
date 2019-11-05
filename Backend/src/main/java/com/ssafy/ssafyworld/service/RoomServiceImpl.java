@@ -45,5 +45,11 @@ public class RoomServiceImpl implements RoomService {
 	public void enterRoom(int room, int user) throws Exception {
 		dao.enterRoom(room,user);
 	}
+	
+
+	@Override
+	public RoomDTO getRoom(int ridx) throws Exception {
+		return dao.getRoom(ridx);
+	}
 
 }
