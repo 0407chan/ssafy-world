@@ -21,7 +21,7 @@
                     <v-card max-width="250" class="mx-auto">
                       <v-img :src="message.user.img" height="200px" dark></v-img>
 
-                      <v-card-title>{{ message.user.uname }}</v-card-title>
+                      <v-card-title >{{ message.user.uname }}</v-card-title>
 
                       <v-card-text>
                         <div>{{ getStaff(message.user.staff) }}</div>
@@ -45,7 +45,7 @@
                 </div>
               </template>
 
-              <template class="content" v-if=" (index-1 >= 0 && msgDatas[index-1].user.uidx != message.user.uidx) || index == 0">
+              <template v-if=" (index-1 >= 0 && msgDatas[index-1].user.uidx != message.user.uidx) || index == 0">
                 <div style="display: inline-block" >
                   <v-menu right offset-x>
                     <template v-slot:activator="{ on }">
@@ -74,15 +74,26 @@
                     {{getTime(message.time)}}
                   </div>
                   <br/>
-                  <div class="content" style=" margin-left: 4px; display: inline-block">
+                  <div class="contentOther" style=" margin-left: 4px; display: inline-block" :class="{contentSsafy: message.user.uname == 'SSAFY'}">
+                    <div>
                     {{message.msg}}
+                    </div>
+                    <div v-if="message.img">
+                      <v-img class="contentImage" @click="viewImage" :src="message.img" width="300px">
+                      </v-img>
+                    </div>
                   </div>
                 </div>
               </template>
               <template v-else>
-                <div class="content" style=" margin-left: 4px; display: inline-block">
+                <div class="contentOther" style=" margin-left: 4px; display: inline-block" :class="{contentSsafy: message.user.uname == 'SSAFY'}">
+                  <div>
                   {{message.msg}}
-                  <!-- <chat-image v-if="message.image" :imgsrc="message.image" @imageLoad="imageLoad"></chat-image> -->
+                  </div>
+                  <div v-if="message.img">
+                    <v-img class="contentImage" @click="viewImage" :src="message.img" width="300px">
+                    </v-img>
+                  </div>
                 </div>
               </template>
             </v-row>
@@ -92,7 +103,7 @@
           <template v-else>
             <v-row style="padding: 4px;" justify="end">
               <!-- 시간, 이름 메세지 -->
-              <template class="content" v-if=" (index-1 >= 0 && msgDatas[index-1].user.uidx != message.user.uidx) || index == 0">
+              <template v-if=" (index-1 >= 0 && msgDatas[index-1].user.uidx != message.user.uidx) || index == 0">
                 <div style=" display: inline-block" align="end">
                   <div class="profileTime" style="display: inline-block" >
                     {{getTime(message.time)}}
@@ -122,13 +133,13 @@
                   </v-menu>
 
                   <br/>
-                  <div class="content" style=" margin-right: 4px; display: inline-block">
+                  <div class="contentMine" style=" margin-right: 4px; display: inline-block">
                     {{message.msg}}
                   </div>
                 </div>
               </template>
               <template v-else>
-                <div class="content" style=" margin-right: 4px; display: inline-block">
+                <div class="contentMine" style=" margin-right: 4px; display: inline-block">
                   {{message.msg}}
                 </div>
               </template>
@@ -198,6 +209,7 @@
                 placeholder="보낼 메세지를 입력하세요."
                 hide-details
                 solo
+                dark
                 @keyup.13="sendMessage"
               >
               </v-text-field>
@@ -217,9 +229,47 @@
           </v-col>
         </v-row>
       </v-col>
+
+      <v-dialog
+        v-model="dialog"
+        fullscreen
+        hide-overlay
+        scrollable
+      >
+
+
+        <v-card >
+          <v-toolbar flat dark>
+            <v-toolbar-title>Images</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-divider
+              class="mx-4"
+              inset
+              vertical
+            ></v-divider>
+
+            <v-btn
+              icon
+              dark
+              @click="dialog = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+
+          </v-toolbar>
+
+          <v-container fill-height>
+            <v-img v-if="images.length>0"
+              :max-height="windows.height" :max-width="windows.width"
+
+              :src="images[0].img"
+              :aspect-ratio="ratio"
+              contain
+            ></v-img>
+          </v-container>
+        </v-card>
+      </v-dialog>
     </v-row>
 
-  <!-- <div class="message" v-for="(message,index) in msgs" :class="{own: message.from.name == username}"> -->
   </v-container>
 </template>
 
@@ -234,7 +284,9 @@ export default {
       msg:'',
       findPeople:false,
       dialog:false,
-
+      images:[],
+      ratio: 2,
+      dialog: false,
       windows: {
         width: 0,
         height: 0
@@ -247,6 +299,7 @@ export default {
     ...mapState({
       msgDatas: state => state.socket.msgDatas,
       currUser: state => state.data.currUser,
+      currRoom: state => state.data.currChatRoom,
     }),
 
     imageIcon () {
@@ -259,20 +312,24 @@ export default {
     this.getChatRoomMsgAction();
     this.setCurrChatRoomInfo();
     this.scrollToBottom();
-
+    this.getRoomImageAction();
   },
 
   watch: {
     '$route'(to, from) {
+      this.startSocket();
       this.setCurrChatRoomInfo();
       this.getChatRoomMsgAction();
       this.scrollToBottom();
+      this.getRoomImageAction();
     },
   },
   methods: {
     ...mapActions('data', ['setCurrChatRoom']),
     ...mapActions('data', ['getRoom']),
     ...mapActions('data', ['getRoomPeople']),
+    ...mapActions('data', ['postRoomImage']),
+    ...mapActions('data', ['getRoomImage']),
 
     ...mapActions('socket',['getMsg']),
     ...mapActions('socket',['pushMsg']),
@@ -280,6 +337,22 @@ export default {
 
     test(){
       this.setCurrChatRoomInfo();
+    },
+
+    async getRoomImageAction(){
+
+      let res = await this.getRoomImage(this.currRoom.ridx);
+      if(res.status==500){
+        console.log("서버에러", res.status)
+      }else{
+        this.images = res.data;
+      }
+    },
+
+    viewImage(){
+      this.dialog = true;
+      console.log(this.images);
+      this.getRoomImageAction();
     },
 
     async startSocket(){
@@ -368,7 +441,7 @@ export default {
 
     async sendMessage() {
       if (this.msg.length === 0) return false;
-      if(this.msg == '#점심'){
+      if(this.msg == '#점심' || this.msg=='@점심'){
         let params ={
           uid: "ssafy@ssafy.com",
           uidx: 0,
@@ -376,11 +449,17 @@ export default {
           img: "https://i.imgur.com/6woB3eO.png",
           uname: "SSAFY"
         }
-        this.pushMsg({
+        await this.pushMsg({
           user:params,
           msg:"오늘의 점심입니다.",
           time:this.getToday(),
+          img:"https://i.imgur.com/fBjay1B.png"
         });
+        console.log("되고")
+        await this.postRoomImageAction("https://i.imgur.com/fBjay1B.png");
+        console.log("되냐",this.currRoom)
+        this.msg='';
+        this.scrollToBottom();
         return false;
       }
       await this.pushMsg({
@@ -442,6 +521,18 @@ export default {
       let tim = time.split(' ')[1];
 
       return tim.substring(0,5);
+    },
+
+
+    /* 2019.11.05 이찬호
+      이미지 있으면 이미지 디비에 저장하기
+    */
+    async postRoomImageAction(img){
+      let params={
+        ridx : this.currRoom.ridx,
+        img : img
+      }
+      await this.postRoomImage(params);
     },
 
     // 이미지 변경해서 imgur에 올리기
@@ -521,27 +612,55 @@ export default {
 }
 
 .message-line:hover .time {
-   color : black;
+   color : white;
  }
 
 .message-line:hover {
-  background: rgba(220,220,220,0.5);
+  background: rgba(20,20,20,0.5);
 }
 .username{
+  color: white;
   font-weight: bold;
 }
 .username:hover{
   text-decoration: underline;
   cursor:pointer;
 }
-.content{
+
+.contentImage:hover{
+  cursor:pointer;
+}
+
+.contentMine{
   border-radius: 5px;
-  background-color: orange;
+  background-color: rgba(255,255,255,0.9);
   padding-left: 6px;
   padding-right: 6px;
   padding-top:2px;
   padding-bottom: 2px;
+  color: black;
 }
+
+.contentOther{
+  border-radius: 5px;
+  background-color: rgba(0,0,0,0.5);
+  padding-left: 6px;
+  padding-right: 6px;
+  padding-top:2px;
+  padding-bottom: 2px;
+  color: white;
+}
+
+.contentSsafy{
+  border-radius: 5px;
+  background-color: rgba(0,0,255,0.5);
+  padding-left: 6px;
+  padding-right: 6px;
+  padding-top:2px;
+  padding-bottom: 2px;
+  color: white;
+}
+
 .inputBorder{
   border: 1px solid rgba(220,220,220,0.9);
   border-radius: 5px;
@@ -554,6 +673,7 @@ export default {
 }
 .profileTime{
   font-size: 12px;
+  color:white;
 }
 
 </style>

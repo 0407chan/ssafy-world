@@ -85,6 +85,7 @@ public class MessageController {
 	@RequestMapping(value = "/message/img", method = RequestMethod.POST, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<String> insertImg(@RequestBody imgDTO img) throws Exception {
+		System.out.println("테스트"+img);
 		mService.insertImg(img);
 		System.out.println("img : "+img.getImg());
 		return new ResponseEntity<String>("이미지 입력 완료",HttpStatus.OK);
@@ -96,7 +97,7 @@ public class MessageController {
 	 * @param ridx
 	 * @return List<imgDTO>
 	 */
-	@RequestMapping(value = "/message/img/{ridx}", method = RequestMethod.GET, produces="application/json; charset=utf8")
+	@RequestMapping(value = "/message/getImg/{ridx}", method = RequestMethod.GET, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<List<imgDTO>> roomImgs(@PathVariable("ridx") int ridx) throws Exception {
 		logger.info(ridx+"번 방 이미지 추출 완료");
