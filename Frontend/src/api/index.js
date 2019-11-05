@@ -177,9 +177,10 @@ export default {
 
   // 11.1 최재형
   // 새친구를 만든다
-  postAddFriend(uidx){
+  postAddFriend(uidx,fidx){
     return axios.post(`${apiUrl}/friend/add`, {
-      'uidx': uidx
+      'uidx': uidx,
+      'friend' :fidx
     }).then(res=>{
       return res
     }).catch(error=>{
