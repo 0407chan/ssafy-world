@@ -51,6 +51,10 @@
     <v-btn icon @click="setProfile2">
       <v-icon>mdi-account</v-icon>
     </v-btn>
+    <v-btn icon @click="invite()">
+      <v-icon>mdi-account-multiple-plus</v-icon>
+    </v-btn>
+    <Invite :user="allUser" :display="display" />
 
     <div v-if="currUser">
       <v-menu offset-y>
@@ -105,8 +109,10 @@
 </template>
 
 <script>
+import api from '@/api'
 import Navigation from '@/components/Navigation'
 
+import Invite from '@/components/invite/Invite'
 import BeforeLogin from '@/components/navigations/BeforeLogin'
 import AfterLogin from '@/components/navigations/AfterLogin'
 import {
@@ -119,6 +125,7 @@ export default {
   components: {
     BeforeLogin,
     AfterLogin,
+    Invite,
     // Navigation,
   },
   data() {
@@ -128,17 +135,45 @@ export default {
         width: 0,
         height: 0
       },
+      allUser : [],
+      display : false
     };
   },
   computed: {
     ...mapState({
       currUser: state => state.data.currUser,
+      currRoom : state => state.data.currChatRoom
     }),
   },
   methods: {
     ...mapActions('data', ['refresh']),
     ...mapActions('data',['clearCurrUser']),
     ...mapActions('data', ['setCurrUser']),
+
+    invite(){
+      api.getUsers().then(res=>{
+        console.log(res.data);
+        
+        let data = []
+        for(let i=0;i<res.data.length;i++){
+          if(this.currUser.uidx!=res.data[i].uidx)
+            data.push(res.data[i])
+          else{
+            let flag =true
+            for(let l=0;l<this.currRoom.rpeople.length;l++){
+              if(this.currRoom.rpeople[l].uidx==res.data[i].uidx){
+                flag=false
+                break
+              }
+            }
+            if(flag==true)
+              data.push(res.data)
+          }
+        }
+        this.allUser=data
+        this.display=true
+      })
+    },
 
     handleResize() {
       this.windows.width = window.innerWidth;
@@ -184,7 +219,7 @@ export default {
       }
       this.$session.set('token',params)
       this.setCurrUser(params);
-    }
+    },
   },
 
   mounted() {
