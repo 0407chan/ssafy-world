@@ -15,7 +15,7 @@ const actions = {
       console.log(res.data);
       for(let i =0;i<res.data.length;i++){
         let user = await api.getUserInfo(res.data[i].uidx)
-        console.log(user.data);
+        console.log('getMsg',user.data);
         let params ={
           user : user.data,
           msg : res.data[i].text,

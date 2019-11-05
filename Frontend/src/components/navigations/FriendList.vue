@@ -85,6 +85,7 @@ export default {
     ...mapActions('data',['registFriend']),
     search(){
       this.dialog=true
+      this.selectedDisplay=false
       this.findUser()
     },
     addFriend() {
