@@ -3,7 +3,7 @@
         v-model="selected"
         :headers="headers"
         :items="desserts"
-        item-key="name"
+        item-key="uidx"
         show-select
         class="elevation-1">
 
@@ -16,11 +16,7 @@
                     vertical>
                 </v-divider>
                 <v-spacer></v-spacer>
-                <v-dialog max-width="500px">
-                    <template v-slot:activator="{ on }">
-                        <v-btn color="primary" dark class="mb-2" v-on="on">전체 수정하기</v-btn>
-                    </template>
-                </v-dialog>
+                <v-btn color="primary" dark class="mb-2" @click="editAllItem(selected)">선택 유저 수정</v-btn>
             </v-toolbar>
         </template>
 
@@ -55,6 +51,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+import Swal from 'sweetalert2'
 
 export default {
     name: 'AdminPage',
@@ -119,16 +116,33 @@ export default {
 
         ...mapActions("data", ['adminUpdateUser']),
         async editItem(item) {
-            console.log(item)
             const index = this.desserts.indexOf(item)
 
             let params = {
                 uidx: this.desserts[index].uidx,
                 staff: this.desserts[index].staff.abbr,
             }
-            console.log(params)
             confirm('정말로 해당 유저의 등급을 변경하시겠습니까?') &&
+                    await this.adminUpdateUser(params) &&
+                    this.successAlert('수정 완료!', '해당 유저의 등급이 바뀌었습니다.')
+        },
+        async editAllItem(items) {
+            if (confirm('정말로 선택한 유저의 등급을 모두 변경하시겠습니까?')) {
+                let getStaff = new Map();
+                for(var j = 0; j < this.desserts.length; ++j)
+                    getStaff.set(this.desserts[j].uidx, this.desserts[j].staff.abbr);
+                
+                for(var i = 0; i < items.length; ++i) {
+                    let params = {
+                        uidx: items[i].uidx,
+                        staff: getStaff.get(items[i].uidx),
+                    }
                     await this.adminUpdateUser(params)
+                }
+                this.selected = []
+
+                this.successAlert('수정 완료!', '선택한 유저의 등급이 모두 바뀌었습니다.')
+            }
         },
 
         ...mapActions("data", ['adminDeleteUser']),
@@ -137,6 +151,16 @@ export default {
 
             confirm('정말로 해당 유저를 삭제하시겠습니까?') &&
                     await this.adminDeleteUser(this.desserts[index].uidx)
+        },
+
+        successAlert(title, text) {
+            Swal.fire({
+                title: title,
+                text: text,
+                type: 'success',
+                showConfirmButton: false,
+                timer: 1000
+            })
         },
     },
 }

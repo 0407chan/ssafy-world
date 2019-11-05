@@ -143,40 +143,6 @@ export default {
         timer: 1000
       })
     },
-
-    async logins() {
-      if (this.credentials.username && this.credentials.password) {
-        axios.post('http://localhost:8000/auth/', this.credentials).then(async res => {
-          this.$session.start();
-          this.$session.set('token', res.data.token);
-          this.userCheck = true;
-          this.getUser();
-          this.getUserInfo();
-          await this.postMatrix()
-          this.$router.push({ name: 'login' });
-          const Toast = Swal.mixin({
-              toast: true,
-              position: 'bottom-end',
-              showConfirmButton: false,
-              timer: 3000
-            });
-
-            Toast.fire({
-              type: 'success',
-              title: 'Signed in successfully.'
-            })
-
-        }).catch(e => {
-          console.log(e);
-          Swal.fire({
-            title: 'Error!',
-            text: '다시 입력해주세요.',
-            type: 'error',
-            confirmButtonText: 'Ok'
-          })
-        })
-      }
-    },
   }
 };
 </script>
