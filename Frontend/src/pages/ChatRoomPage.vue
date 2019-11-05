@@ -4,9 +4,9 @@
       <v-col cols="12" id="messageBody" class="scrollable">
         <div class="message-line" v-for="(message, index) in msgDatas" no-gutters>
 
-          <template v-if="message.user.uname != currUser.uname">
+          <template v-if="message.user.uidx != currUser.uidx">
             <v-row style="padding: 4px;">
-              <template v-if=" (index-1 >= 0 && msgDatas[index-1].user.uname != message.user.uname) || index == 0">
+              <template v-if=" (index-1 >= 0 && msgDatas[index-1].user.uidx != message.user.uidx) || index == 0">
                 <div align-center justify-center style="padding: 6px; display: inline-block; width:48px">
                   <v-menu bottom offset-y>
                     <template v-slot:activator="{ on }">
@@ -45,7 +45,7 @@
                 </div>
               </template>
 
-              <template class="content" v-if=" (index-1 >= 0 && msgDatas[index-1].user.uname != message.user.uname) || index == 0">
+              <template class="content" v-if=" (index-1 >= 0 && msgDatas[index-1].user.uidx != message.user.uidx) || index == 0">
                 <div style="display: inline-block" >
                   <v-menu right offset-x>
                     <template v-slot:activator="{ on }">
@@ -92,7 +92,7 @@
           <template v-else>
             <v-row style="padding: 4px;" justify="end">
               <!-- 시간, 이름 메세지 -->
-              <template class="content" v-if=" (index-1 >= 0 && msgDatas[index-1].user.uname != message.user.uname) || index == 0">
+              <template class="content" v-if=" (index-1 >= 0 && msgDatas[index-1].user.uidx != message.user.uidx) || index == 0">
                 <div style=" display: inline-block" align="end">
                   <div class="profileTime" style="display: inline-block" >
                     {{getTime(message.time)}}
@@ -100,15 +100,15 @@
                   <v-menu left offset-x>
                     <template v-slot:activator="{ on }">
                       <span class="username" v-on="on" style="padding : 4px; display: inline-block">
-                        {{message.user.uname}}
+                        {{currUser.uname}}
                       </span>
                     </template>
                     <v-card max-width="250" class="mx-auto">
-                      <v-img :src="message.user.img" height="200px" dark></v-img>
-                      <v-card-title>{{ message.user.uname }}</v-card-title>
+                      <v-img :src="currUser.img" height="200px" dark></v-img>
+                      <v-card-title>{{ currUser.uname }}</v-card-title>
                       <v-card-text>
-                        <div>{{ getStaff(message.user.staff) }}</div>
-                        <div>{{ message.user.uid }}</div>
+                        <div>{{ getStaff(currUser.staff) }}</div>
+                        <div>{{ currUser.uid }}</div>
                       </v-card-text>
                       <v-divider class="mx-4"></v-divider>
                       <v-list-item>
@@ -134,13 +134,13 @@
               </template>
 
               <!-- 사진 -->
-              <template v-if=" (index-1 >= 0 && msgDatas[index-1].user.uname != message.user.uname) || index == 0">
+              <template v-if=" (index-1 >= 0 && msgDatas[index-1].user.uidx != message.user.uidx) || index == 0">
                 <div align-center justify-center style="padding: 6px; display: inline-block; width:48px">
                   <v-menu bottom offset-y>
                     <template v-slot:activator="{ on }">
                       <v-btn tile icon large v-on="on">
                         <v-avatar size="44px" tile>
-                          <v-img :src="message.user.img">
+                          <v-img :src="currUser.img">
 
                           </v-img>
                         </v-avatar>
@@ -148,13 +148,13 @@
                     </template>
 
                     <v-card max-width="250" class="mx-auto">
-                      <v-img :src="message.user.img" height="200px" dark></v-img>
+                      <v-img :src="currUser.img" height="200px" dark></v-img>
 
-                      <v-card-title>{{ message.user.uname }}</v-card-title>
+                      <v-card-title>{{ currUser.uname }}</v-card-title>
 
                       <v-card-text>
-                        <div>{{ getStaff(message.user.staff) }}</div>
-                        <div>{{ message.user.uid }}</div>
+                        <div>{{ getStaff(currUser.staff) }}</div>
+                        <div>{{ currUser.uid }}</div>
                       </v-card-text>
                       <v-divider class="mx-4"></v-divider>
                       <v-list-item>
