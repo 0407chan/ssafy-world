@@ -157,20 +157,23 @@ export default {
         
         let data = []
         for(let i=0;i<res.data.length;i++){
-          if(this.currUser.uidx!=res.data[i].uidx)
-            data.push(res.data[i])
-          else{
+          if(this.currUser.uidx!=res.data[i].uidx){
             let flag =true
-            for(let l=0;l<this.currRoom.rpeople.length;l++){
-              if(this.currRoom.rpeople[l].uidx==res.data[i].uidx){
+            for(let l=0;l<this.currRoom.rPeople.length;l++){
+              console.log(this.currRoom.rPeople[l].uidx,res.data[i].uidx);
+              
+              if(this.currRoom.rPeople[l].uidx==res.data[i].uidx){
                 flag=false
                 break
               }
             }
             if(flag==true)
-              data.push(res.data)
+              data.push(res.data[i])
           }
         }
+        console.log(data);
+        console.log(this.currRoom.rPeople);
+        
         this.allUser=data
         this.display=true
       })
