@@ -17,5 +17,5 @@ public interface UserService {
 	public void update(UserDTO user) throws Exception;
 	public void adminUpdate(UserDTO user) throws Exception;
 	public void deleteUser(int uidx) throws Exception;
-	public void adminUpdate(UserDTO user) throws Exception;
+	public List<UserDTO> searchUserAll(String uid) throws Exception;
 }

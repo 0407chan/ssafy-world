@@ -87,5 +87,11 @@ public class UserDAOImpl implements UserDAO {
 	public void adminUpdate(UserDTO user) throws Exception {
 		sqlSession.update(Namespace+".adminUpdate",user);
 	}
+
+	@Override
+	public List<UserDTO> searchUserAll(String uid) {
+		List<UserDTO> list = sqlSession.selectList(Namespace+".searchUserAll", uid);
+		return list;
+	}
  
 }

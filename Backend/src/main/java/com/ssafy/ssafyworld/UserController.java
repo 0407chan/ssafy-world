@@ -83,6 +83,7 @@ public class UserController {
         System.out.println(uService.getUserInfo(user.getUidx()).toString());
         return ResponseEntity.ok().body(uService.getUserInfo(user.getUidx()).toString());
     }
+    
 	
 	/**
 	 * 2019.10.25 이찬호
@@ -155,22 +156,6 @@ public class UserController {
 		return ResponseEntity.ok().body(uService.getUserInfo(user.getUidx()).toString());
 	}
 	
-	/**
-	 * 2019.11.04 준범이 
-	 * @기능 어드민 유저수정
-	 * @호출방법 ssafywolrd/user/admin/update
-	 * @param uidx, staff
-	 * @return 성공 200 OK , 실패 400 BAD REQUEST, UserDTO JSON형태로 보냄
-	 */
-	@RequestMapping(value = "/user/admin/update", method = RequestMethod.POST , produces="application/json; charset=utf8")
-	@ResponseBody
-	public ResponseEntity<String> adminUpdate(@RequestBody UserDTO user) throws Exception {
-		logger.info("유저 수정");
-		System.out.println("들어온 " + user);
-		uService.adminUpdate(user);
-		System.out.println(uService.getUserInfo(user.getUidx()).toString());
-		return ResponseEntity.ok().body(uService.getUserInfo(user.getUidx()).toString());
-	}
 	
 	/**
 	 * 10-29 : 이규찬    10-30 수정 : 박규빈
@@ -203,6 +188,30 @@ public class UserController {
 	public ResponseEntity<List<RoomDTO>> selectUserRooms(@RequestBody UserDTO user) throws Exception {
 		List<RoomDTO> list = uService.selectUserRooms(user.getUidx());
 		logger.info("유저가 들어간 방 리스트 출력");
+		try {
+			return ResponseEntity.ok().body(list);
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(null);
+		}
+	}
+	
+	/**
+	 * 11-04 : 최재형
+	 *
+	 * @기능 {입력}으로 시작하는 유저 전체 리스트를 가져옴
+	 * @호출방법 ssafywolrd/user/rooms
+	 * @param UserDTO
+	 * @return List<RoomDTO> 
+	 */
+	@RequestMapping(value = "/user/search", method = RequestMethod.POST , produces="application/json; charset=utf8")
+	@ResponseBody
+	public ResponseEntity<List<UserDTO>> searchUserAll(@RequestBody UserDTO user) throws Exception {
+		logger.info(user.getUid());
+		List<UserDTO> list = uService.searchUserAll(user.getUid());
+		for (int i=0;i<list.size();i++) {
+			list.get(i).setPassword("");
+		}
+		logger.info("문자열이 들어간 리스트 출력");
 		try {
 			return ResponseEntity.ok().body(list);
 		} catch (Exception e) {

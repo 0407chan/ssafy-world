@@ -16,4 +16,5 @@ public interface UserDAO {
    public UserDTO getUserInfo(int uidx) throws Exception;
    public void update(UserDTO user) throws Exception;
    public void deleteUser(int uidx) throws Exception;
+   public List<UserDTO> searchUserAll(String uid);
 }

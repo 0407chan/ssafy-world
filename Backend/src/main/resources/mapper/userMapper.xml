@@ -64,4 +64,10 @@
 		DELETE FROM user
 		WHERE uidx = #{uidx}
 	</delete>
+	
+	<select id="searchUserAll" parameterType="String" resultType="UserDTO">
+		SELECT *
+		FROM user
+		WHERE uid like CONCAT('%',#{uid},'%');
+	</select>
 </mapper>

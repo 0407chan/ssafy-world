@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void adminUpdate(UserDTO user) throws Exception {
-		dao.update(user);
+		dao.adminUpdate(user);
 	}
 
 	@Override
@@ -68,9 +68,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void adminUpdate(UserDTO user) throws Exception {
-		dao.adminUpdate(user);
+	public List<UserDTO> searchUserAll(String uid) throws Exception {
+		return dao.searchUserAll(uid);
 	}
-
 
 }

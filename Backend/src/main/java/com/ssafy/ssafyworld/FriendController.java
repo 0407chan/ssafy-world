@@ -62,11 +62,10 @@ public class FriendController {
 		logger.info("UID 해당 친구 출력"); 
 		System.out.println(uidx+"의 친구 출력");
 		List<String> list = fService.selectFriend(uidx);
-		List<String> temp = new ArrayList();
 		for(int i=0;i<list.size();i++) {
 			System.out.println(list.get(i));
 		}
-		return ResponseEntity.ok().body(temp);
+		return ResponseEntity.ok().body(list);
 	}
 	
 	/**

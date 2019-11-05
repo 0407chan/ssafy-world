@@ -23,6 +23,7 @@ const actions = {
     if (params != null){
       commit('SET_CURRUSER', params)
     }
+
     if (state.currUser != '') {
       console.log("refresh 함수 확인");
       
@@ -72,12 +73,13 @@ const actions = {
   },
   // 로그인 후 친구목록 생성
   registFriend() {
-    api.getFriend(state.currUser.uidx).then(async res=>{
+    api.getFriend(state.currUser.uidx).then(res=>{
       console.log('친구 목록' , res);
       let data = []
       for(let i =0;i<res.length;i++){
-        let tmp =await api.getUserInfo(res[i])
-        data.push(tmp.data)
+        api.getUserInfo(res[i]).then(res=>{
+          data.push(res.data)
+        })
       }
       state.friendList=data
     })
