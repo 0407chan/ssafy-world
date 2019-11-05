@@ -149,9 +149,14 @@ public class UserController {
 	public ResponseEntity<String> update(@RequestBody UserDTO user) throws Exception {
 		logger.info("유저 수정");
 		System.out.println(user);
+		System.out.println(user.getPassword());
 		//비밀 번호 변경 시
-		String hashPw = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
-		user.setPassword(hashPw);
+		if(user.getPassword() != null) {
+			String hashPw = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+			user.setPassword(hashPw);
+		}else {
+			user.setPassword(uService.getUserInfo(user.getUidx()).getPassword());
+		}
 		
 		uService.update(user);
 		return ResponseEntity.ok().body(uService.getUserInfo(user.getUidx()).toString());

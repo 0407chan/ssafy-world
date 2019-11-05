@@ -33,13 +33,14 @@
   </template>
 
   <!-- <Header></Header> -->
-  <v-app-bar id="headerBar" app clipped-left color="blue" elevation="0">
+  <v-app-bar id="headerBar" app color="blue" elevation="0">
     <template v-if="windows.width < 600">
       <v-btn icon @click="drawer = !drawer">
         <v-app-bar-nav-icon></v-app-bar-nav-icon>
       </v-btn>
     </template>
 
+    <v-toolbar-title>{{currRoom.rname}}</v-toolbar-title>
 
 
     <v-spacer />
@@ -142,7 +143,7 @@ export default {
   computed: {
     ...mapState({
       currUser: state => state.data.currUser,
-      currRoom : state => state.data.currChatRoom
+      currRoom: state => state.data.currChatRoom,
     }),
   },
   methods: {
@@ -199,6 +200,7 @@ export default {
     },
 
     setProfile(){
+      // console.log(this.currRoom);
       let params={
         uidx :1,
         uname : "이찬호",
