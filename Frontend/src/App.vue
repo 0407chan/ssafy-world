@@ -280,6 +280,27 @@ export default {
     ...mapActions('data', ['refresh']),
     ...mapActions('data',['clearCurrUser']),
     ...mapActions('data', ['setCurrUser']),
+    ...mapActions('data', ['getRoom']),
+    ...mapActions('data', ['getRoomPeople']),
+    ...mapActions('data', ['setCurrChatRoom']),
+
+    async setCurrChatRoomInfo(){
+      let room = null;
+      let roomPeople = null;
+      if(window.location.pathname.split('/')[2]!= undefined){
+        room = await this.getRoom(window.location.pathname.split('/')[2]);
+        roomPeople = await this.getRoomPeople(window.location.pathname.split('/')[2]);
+      }
+
+      if(room != null && roomPeople != null){
+        let params = {
+          ridx : room.data.ridx,
+          rname : room.data.rname,
+          rPeople : roomPeople.data,
+        }
+        this.setCurrChatRoom(params);
+      }
+    },
 
     getStaff(staff){
       if(staff == 0){
@@ -375,11 +396,12 @@ export default {
     setBackground(){
       // document.getElementById('startBackground').style.backgroundImage="url(https://i.imgur.com/bmdyui1.jpg)";
     },
-    inviteFriend(){
+    async inviteFriend(){
       for (let index = 0; index < this.selected.length; index++) {
-        api.postEnterRoom(this.selected[index],window.location.pathname.split('/')[2])
+        await api.postEnterRoom(this.selected[index],window.location.pathname.split('/')[2])
       }
       this.display=false
+      this.setCurrChatRoomInfo();
     }
   },
 
