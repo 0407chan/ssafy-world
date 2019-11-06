@@ -142,4 +142,23 @@ public class RoomController {
 			return ResponseEntity.badRequest().body("Room Enter Fail!");
 		}
 	}
-}
+	
+	/**
+	 * 11-06 : 이규찬 
+	 * @기능 방이름 변경
+	 * @호출방법 ssafywolrd/room/update
+	 * @param RoomDTO
+	 * @return String
+	 * @throws Exception 
+	 */
+	@RequestMapping(value="/room/update", method=RequestMethod.POST, produces="application/json; charset=utf8")
+	@ResponseBody
+	public ResponseEntity<String> updateRoom(@RequestBody RoomDTO dto){
+			try {
+				rService.updateRoom(dto);
+				return ResponseEntity.ok().body("방 이름 변경 : "+dto.getRidx()+" "+dto.getRname());
+			} catch (Exception e) {
+				return ResponseEntity.badRequest().body("방이름 변경 실패");
+			}
+		}
+	}

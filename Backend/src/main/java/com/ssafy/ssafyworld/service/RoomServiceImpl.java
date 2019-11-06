@@ -52,4 +52,10 @@ public class RoomServiceImpl implements RoomService {
 		return dao.getRoom(ridx);
 	}
 
+
+	@Override
+	public void updateRoom(RoomDTO dto) throws Exception {
+		dao.updateRoom(dto);
+	}
+
 }

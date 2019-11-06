@@ -35,4 +35,10 @@
 	<insert id="enterRoom" parameterType="map">
 		INSERT INTO room_has_user (ridx, uidx) VALUES (#{ridx},#{uidx});
 	</insert>
+	
+	<update id="updateRoom" parameterType="RoomDTO">
+		UPDATE room
+		SET rname=#{rname}
+		WHERE ridx = #{ridx};
+	</update>
 </mapper>
