@@ -67,15 +67,11 @@ public class RoomController {
 	@ResponseBody
 	public ResponseEntity<List<UserDTO>>selectRoom(@PathVariable("ridx") int ridx) throws Exception {
 		logger.info(ridx+"방에 속한 사람");
-		System.out.println("시작한다잉");
 		List<UserDTO> temp = rService.selectRoom(ridx);
 		List<UserDTO> res = new ArrayList<UserDTO>();
 		for(int i=0; i<temp.size(); i++) {
-			System.out.println("temp.get(i) "+temp.get(i));
-			System.out.println("temp.get(i).getUidx() "+temp.get(i).getUidx());
 			res.add(uService.getUserInfo(temp.get(i).getUidx()));
 		}
-		System.out.println("어떤 정보냐 "+res);
 		return ResponseEntity.ok().body(res);
 	}
 	
