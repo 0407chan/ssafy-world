@@ -1,5 +1,6 @@
 <template>
   <v-container fluid fill-height>
+
     <v-row >
       <v-col cols="12" id="messageBody" class="scrollable">
         <div class="message-line" v-for="(message, index) in msgDatas" no-gutters>
@@ -76,11 +77,50 @@
                   <br/>
                   <div class="contentOther" style=" margin-left: 4px; display: inline-block" :class="{contentSsafy: message.user.uname == 'SSAFY'}">
                     <div>
-                    {{message.msg}}
+                      {{message.msg}}
                     </div>
                     <div v-if="message.img">
                       <v-img class="contentImage" @click="viewImage" :src="message.img" width="300px">
                       </v-img>
+                    </div>
+                    <div v-if="message.count == 1">
+                      <Timer
+                       :starttime="start"
+                       :endtime="end"
+                       trans='{
+                       "day":"Day",
+                       "hours":"Hours",
+                       "minutes":"Minuts",
+                       "seconds":"Seconds",
+                       "expired":"Event has been expired.",
+                       "running":"Till the end of event.",
+                       "upcoming":"Till start of event.",
+                       "status": {
+                          "expired":"Expired",
+                          "running":"Running",
+                          "upcoming":"Future"
+                         }}'
+                       ></Timer>
+                    </div>
+                    <div v-if="message.count == 2">
+                      <Timer
+                       :starttime="start"
+                       :endtime="endTest"
+                       trans='{
+                       "day":"Day",
+                       "hours":"Hours",
+                       "minutes":"Minuts",
+                       "seconds":"Seconds",
+                       "expired":"Event has been expired.",
+                       "running":"Till the end of event.",
+                       "upcoming":"Till start of event.",
+
+                       "status": {
+                          "expired":"Expired",
+                          "running":"Running",
+                          "upcoming":"Future"
+                         }}'
+                       ></Timer>
                     </div>
                   </div>
                 </div>
@@ -93,6 +133,45 @@
                   <div v-if="message.img">
                     <v-img class="contentImage" @click="viewImage" :src="message.img" width="300px">
                     </v-img>
+                  </div>
+                  <div v-if="message.count == 1">
+                    <Timer
+                     :starttime="start"
+                     :endtime="end"
+                     trans='{
+                     "day":"Day",
+                     "hours":"Hours",
+                     "minutes":"Minuts",
+                     "seconds":"Seconds",
+                     "expired":"Event has been expired.",
+                     "running":"Till the end of event.",
+                     "upcoming":"Till start of event.",
+                     "status": {
+                        "expired":"Expired",
+                        "running":"Running",
+                        "upcoming":"Future"
+                       }}'
+                     ></Timer>
+                  </div>
+                  <div v-if="message.count == 2">
+                    <Timer
+                     :starttime="start"
+                     :endtime="endTest"
+                     trans='{
+                     "day":"Day",
+                     "hours":"Hours",
+                     "minutes":"Minuts",
+                     "seconds":"Seconds",
+                     "expired":"Event has been expired.",
+                     "running":"Till the end of event.",
+                     "upcoming":"Till start of event.",
+
+                     "status": {
+                        "expired":"Expired",
+                        "running":"Running",
+                        "upcoming":"Future"
+                       }}'
+                     ></Timer>
                   </div>
                 </div>
               </template>
@@ -190,9 +269,6 @@
         </div>
       </v-col>
 
-      <v-btn @click="test">
-
-      </v-btn>
       <v-col cols="12" id="chatInput">
         <v-row no-gutters class="inputBorder">
           <v-col cols="12" >
@@ -236,8 +312,6 @@
         hide-overlay
         scrollable
       >
-
-
         <v-card >
           <v-toolbar flat dark>
             <v-toolbar-title>Images</v-toolbar-title>
@@ -275,9 +349,12 @@
 
 <script>
 import { mapMutations, mapState, mapActions } from 'vuex'
-
+import Timer from '../components/Timer'
 export default {
   name: 'ChatRoomPage',
+  components:{
+    Timer,
+  },
   data() {
     return {
       datas: [],
@@ -285,14 +362,18 @@ export default {
       findPeople:false,
       dialog:false,
       images:[],
-      ratio: 2,
+      ratio: 1.5,
       dialog: false,
       windows: {
         width: 0,
         height: 0
       },
 
-
+      end: new Date(new Date().getFullYear()+"-"+(new Date().getMonth()+1)
+                    +"-"+new Date().getDate()+" 18:00:00").getTime(),
+      endTest: new Date(new Date().getFullYear()+"-"+(new Date().getMonth()+1)
+                    +"-"+new Date().getDate()+" "+new Date().getHours()+":"+(new Date().getMinutes()+1)+":"+new Date().getSeconds()).getTime(),
+      start: new Date().getTime(),
     };
   },
   computed: {
@@ -305,14 +386,17 @@ export default {
     imageIcon () {
       return this.icons[this.iconIndex]
     },
+
+
   },
-  async mounted() {
+  mounted() {
     console.log("connect chatroom" , window.location.pathname);
     this.startSocket();
     this.getChatRoomMsgAction();
     this.setCurrChatRoomInfo();
     this.scrollToBottom();
     this.getRoomImageAction();
+
   },
 
   watch: {
@@ -333,11 +417,16 @@ export default {
 
     ...mapActions('socket',['getMsg']),
     ...mapActions('socket',['pushMsg']),
+    ...mapMutations('socket',['clearMsg']),
 
 
     test(){
-      this.setCurrChatRoomInfo();
+      console.log(this.start)
+      console.log(this.end)
+      console.log(new Date(this.start).getDate())
     },
+
+
 
     async getRoomImageAction(){
 
@@ -369,6 +458,7 @@ export default {
     */
     async getChatRoomMsgAction(){
       console.log("읽어보자!")
+      await this.clearMsg();
       if(window.location.pathname.split('/')[2]!=undefined){
         await this.getMsg(window.location.pathname.split('/')[2])
       }
@@ -446,7 +536,7 @@ export default {
           uid: "ssafy@ssafy.com",
           uidx: 0,
           staff: 1,
-          img: "https://i.imgur.com/6woB3eO.png",
+          img: "https://i.imgur.com/bp8N7YT.png",
           uname: "SSAFY"
         }
         await this.pushMsg({
@@ -455,9 +545,41 @@ export default {
           time:this.getToday(),
           img:"https://i.imgur.com/fBjay1B.png"
         });
-        console.log("되고")
         await this.postRoomImageAction("https://i.imgur.com/fBjay1B.png");
-        console.log("되냐",this.currRoom)
+        this.msg='';
+        this.scrollToBottom();
+        return false;
+      }else if(this.msg == '#퇴근' || this.msg=='@퇴근' || this.msg=='@퇴실' ||this.msg=='#퇴실'){
+        let ssafy ={
+          uid: "ssafy@ssafy.com",
+          uidx: 0,
+          staff: 1,
+          img: "https://i.imgur.com/bp8N7YT.png",
+          uname: "SSAFY"
+        }
+        await this.pushMsg({
+          user:ssafy,
+          time:this.getToday(),
+          count:1,
+        });
+
+        this.msg='';
+        this.scrollToBottom();
+        return false;
+      }else if(this.msg == '#퇴근테스트' || this.msg=='@퇴근테스트' || this.msg=='@퇴실테스트' ||this.msg=='#퇴실테스트'){
+        let ssafy ={
+          uid: "ssafy@ssafy.com",
+          uidx: 0,
+          staff: 1,
+          img: "https://i.imgur.com/bp8N7YT.png",
+          uname: "SSAFY"
+        }
+        await this.pushMsg({
+          user:ssafy,
+          time:this.getToday(),
+          count:2,
+        });
+
         this.msg='';
         this.scrollToBottom();
         return false;
@@ -676,4 +798,9 @@ export default {
   color:white;
 }
 
+#bannerCard {
+  position: sticky;
+  top: 0px;
+  z-index: 1;
+}
 </style>

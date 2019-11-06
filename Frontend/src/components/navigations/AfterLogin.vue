@@ -1,6 +1,6 @@
 <template>
     <v-list>
-        <v-list-item @click="() => { if (afterLoginItems[0].path) { goTo(afterLoginItems[0].path) } }">
+        <v-list-item @click="goTo(afterLoginItems[0].path)">
             <v-list-item-action>
                 <v-icon>{{ afterLoginItems[0].icon }}</v-icon>
             </v-list-item-action>
@@ -10,7 +10,7 @@
         </v-list-item>
 
         <!-- 친구 목록 열기 -->
-        <v-list-item @click="reverse('friend')">
+        <!-- <v-list-item @click="reverse('friend')">
             <v-list-item-action>
                 <v-icon>{{ afterLoginItems[1].icon }}</v-icon>
             </v-list-item-action>
@@ -18,7 +18,7 @@
                 {{ afterLoginItems[1].title }}
             </v-list-item-title>
         </v-list-item>
-        <FriendList />
+        <FriendList /> -->
 
         <!-- 대화방 열기 -->
         <v-list-item @click="reverse('chatlist')">
@@ -35,7 +35,7 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
-import FriendList from '@/components/navigations/FriendList'
+// import FriendList from '@/components/navigations/FriendList'
 import ChatRoomList from '@/components/navigations/ChatRoomList'
 import api from '@/api'
 
@@ -44,14 +44,14 @@ export default {
     data() {
         return {
             afterLoginItems: [
-                { title: '일 정 표', icon: 'mdi-calendar', path: '' },
+                { title: '메    인', icon: 'mdi-home', path: 'mainpage' },
                 { title: '친 구 들', icon: 'mdi-account', path: 'chatroom' },
                 { title: '채 팅 방', icon: 'mdi-account-group-outline', path: '' },
             ],
         }
     },
     components: {
-        FriendList,
+        // FriendList,
         ChatRoomList,
     },
     created() {
@@ -88,7 +88,17 @@ export default {
     },
     methods: {
         ...mapMutations('data', ['setMenu', 'clearUser', 'reverse']),
-        ...mapActions('data', ['registChatroom','registFriend','login'])
+        ...mapActions('data', ['registChatroom','registFriend','login']),
+        ...mapActions('data',['setCurrChatRoom']),
+        goTo(path) {
+          let params ={
+            rname:"HOME",
+            ridx:'',
+            rPeople:[],
+          };
+          this.setCurrChatRoom(params);
+          this.$router.push({ name: path });
+        },
     },
 }
 </script>

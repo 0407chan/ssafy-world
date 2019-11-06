@@ -20,17 +20,11 @@
         <AfterLogin />
       </v-list>
 
-      <v-list dense>
-        <v-list-item @click="goTo('chatroom')">
-            <v-list-item-title>
-                <span>
-                채팅방 ㄱㄱㄱ
-              </span>
-            </v-list-item-title>
-        </v-list-item>
-      </v-list>
     </v-navigation-drawer>
+
+
   </template>
+
 
   <!-- <Header></Header> -->
   <v-app-bar id="headerBar" app dark elevation="0">
@@ -40,10 +34,19 @@
       </v-btn>
     </template>
 
-    <v-toolbar-title>{{currRoom.rname}}</v-toolbar-title>
+    <v-toolbar-title>{{currRoom.rname}}
+      <span v-if="currRoom.rPeople.length>0" style="color:rgba(255,255,255,0.8); font-size:80%">{{currRoom.rPeople.length}}
+      </span>
+    </v-toolbar-title>
+    <v-divider
+      class="mx-4"
+      inset
+      vertical
+    ></v-divider>
     <div>
       <template v-if="currRoom.rPeople.length>0">
         <v-badge
+          v-model="badgeShow"
           color="primary"
           overlap
           class="align-self-center"
@@ -51,24 +54,128 @@
           <template v-slot:badge>
             <span>{{currRoom.rPeople.length}}</span>
           </template>
-          <v-icon large>
-            mdi-account
-          </v-icon>
+          <v-menu bottom offset-y open-on-hover>
+            <template v-slot:activator="{ on }">
+              <v-btn dark icon v-on="on" large>
+              <v-icon large
+                @mouseover="badgeShow = true"
+                @mouseout="badgeShow = false"
+              >mdi-account</v-icon>
+            </v-btn>
+            </template>
+            <v-card max-width="250" class="mx-auto">
+              <span v-for="(item, i) in currRoom.rPeople" :key="i">
+                <v-menu bottom offset-y open-on-hover>
+                  <template v-slot:activator="{ on }">
+                    <v-btn tile icon large v-on="on">
+                      <v-avatar size="44px" tile>
+                        <v-img :src="item.img">
+                        </v-img>
+                      </v-avatar>
+                    </v-btn>
+                  </template>
+
+                  <v-card max-width="250" class="mx-auto">
+                    <v-img :src="item.img" height="200px" dark></v-img>
+
+                    <v-card-title >{{ item.uname }}</v-card-title>
+
+                    <v-card-text>
+                      <div>{{ getStaff(item) }}</div>
+                      <div>{{item.id }}</div>
+                    </v-card-text>
+                    <v-divider class="mx-4"></v-divider>
+                    <v-list-item>
+                      <v-list-item-action>
+                        <v-btn color="deep-purple accent-4" outlined>
+                          Message
+                        </v-btn>
+                      </v-list-item-action>
+                    </v-list-item>
+                  </v-card>
+                </v-menu>
+              </span>
+            </v-card>
+          </v-menu>
         </v-badge>
-
-
-
       </template>
     </div>
 
+
+
     <v-spacer />
 
-    <!-- 집에서 테스트하기위한 -->
-
-    <v-btn icon @click="invite()">
+    <v-btn v-if="currRoom.rPeople.length>0" icon @click="invite()">
       <v-icon>mdi-account-multiple-plus</v-icon>
     </v-btn>
-    <Invite :user="allUser" :display="inviteDisplay" />
+    <v-btn v-if="currRoom.rPeople.length>0" icon @click="invite()">
+      <v-icon>mdi-settings</v-icon>
+    </v-btn>
+    <!-- <Invite :user="allUser" :display="inviteDisplay" /> -->
+
+    <v-dialog
+        v-model="display"
+        max-width="480">
+        <v-card>
+        <v-card-title class="headline">친구 초대</v-card-title>
+        <v-card-text>
+          <v-row>
+              <v-col cols="2" >
+                선택
+              </v-col>
+              <v-col cols="2" >
+                이미지
+              </v-col>
+              <v-col cols="4" >
+                이름
+              </v-col>
+              <v-col cols="4" >
+                아이디
+              </v-col>
+          </v-row>
+          <template v-for="i in user">
+            <v-row>
+              <v-col cols="2" >
+                <v-checkbox  :value="i.uidx" v-model="selected" />
+              </v-col>
+              <v-col cols="2" >
+                <v-img :src="i.img" max-height="64" max-width="64" />
+              </v-col>
+              <v-col cols="4" >
+                {{i.uname}}
+              </v-col>
+              <v-col cols="4" >
+                 ({{i.uid}})
+              </v-col>
+            </v-row>
+          </template>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="inviteFriend()">
+            확인
+          </v-btn>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="display = false" >
+            취소
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+
+
+    <v-divider
+      class="mx-4"
+      inset
+      vertical
+    ></v-divider>
+
 
     <div v-if="currUser">
       <v-menu offset-y>
@@ -113,8 +220,8 @@
         </v-list>
       </v-menu>
     </div>
-  </v-app-bar>
 
+  </v-app-bar>
 
   <v-content class="contents">
     <router-view />
@@ -130,7 +237,6 @@
 import api from '@/api'
 import Navigation from '@/components/Navigation'
 
-import Invite from '@/components/invite/Invite'
 import BeforeLogin from '@/components/navigations/BeforeLogin'
 import AfterLogin from '@/components/navigations/AfterLogin'
 import {
@@ -143,18 +249,22 @@ export default {
   components: {
     BeforeLogin,
     AfterLogin,
-    Invite,
     // Navigation,
   },
   data() {
     return {
       drawer: true,
+      roomUserList: false,
+      badgeShow: false,
       windows: {
         width: 0,
         height: 0
       },
       allUser : [],
-      inviteDisplay : false
+      // inviteDisplay : false,
+      selected:[],
+      user:'',
+      display:false,
     };
   },
   computed: {
@@ -162,12 +272,53 @@ export default {
       currUser: state => state.data.currUser,
       currRoom: state => state.data.currChatRoom,
     }),
+
+
+
   },
   methods: {
     ...mapActions('data', ['refresh']),
     ...mapActions('data',['clearCurrUser']),
     ...mapActions('data', ['setCurrUser']),
+    ...mapActions('data', ['getRoom']),
+    ...mapActions('data', ['getRoomPeople']),
+    ...mapActions('data', ['setCurrChatRoom']),
 
+    async setCurrChatRoomInfo(){
+      let room = null;
+      let roomPeople = null;
+      if(window.location.pathname.split('/')[2]!= undefined){
+        room = await this.getRoom(window.location.pathname.split('/')[2]);
+        roomPeople = await this.getRoomPeople(window.location.pathname.split('/')[2]);
+      }
+
+      if(room != null && roomPeople != null){
+        let params = {
+          ridx : room.data.ridx,
+          rname : room.data.rname,
+          rPeople : roomPeople.data,
+        }
+        this.setCurrChatRoom(params);
+      }
+    },
+
+    getStaff(staff){
+      if(staff == 0){
+        return "학생"
+      }else if(staff == 1){
+        return "프로"
+      }else{
+        return "관리자"
+      }
+    },
+
+
+    /* 2019.11.05 이찬호
+      기능 : 현재 방 사람들 목록 보여줌
+    */
+    showRoomUserList(){
+      this.roomUserList = !this.roomUserList;
+    },
     invite(){
       api.getUsers().then(res=>{
         console.log(res.data);
@@ -191,8 +342,8 @@ export default {
         console.log(data);
         console.log(this.currRoom.rPeople);
 
-        this.allUser=data
-        this.inviteDisplay=true
+        this.user=data
+        this.display=true
       })
     },
 
@@ -244,6 +395,13 @@ export default {
     },
     setBackground(){
       // document.getElementById('startBackground').style.backgroundImage="url(https://i.imgur.com/bmdyui1.jpg)";
+    },
+    async inviteFriend(){
+      for (let index = 0; index < this.selected.length; index++) {
+        await api.postEnterRoom(this.selected[index],window.location.pathname.split('/')[2])
+      }
+      this.display=false
+      this.setCurrChatRoomInfo();
     }
   },
 

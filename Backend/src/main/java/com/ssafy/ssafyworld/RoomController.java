@@ -1,5 +1,6 @@
 package com.ssafy.ssafyworld;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -20,6 +21,7 @@ import com.ssafy.ssafyworld.dto.RoomHasUserDTO;
 import com.ssafy.ssafyworld.dto.UserDTO;
 import com.ssafy.ssafyworld.service.MessageService;
 import com.ssafy.ssafyworld.service.RoomService;
+import com.ssafy.ssafyworld.service.UserService;
 
 /**
  * Handles requests for the application home page.
@@ -30,6 +32,11 @@ public class RoomController {
 	
 	@Inject
 	private RoomService rService;
+	
+	@Inject
+	private UserService uService;
+	
+	@Inject
 	private MessageService mService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(RoomController.class);
@@ -60,7 +67,12 @@ public class RoomController {
 	@ResponseBody
 	public ResponseEntity<List<UserDTO>>selectRoom(@PathVariable("ridx") int ridx) throws Exception {
 		logger.info(ridx+"방에 속한 사람");
-		return ResponseEntity.ok().body(rService.selectRoom(ridx));
+		List<UserDTO> temp = rService.selectRoom(ridx);
+		List<UserDTO> res = new ArrayList<UserDTO>();
+		for(int i=0; i<temp.size(); i++) {
+			res.add(uService.getUserInfo(temp.get(i).getUidx()));
+		}
+		return ResponseEntity.ok().body(res);
 	}
 	
 	/* 2019.11.05 이찬호
