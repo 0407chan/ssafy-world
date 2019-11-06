@@ -94,8 +94,8 @@ export default {
       this.insertuid=''
     },
     async goTo(rid) {
-      await this.clearMsg();
-      await this.getMsg(rid);
+      // await this.clearMsg();
+      // await this.getMsg(rid);
       this.$router.push('/chatroom/'+rid)
     },
     //디비에서 내가 접속한 방들 다 가져옴
