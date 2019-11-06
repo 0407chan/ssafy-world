@@ -242,7 +242,6 @@
 import api from '@/api'
 import Navigation from '@/components/Navigation'
 
-import Invite from '@/components/invite/Invite'
 import BeforeLogin from '@/components/navigations/BeforeLogin'
 import AfterLogin from '@/components/navigations/AfterLogin'
 import {
@@ -255,7 +254,6 @@ export default {
   components: {
     BeforeLogin,
     AfterLogin,
-    Invite,
     // Navigation,
   },
   data() {

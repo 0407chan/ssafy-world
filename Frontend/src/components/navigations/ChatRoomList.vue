@@ -27,10 +27,10 @@
             label="Room Name"
             v-model='roomname'
           ></v-text-field>
-          <v-text-field
+          <!-- <v-text-field
             label="Invite User"
             v-model='insertuid'
-          ></v-text-field>
+          ></v-text-field> -->
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -62,7 +62,6 @@ export default {
   data () {
       return {
         dialog: false,
-        insertuid :'',
         roomname :''
       }
     },
