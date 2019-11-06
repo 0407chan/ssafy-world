@@ -68,3 +68,18 @@ CREATE TABLE IF NOT EXISTS `ssafyworld`.`message` (
   REFERENCES `ssafyworld`.`room` (`ridx`),
   FOREIGN KEY (`uidx`)
   REFERENCES `ssafyworld`.`user` (`uidx`) );
+  
+  
+ -- -----------------------------------------------------
+-- Table `ssafyworld`.`img`
+-- ----------------------------------------------------- 
+  CREATE TABLE `ssafyworld`.`img` (
+	 `iidx` INT AUTO_INCREMENT,
+     `ridx` INT NOT NULL,
+     `img` VARCHAR(100) NOT NULL,
+     PRIMARY KEY (`iidx`),
+  FOREIGN KEY (`ridx`)
+  REFERENCES `ssafyworld`.`room` (`ridx`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION
+);

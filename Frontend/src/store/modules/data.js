@@ -15,7 +15,11 @@ const state = {
   currUser: '',
   navDrawer: false,
 
-  currChatRoom:'',
+  currChatRoom:{
+    rname:'',
+    ridx:'',
+    rPeople:[],
+  },
 }
 
 // actions
@@ -124,6 +128,17 @@ const actions = {
 
     return res;
   },
+
+  async postRoomImage({ commit }, params) {
+    const res = await api.postRoomImage(params);
+    return res;
+  },
+
+  async getRoomImage({ commit }, params) {
+    const res = await api.getRoomImage(params);
+    return res;
+  },
+
 
   async getUserInfo({ commit }, params) {
     const resp = await api.getUserInfo(params)

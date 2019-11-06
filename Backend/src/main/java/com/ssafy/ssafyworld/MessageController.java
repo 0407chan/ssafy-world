@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.ssafyworld.dto.MessageDTO;
+import com.ssafy.ssafyworld.dto.imgDTO;
 import com.ssafy.ssafyworld.service.MessageService;
 
 /**
@@ -70,7 +71,38 @@ public class MessageController {
 	@RequestMapping(value = "/message", method = RequestMethod.POST, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<String> insertMessage(@RequestBody MessageDTO message) throws Exception {
+		System.out.println(message);
 		mService.insertMessage(message);
+		System.out.println("메시지 입력 : "+message.getText());
 		return new ResponseEntity<String>("메세지 입력 완료",HttpStatus.OK);
 	}
+	/**
+	 * 11-05 : 이규찬 
+	 * @기능 사진입력
+	 * @호출방법 ssafywolrd/message/img
+	 * @param ridx , img
+	 * @return 200 OK
+	 */
+	@RequestMapping(value = "/message/img", method = RequestMethod.POST, produces="application/json; charset=utf8")
+	@ResponseBody
+	public ResponseEntity<String> insertImg(@RequestBody imgDTO img) throws Exception {
+		System.out.println("테스트"+img);
+		mService.insertImg(img);
+		System.out.println("img : "+img.getImg());
+		return new ResponseEntity<String>("이미지 입력 완료",HttpStatus.OK);
+	}
+	/**
+	 * 11-05 : 이규찬 
+	 * @기능 해당 방의 이미지 모두 가져오기
+	 * @호출방법 ssafywolrd/mesage/img/{ridx}
+	 * @param ridx
+	 * @return List<imgDTO>
+	 */
+	@RequestMapping(value = "/message/getImg/{ridx}", method = RequestMethod.GET, produces="application/json; charset=utf8")
+	@ResponseBody
+	public ResponseEntity<List<imgDTO>> roomImgs(@PathVariable("ridx") int ridx) throws Exception {
+		logger.info(ridx+"번 방 이미지 추출 완료");
+		return new ResponseEntity<List<imgDTO>>(mService.roomImgs(ridx),HttpStatus.OK);
+	}
+	
 }

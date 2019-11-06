@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 // const apiUrl = 'http://localhost:8080/ssafyworld';
-const apiUrl = 'http://70.12.247.76:8080/ssafyworld';
-// const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
+// const apiUrl = 'http://70.12.247.76:8080/ssafyworld';
+const apiUrl = 'http://13.124.121.215:8080/ssafyworld';
 // const apiUrl = 'http://70.12.246.62:8080/ssafyworld'; // 9비니여보야의여보야
 // const apiUrl = 'http://70.12.247.61:8080/ssafyworld';
 // const apiUrl = 'http://70.12.247.108:8080/ssafyworld';
@@ -71,7 +71,7 @@ export default {
         img: params.img,
     })
     .catch(error => {
-      console.log(error)
+      console.log(error.response)
       return error.response
     });
   },
@@ -96,6 +96,35 @@ export default {
     });
   },
 
+  /* 2019.11.05 이찬호
+    이미지 업로드 하기
+  */
+  postRoomImage(params){
+    return axios.post(`${apiUrl}/message/img`, {
+      ridx: params.ridx,
+      img: params.img,
+    }).then(response => {
+      return response
+    })
+    .catch(error => {
+      console.log(error);
+      return error.response
+    });
+  },
+
+  /* 2019.11.05 이찬호
+    해당 방 이미지 다 가져오기
+  */
+  getRoomImage(params){
+    return axios.get(`${apiUrl}/message/getImg/${params}`)
+    .then(response => {
+      return response
+    })
+    .catch(error => {
+      console.log(error);
+      return error.response
+    });
+  },
   /** 2019.10.25 이찬호
   * 기능 : 회원가입
   * 파라미터 : params = uid, uname, password, img

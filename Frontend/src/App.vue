@@ -2,7 +2,7 @@
 <v-app xs12>
   <!-- <Navigation /> -->
   <template v-if="windows.width < 600">
-    <v-navigation-drawer v-model="drawer" disable-resize-watcher width="200px" app>
+    <v-navigation-drawer dark class="" v-model="drawer" disable-resize-watcher width="200px" app>
       <v-list dense v-show="currUser == ''">
         <BeforeLogin />
       </v-list>
@@ -12,7 +12,7 @@
     </v-navigation-drawer>
   </template>
   <template v-else>
-    <v-navigation-drawer v-model="drawer" disable-resize-watcher width="200px" app permanent>
+    <v-navigation-drawer dark v-model="drawer" disable-resize-watcher width="200px" app permanent>
       <v-list dense v-show="currUser == ''">
         <BeforeLogin />
       </v-list>
@@ -33,7 +33,7 @@
   </template>
 
   <!-- <Header></Header> -->
-  <v-app-bar id="headerBar" app color="blue" elevation="0">
+  <v-app-bar id="headerBar" app dark elevation="0">
     <template v-if="windows.width < 600">
       <v-btn icon @click="drawer = !drawer">
         <v-app-bar-nav-icon></v-app-bar-nav-icon>
@@ -41,21 +41,34 @@
     </template>
 
     <v-toolbar-title>{{currRoom.rname}}</v-toolbar-title>
+    <div>
+      <template v-if="currRoom.rPeople.length>0">
+        <v-badge
+          color="primary"
+          overlap
+          class="align-self-center"
+        >
+          <template v-slot:badge>
+            <span>{{currRoom.rPeople.length}}</span>
+          </template>
+          <v-icon large>
+            mdi-account
+          </v-icon>
+        </v-badge>
 
+
+
+      </template>
+    </div>
 
     <v-spacer />
 
     <!-- 집에서 테스트하기위한 -->
-    <v-btn icon @click="setProfile">
-      <v-icon>mdi-account</v-icon>
-    </v-btn>
-    <v-btn icon @click="setProfile2">
-      <v-icon>mdi-account</v-icon>
-    </v-btn>
+
     <v-btn icon @click="invite()">
       <v-icon>mdi-account-multiple-plus</v-icon>
     </v-btn>
-    <Invite :user="allUser" :display="display" />
+    <Invite :user="allUser" :display="inviteDisplay" />
 
     <div v-if="currUser">
       <v-menu offset-y>
@@ -103,9 +116,13 @@
   </v-app-bar>
 
 
-  <v-content>
+  <v-content class="contents">
     <router-view />
   </v-content>
+
+  <div id="startBackground"></div>
+  <div class="darker"></div>
+
 </v-app>
 </template>
 
@@ -137,7 +154,7 @@ export default {
         height: 0
       },
       allUser : [],
-      display : false
+      inviteDisplay : false
     };
   },
   computed: {
@@ -154,14 +171,14 @@ export default {
     invite(){
       api.getUsers().then(res=>{
         console.log(res.data);
-        
+
         let data = []
         for(let i=0;i<res.data.length;i++){
           if(this.currUser.uidx!=res.data[i].uidx){
             let flag =true
             for(let l=0;l<this.currRoom.rPeople.length;l++){
               console.log(this.currRoom.rPeople[l].uidx,res.data[i].uidx);
-              
+
               if(this.currRoom.rPeople[l].uidx==res.data[i].uidx){
                 flag=false
                 break
@@ -173,9 +190,9 @@ export default {
         }
         console.log(data);
         console.log(this.currRoom.rPeople);
-        
+
         this.allUser=data
-        this.display=true
+        this.inviteDisplay=true
       })
     },
 
@@ -225,9 +242,13 @@ export default {
       this.$session.set('token',params)
       this.setCurrUser(params);
     },
+    setBackground(){
+      // document.getElementById('startBackground').style.backgroundImage="url(https://i.imgur.com/bmdyui1.jpg)";
+    }
   },
 
   mounted() {
+    this.inviteDisplay=false
     if(this.$session.has('token')){
       let token = this.$session.get('token')
       console.log("App.vue Mounted")
@@ -235,6 +256,7 @@ export default {
         this.refresh(token)
       })
     }
+    this.setBackground();
   },
 
   created() {
@@ -249,3 +271,40 @@ export default {
   },
 }
 </script>
+
+<style>
+#startBackground{
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.contents{
+  z-index: 4;
+}
+
+.darker {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background-color: #000000;
+
+  -webkit-filter: blur(4px);
+  -moz-filter: blur(4px);
+  -ms-filter: blur(4px);
+  -o-filter: blur(4px);
+  filter: blur(4px);
+
+  opacity: 0.7;
+}
+</style>

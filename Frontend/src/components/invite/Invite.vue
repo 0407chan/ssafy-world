@@ -73,7 +73,6 @@ export default {
         api.postEnterRoom(this.selected[index],window.location.pathname.split('/')[2])
       }
       this.display=false
-      
     }
   }
 };

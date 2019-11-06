@@ -8,5 +8,7 @@
 		<typeAlias type="com.ssafy.ssafyworld.dto.RoomDTO" alias="RoomDTO" />
 		<typeAlias type="com.ssafy.ssafyworld.dto.MessageDTO" alias="MessageDTO" />
 		<typeAlias type="com.ssafy.ssafyworld.dto.FriendDTO" alias="FriendDTO" />
+		<typeAlias type="com.ssafy.ssafyworld.dto.imgDTO" alias="imgDTO" />
+		<typeAlias type="com.ssafy.ssafyworld.dto.RoomHasUserDTO" alias="RoomHasUserDTO" />
 	</typeAliases>
 </configuration>
