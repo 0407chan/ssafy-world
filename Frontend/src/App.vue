@@ -68,7 +68,66 @@
     <v-btn icon @click="invite()">
       <v-icon>mdi-account-multiple-plus</v-icon>
     </v-btn>
-    <Invite :user="allUser" :display="inviteDisplay" />
+    <!-- <Invite :user="allUser" :display="inviteDisplay" /> -->
+
+
+
+    <v-dialog
+        v-model="display"
+        max-width="480">
+        <v-card>
+        <v-card-title class="headline">친구 초대</v-card-title>
+        <v-card-text>
+          <v-row>
+              <v-col cols="2" >
+                선택
+              </v-col>
+              <v-col cols="2" >
+                이미지
+              </v-col>
+              <v-col cols="4" >
+                이름
+              </v-col>
+              <v-col cols="4" >
+                아이디
+              </v-col>
+          </v-row>
+          <template v-for="i in user">
+            <v-row>
+              <v-col cols="2" >
+                <v-checkbox  :value="i.uidx" v-model="selected" />
+              </v-col>
+              <v-col cols="2" >
+                <v-img :src="i.img" max-height="64" max-width="64" />
+              </v-col>
+              <v-col cols="4" >
+                {{i.uname}} 
+              </v-col>
+              <v-col cols="4" >
+                 ({{i.uid}})
+              </v-col>
+            </v-row>
+          </template>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="inviteFriend()">
+            확인
+          </v-btn>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="display = false" >
+            취소
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+
 
     <div v-if="currUser">
       <v-menu offset-y>
@@ -154,7 +213,10 @@ export default {
         height: 0
       },
       allUser : [],
-      inviteDisplay : false
+      // inviteDisplay : false,
+      selected:[],
+      user:'',
+      display:false,
     };
   },
   computed: {
@@ -191,8 +253,8 @@ export default {
         console.log(data);
         console.log(this.currRoom.rPeople);
 
-        this.allUser=data
-        this.inviteDisplay=true
+        this.user=data
+        this.display=true
       })
     },
 
@@ -244,6 +306,12 @@ export default {
     },
     setBackground(){
       // document.getElementById('startBackground').style.backgroundImage="url(https://i.imgur.com/bmdyui1.jpg)";
+    },
+    inviteFriend(){
+      for (let index = 0; index < this.selected.length; index++) {
+        api.postEnterRoom(this.selected[index],window.location.pathname.split('/')[2])
+      }
+      this.display=false
     }
   },
 
