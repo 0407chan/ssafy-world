@@ -26,12 +26,13 @@
             <!-- 컨텐츠 확인 -->
             <v-text-field
               label="Room Name"
+              @keyup.enter="addChatroom()"
               v-model='roomname'
             ></v-text-field>
-            <v-text-field
+            <!-- <v-text-field
               label="Invite User"
               v-model='insertuid'
-            ></v-text-field>
+            ></v-text-field> -->
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -58,6 +59,7 @@
 <script>
 import { mapState, mapActions,mapMutations  } from 'vuex'
 import axios from 'axios'
+import api from '@/api'
 import Swal from 'sweetalert2'
 
 export default {
@@ -70,6 +72,12 @@ export default {
     insertuid :'',
     roomname :''
   }),
+  computed:{
+    ...mapState('data', ['chatlist', 'chatroomList']),
+    ...mapState({
+      currUser: state => state.data.currUser,
+    }),
+  },
   methods: {
     ...mapActions('data', ['registChatroom']),
     ...mapActions('socket', ['getMsg']),
@@ -87,31 +95,33 @@ export default {
       this.roomname=''
       this.insertuid=''
     },
-    async goTo(rid) {
+    goTo(rid) {
       // await this.clearMsg();
       // await this.getMsg(rid);
       this.$router.push('/chatroom/'+rid)
     },
     //디비에서 내가 접속한 방들 다 가져옴
-     getRoomList(){
-       this.registChatroom(this.currUser.uidx)
+     async getRoomList(){
+       await this.registChatroom(this.currUser.uidx)
      },
      //룸 생성, 참가
-     createRoom(roomname){
-       api.postRoom(roomname).then(res=>{
+     async createRoom(roomname){
+       await api.postRoom(roomname).then(async res=>{
          let rid = res.data
-         this.$socket.emit('create',{
+         await this.$socket.emit('create',{
            ridx : rid,
            rname : roomname
            })
-          this.chatroomList.push({
+          await this.chatroomList.push({
             ridx : rid,
             rname : roomname
             })
 
-          api.postEnterRoom(this.currUser.uidx,rid).then(res=>{
-            this.registChatroom()
+          await api.postEnterRoom(this.currUser.uidx,rid).then(async res=>{
+             await this.registChatroom()
           })
+
+          this.goTo(rid);
        })
      }
   }

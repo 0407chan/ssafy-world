@@ -103,7 +103,7 @@ export default {
         })
         this.$session.start();
         this.$session.set('token', logres.data);
-        this.$router.push({ name: 'chatroom' })
+        this.$router.push({ name: 'mainpage' })
       }
       else {
         this.errorAlert(res.data,"Try other name");
