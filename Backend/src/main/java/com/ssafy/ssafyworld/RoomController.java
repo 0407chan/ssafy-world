@@ -154,6 +154,8 @@ public class RoomController {
 	@RequestMapping(value="/room/update", method=RequestMethod.POST, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<String> updateRoom(@RequestBody RoomDTO dto){
+		System.out.println("여기오냐"+dto);
+		
 			try {
 				rService.updateRoom(dto);
 				return ResponseEntity.ok().body("방 이름 변경 : "+dto.getRidx()+" "+dto.getRname());

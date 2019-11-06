@@ -109,7 +109,7 @@
       <v-icon>mdi-account-multiple-plus</v-icon>
     </v-btn>
 
-    <v-dialog
+    <v-dialog v-if="currRoom.rPeople.length>0"
       v-model="roomSettingDialog"
       width="50%"
     >
@@ -162,8 +162,6 @@
             </v-card>
           </v-col>
         </v-row>
-
-
       </v-container>
     </v-dialog>
     <!-- <Invite :user="allUser" :display="inviteDisplay" /> -->
@@ -343,11 +341,23 @@ export default {
     ...mapActions('data', ['getRoom']),
     ...mapActions('data', ['getRoomPeople']),
     ...mapActions('data', ['setCurrChatRoom']),
+    ...mapActions('data', ['roomUpdate']),
 
-    updateRoomNameAction(){
+
+    async updateRoomNameAction(){
       this.roomSettingDialog = false;
-      this.successAlert("방 이름이 변경되었습니다.",'');
-      
+      let params ={
+        ridx : this.currRoom.ridx,
+        rname : this.newRoomName
+      }
+      let res = await this.roomUpdate(params);
+      console.log(res);
+      if(res.status=='200'){
+        this.successAlert("방 이름이 변경되었습니다.",'');
+        this.setCurrChatRoomInfo();
+      }else{
+        console.log(res.data);
+      }
     },
     successAlert(title,text){
       Swal.fire({

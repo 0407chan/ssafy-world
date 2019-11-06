@@ -117,6 +117,12 @@ const actions = {
     return resp;
   },
 
+
+  async roomUpdate({ commit }, params) {
+    const resp = await api.roomUpdate(params);
+    return resp;
+  },
+
   async getRoomPeople({ commit }, params) {
     const resp = await api.getRoomPeople(params);
     return resp;
