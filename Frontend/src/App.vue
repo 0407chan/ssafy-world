@@ -20,15 +20,6 @@
         <AfterLogin />
       </v-list>
 
-      <v-list dense>
-        <v-list-item @click="goTo('chatroom')">
-            <v-list-item-title>
-                <span>
-                채팅방 ㄱㄱㄱ
-              </span>
-            </v-list-item-title>
-        </v-list-item>
-      </v-list>
     </v-navigation-drawer>
 
 
@@ -43,7 +34,10 @@
       </v-btn>
     </template>
 
-    <v-toolbar-title>{{currRoom.rname}}</v-toolbar-title>
+    <v-toolbar-title>{{currRoom.rname}}
+      <span v-if="currRoom.rPeople.length>0" style="color:rgba(255,255,255,0.8); font-size:80%">{{currRoom.rPeople.length}}
+      </span>
+    </v-toolbar-title>
     <v-divider
       class="mx-4"
       inset
@@ -60,14 +54,14 @@
           <template v-slot:badge>
             <span>{{currRoom.rPeople.length}}</span>
           </template>
-          <v-menu bottom offset-y >
+          <v-menu bottom offset-y open-on-hover>
             <template v-slot:activator="{ on }">
-                <v-btn dark icon v-on="on" large>
-                <v-icon large
+              <v-btn dark icon v-on="on" large>
+              <v-icon large
                 @mouseover="badgeShow = true"
                 @mouseout="badgeShow = false"
-                >mdi-account</v-icon>
-              </v-btn>
+              >mdi-account</v-icon>
+            </v-btn>
             </template>
             <v-card max-width="250" class="mx-auto">
               <span v-for="(item, i) in currRoom.rPeople" :key="i">
@@ -111,12 +105,13 @@
 
     <v-spacer />
 
-    <v-btn icon @click="invite()">
+    <v-btn v-if="currRoom.rPeople.length>0" icon @click="invite()">
       <v-icon>mdi-account-multiple-plus</v-icon>
     </v-btn>
+    <v-btn v-if="currRoom.rPeople.length>0" icon @click="invite()">
+      <v-icon>mdi-settings</v-icon>
+    </v-btn>
     <!-- <Invite :user="allUser" :display="inviteDisplay" /> -->
-
-
 
     <v-dialog
         v-model="display"

@@ -83,7 +83,7 @@
                       <v-img class="contentImage" @click="viewImage" :src="message.img" width="300px">
                       </v-img>
                     </div>
-                    <div v-if="message.count">
+                    <div v-if="message.count == 1">
                       <Timer
                        :starttime="start"
                        :endtime="end"
@@ -102,6 +102,26 @@
                          }}'
                        ></Timer>
                     </div>
+                    <div v-if="message.count == 2">
+                      <Timer
+                       :starttime="start"
+                       :endtime="endTest"
+                       trans='{
+                       "day":"Day",
+                       "hours":"Hours",
+                       "minutes":"Minuts",
+                       "seconds":"Seconds",
+                       "expired":"Event has been expired.",
+                       "running":"Till the end of event.",
+                       "upcoming":"Till start of event.",
+
+                       "status": {
+                          "expired":"Expired",
+                          "running":"Running",
+                          "upcoming":"Future"
+                         }}'
+                       ></Timer>
+                    </div>
                   </div>
                 </div>
               </template>
@@ -113,6 +133,45 @@
                   <div v-if="message.img">
                     <v-img class="contentImage" @click="viewImage" :src="message.img" width="300px">
                     </v-img>
+                  </div>
+                  <div v-if="message.count == 1">
+                    <Timer
+                     :starttime="start"
+                     :endtime="end"
+                     trans='{
+                     "day":"Day",
+                     "hours":"Hours",
+                     "minutes":"Minuts",
+                     "seconds":"Seconds",
+                     "expired":"Event has been expired.",
+                     "running":"Till the end of event.",
+                     "upcoming":"Till start of event.",
+                     "status": {
+                        "expired":"Expired",
+                        "running":"Running",
+                        "upcoming":"Future"
+                       }}'
+                     ></Timer>
+                  </div>
+                  <div v-if="message.count == 2">
+                    <Timer
+                     :starttime="start"
+                     :endtime="endTest"
+                     trans='{
+                     "day":"Day",
+                     "hours":"Hours",
+                     "minutes":"Minuts",
+                     "seconds":"Seconds",
+                     "expired":"Event has been expired.",
+                     "running":"Till the end of event.",
+                     "upcoming":"Till start of event.",
+
+                     "status": {
+                        "expired":"Expired",
+                        "running":"Running",
+                        "upcoming":"Future"
+                       }}'
+                     ></Timer>
                   </div>
                 </div>
               </template>
@@ -210,8 +269,6 @@
         </div>
       </v-col>
 
-      <v-btn @click="test">
-      </v-btn>
       <v-col cols="12" id="chatInput">
         <v-row no-gutters class="inputBorder">
           <v-col cols="12" >
@@ -312,8 +369,11 @@ export default {
         height: 0
       },
 
-      end: Math.trunc(new Date(new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+new Date().getDate()+" 18:00:00").getTime()/1000),
-      start: Math.trunc((new Date()).getTime() / 1000),
+      end: new Date(new Date().getFullYear()+"-"+(new Date().getMonth()+1)
+                    +"-"+new Date().getDate()+" 18:00:00").getTime(),
+      endTest: new Date(new Date().getFullYear()+"-"+(new Date().getMonth()+1)
+                    +"-"+new Date().getDate()+" "+new Date().getHours()+":"+(new Date().getMinutes()+1)+":"+new Date().getSeconds()).getTime(),
+      start: new Date().getTime(),
     };
   },
   computed: {
@@ -361,8 +421,9 @@ export default {
 
 
     test(){
-      console.log(this.date)
-      console.log(this.now)
+      console.log(this.start)
+      console.log(this.end)
+      console.log(new Date(this.start).getDate())
     },
 
 
@@ -498,9 +559,25 @@ export default {
         }
         await this.pushMsg({
           user:ssafy,
-          msg:"퇴근까지",
           time:this.getToday(),
           count:1,
+        });
+
+        this.msg='';
+        this.scrollToBottom();
+        return false;
+      }else if(this.msg == '#퇴근테스트' || this.msg=='@퇴근테스트' || this.msg=='@퇴실테스트' ||this.msg=='#퇴실테스트'){
+        let ssafy ={
+          uid: "ssafy@ssafy.com",
+          uidx: 0,
+          staff: 1,
+          img: "https://i.imgur.com/bp8N7YT.png",
+          uname: "SSAFY"
+        }
+        await this.pushMsg({
+          user:ssafy,
+          time:this.getToday(),
+          count:2,
         });
 
         this.msg='';
