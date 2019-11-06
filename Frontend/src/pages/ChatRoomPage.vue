@@ -363,7 +363,6 @@ export default {
       dialog:false,
       images:[],
       ratio: 1.5,
-      dialog: false,
       windows: {
         width: 0,
         height: 0

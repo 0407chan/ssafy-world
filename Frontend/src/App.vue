@@ -108,9 +108,64 @@
     <v-btn v-if="currRoom.rPeople.length>0" icon @click="invite()">
       <v-icon>mdi-account-multiple-plus</v-icon>
     </v-btn>
-    <v-btn v-if="currRoom.rPeople.length>0" icon @click="invite()">
-      <v-icon>mdi-settings</v-icon>
-    </v-btn>
+
+    <v-dialog
+      v-model="roomSettingDialog"
+      width="50%"
+    >
+      <template v-slot:activator="{ on }">
+        <v-btn v-if="currRoom.rPeople.length>0" icon v-on="on">
+          <v-icon>mdi-settings</v-icon>
+        </v-btn>
+      </template>
+
+      <v-container fill-height >
+        <v-row>
+          <v-col cols="12">
+            <v-card contain >
+              <v-card-title
+              class="headline grey lighten-2"
+              primary-title
+              >
+                Room Setting
+              </v-card-title>
+
+              <v-card-text>
+                <v-text-field v-model="newRoomName"
+                  label="RoomName"
+                  solo
+                  hide-details
+                  @keyup.enter="updateRoomNameAction"
+                  style="margin: 2% 0; opacity: 0.7">
+                  <template v-slot:append>
+                    <v-fade-transition>
+                      <template v-if="newRoomName.length > 0">
+                        <v-icon small color="green darken-2">mdi-check-circle-outline</v-icon>
+                      </template>
+                      <template v-else>
+                        <v-icon small color="red darken-2">mdi-close-circle-outline</v-icon>
+                      </template>
+                    </v-fade-transition>
+                  </template>
+                </v-text-field>
+              </v-card-text>
+              <v-divider></v-divider>
+              <v-card-text>
+                <div align="center">
+                  <v-btn v-if="newRoomName.length > 0" rounded color="orange" @click="updateRoomNameAction"><span class="btnText">수정하기</span></v-btn>
+                  <v-btn v-else rounded disabled>수정하기</v-btn>
+                  <v-btn rounded v-on:click="roomSettingDialog = false" style="margin: 0 1%">
+                    취소
+                  </v-btn>
+                </div>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+
+
+      </v-container>
+    </v-dialog>
     <!-- <Invite :user="allUser" :display="inviteDisplay" /> -->
 
     <v-dialog
@@ -235,8 +290,8 @@
 
 <script>
 import api from '@/api'
+import Swal from 'sweetalert2'
 import Navigation from '@/components/Navigation'
-
 import BeforeLogin from '@/components/navigations/BeforeLogin'
 import AfterLogin from '@/components/navigations/AfterLogin'
 import {
@@ -260,11 +315,16 @@ export default {
         width: 0,
         height: 0
       },
+
+      newRoomName:'',
+
       allUser : [],
       // inviteDisplay : false,
       selected:[],
       user:'',
       display:false,
+
+      roomSettingDialog:false,
     };
   },
   computed: {
@@ -283,6 +343,21 @@ export default {
     ...mapActions('data', ['getRoom']),
     ...mapActions('data', ['getRoomPeople']),
     ...mapActions('data', ['setCurrChatRoom']),
+
+    updateRoomNameAction(){
+      this.roomSettingDialog = false;
+      this.successAlert("방 이름이 변경되었습니다.",'');
+      
+    },
+    successAlert(title,text){
+      Swal.fire({
+        title: title,
+        text: text,
+        type: 'success',
+        showConfirmButton: false,
+        timer: 1000
+      })
+    },
 
     async setCurrChatRoomInfo(){
       let room = null;

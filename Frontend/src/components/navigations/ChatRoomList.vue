@@ -103,6 +103,7 @@ export default {
      },
      //룸 생성, 참가
      createRoom(roomname){
+       if (roomname.length == 0) return false;
        api.postRoom(roomname).then(res=>{
          let rid = res.data
          this.$socket.emit('create',{

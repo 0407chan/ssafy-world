@@ -106,6 +106,8 @@ export default {
      },
      //룸 생성, 참가
      async createRoom(roomname){
+       if (roomname.length == 0) return false;
+
        await api.postRoom(roomname).then(async res=>{
          let rid = res.data
          await this.$socket.emit('create',{
