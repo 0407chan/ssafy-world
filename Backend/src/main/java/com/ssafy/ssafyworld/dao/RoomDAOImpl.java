@@ -57,4 +57,9 @@ public class RoomDAOImpl implements RoomDAO {
 		return room;
 	}
 
+	@Override
+	public void updateRoom(RoomDTO dto) throws Exception {
+		sqlSession.update(Namespace + ".updateRoom", dto);
+	}
+
 }

@@ -12,5 +12,5 @@ public interface RoomService {
 	public void deleteRoom(int ridx) throws Exception;
 	public List<RoomDTO> selectRooms() throws Exception;
 	public void enterRoom(int room, int user) throws Exception;
-	
+	public void updateRoom(RoomDTO dto) throws Exception;
 }
