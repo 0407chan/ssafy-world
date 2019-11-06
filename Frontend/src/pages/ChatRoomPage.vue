@@ -357,6 +357,7 @@ export default {
 
     ...mapActions('socket',['getMsg']),
     ...mapActions('socket',['pushMsg']),
+    ...mapMutations('socket',['clearMsg']),
 
 
     test(){
@@ -396,6 +397,7 @@ export default {
     */
     async getChatRoomMsgAction(){
       console.log("읽어보자!")
+      await this.clearMsg();
       if(window.location.pathname.split('/')[2]!=undefined){
         await this.getMsg(window.location.pathname.split('/')[2])
       }
