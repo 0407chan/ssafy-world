@@ -21,9 +21,9 @@ const actions = {
           msg : res.data[i].text,
           time : res.data[i].time,
         }
-        console.log(params);
+        // console.log(params);
         commit('pushMsgData',params);
-      }
+      }      
       console.log("넣었다",state.msgDatas)
     })
   },

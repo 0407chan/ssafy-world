@@ -5,6 +5,7 @@ import AdminPage from '@/pages/AdminPage.vue'
 import RegisterPage from '@/pages/RegisterPage.vue'
 import ChatRoomPage from '@/pages/ChatRoomPage.vue'
 import UserDetailPage from '@/pages/UserDetailPage'
+import MainPage from '@/pages/MainPage'
 
 Vue.use(Router)
 
@@ -41,14 +42,10 @@ export default new Router({
             name: 'userinfo',
             component: UserDetailPage
         },
-
-        // 임시
         {
-          path: '/userdetail/:uidx',
-          component: UserDetailPage,
-          name: 'userdetail',
-          props: true,
-        }
-
+          path: '/mainpage',
+          name: 'mainpage',
+          component: MainPage
+        },
     ]
 })
