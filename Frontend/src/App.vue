@@ -30,7 +30,10 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+
+
   </template>
+
 
   <!-- <Header></Header> -->
   <v-app-bar id="headerBar" app dark elevation="0">
@@ -41,9 +44,15 @@
     </template>
 
     <v-toolbar-title>{{currRoom.rname}}</v-toolbar-title>
+    <v-divider
+      class="mx-4"
+      inset
+      vertical
+    ></v-divider>
     <div>
       <template v-if="currRoom.rPeople.length>0">
         <v-badge
+          v-model="badgeShow"
           color="primary"
           overlap
           class="align-self-center"
@@ -51,24 +60,69 @@
           <template v-slot:badge>
             <span>{{currRoom.rPeople.length}}</span>
           </template>
-          <v-icon large>
-            mdi-account
-          </v-icon>
+          <v-menu bottom offset-y >
+            <template v-slot:activator="{ on }">
+                <v-btn dark icon v-on="on" large>
+                <v-icon large
+                @mouseover="badgeShow = true"
+                @mouseout="badgeShow = false"
+                >mdi-account</v-icon>
+              </v-btn>
+            </template>
+            <v-card max-width="250" class="mx-auto">
+              <span v-for="(item, i) in currRoom.rPeople" :key="i">
+                <v-menu bottom offset-y open-on-hover>
+                  <template v-slot:activator="{ on }">
+                    <v-btn tile icon large v-on="on">
+                      <v-avatar size="44px" tile>
+                        <v-img :src="item.img">
+                        </v-img>
+                      </v-avatar>
+                    </v-btn>
+                  </template>
+
+                  <v-card max-width="250" class="mx-auto">
+                    <v-img :src="item.img" height="200px" dark></v-img>
+
+                    <v-card-title >{{ item.uname }}</v-card-title>
+
+                    <v-card-text>
+                      <div>{{ getStaff(item) }}</div>
+                      <div>{{item.id }}</div>
+                    </v-card-text>
+                    <v-divider class="mx-4"></v-divider>
+                    <v-list-item>
+                      <v-list-item-action>
+                        <v-btn color="deep-purple accent-4" outlined>
+                          Message
+                        </v-btn>
+                      </v-list-item-action>
+                    </v-list-item>
+                  </v-card>
+                </v-menu>
+              </span>
+            </v-card>
+          </v-menu>
         </v-badge>
-
-
-
       </template>
     </div>
 
-    <v-spacer />
 
-    <!-- 집에서 테스트하기위한 -->
+
+    <v-spacer />
 
     <v-btn icon @click="invite()">
       <v-icon>mdi-account-multiple-plus</v-icon>
     </v-btn>
+
     <Invite :user="allUser" :display="inviteDisplay" />
+
+    <v-divider
+      class="mx-4"
+      inset
+      vertical
+    ></v-divider>
+
 
     <div v-if="currUser">
       <v-menu offset-y>
@@ -113,8 +167,8 @@
         </v-list>
       </v-menu>
     </div>
-  </v-app-bar>
 
+  </v-app-bar>
 
   <v-content class="contents">
     <router-view />
@@ -149,6 +203,8 @@ export default {
   data() {
     return {
       drawer: true,
+      roomUserList: false,
+      badgeShow: false,
       windows: {
         width: 0,
         height: 0
@@ -162,12 +218,32 @@ export default {
       currUser: state => state.data.currUser,
       currRoom: state => state.data.currChatRoom,
     }),
+
+    
+
   },
   methods: {
     ...mapActions('data', ['refresh']),
     ...mapActions('data',['clearCurrUser']),
     ...mapActions('data', ['setCurrUser']),
 
+    getStaff(staff){
+      if(staff == 0){
+        return "학생"
+      }else if(staff == 1){
+        return "프로"
+      }else{
+        return "관리자"
+      }
+    },
+
+
+    /* 2019.11.05 이찬호
+      기능 : 현재 방 사람들 목록 보여줌
+    */
+    showRoomUserList(){
+      this.roomUserList = !this.roomUserList;
+    },
     invite(){
       api.getUsers().then(res=>{
         console.log(res.data);

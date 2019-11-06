@@ -84,23 +84,8 @@
                       </v-img>
                     </div>
                     <div v-if="message.count">
-                      <Timer
-                       :starttime="start"
-                       :endtime="end"
-                       trans='{
-                       "day":"Day",
-                       "hours":"Hours",
-                       "minutes":"Minuts",
-                       "seconds":"Seconds",
-                       "expired":"Event has been expired.",
-                       "running":"Till the end of event.",
-                       "upcoming":"Till start of event.",
-                       "status": {
-                          "expired":"Expired",
-                          "running":"Running",
-                          "upcoming":"Future"
-                         }}'
-                       ></Timer>
+                      {{days}}:{{minutes}}:{{seconds}}
+                        남았습니다.
                     </div>
                   </div>
                 </div>
@@ -249,12 +234,7 @@
         </v-row>
       </v-col>
 
-      <v-dialog
-        v-model="dialog"
-        fullscreen
-        hide-overlay
-        scrollable
-      >
+      <v-dialog v-model="dialog" fullscreen hide-overlay scrollable>
         <v-card >
           <v-toolbar flat dark>
             <v-toolbar-title>Images</v-toolbar-title>
@@ -292,12 +272,9 @@
 
 <script>
 import { mapMutations, mapState, mapActions } from 'vuex'
-import Timer from '../components/Timer'
+
 export default {
   name: 'ChatRoomPage',
-  components:{
-    Timer,
-  },
   data() {
     return {
       datas: [],
@@ -312,8 +289,12 @@ export default {
         height: 0
       },
 
-      end: Math.trunc(new Date(new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+new Date().getDate()+" 18:00:00").getTime()/1000),
-      start: Math.trunc((new Date()).getTime() / 1000),
+      countHour:true,
+      countMin: true,
+      countSec: true,
+
+      date: Math.trunc(new Date(new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+new Date().getDate()+" 18:00:00").getTime()/1000),
+      now: Math.trunc((new Date()).getTime() / 1000),
     };
   },
   computed: {
@@ -327,16 +308,28 @@ export default {
       return this.icons[this.iconIndex]
     },
 
+    seconds() {
+      return (this.date - this.now) % 60;
+    },
+    minutes() {
+      return Math.trunc((this.date - this.now) / 60) % 60;
+    },
+    hours() {
+      return Math.trunc((this.date - this.now) / 60 / 60) % 24;
+    },
+    days() {
+      return Math.trunc((this.date - this.now) / 60 / 60 / 24);
+    }
 
   },
-  mounted() {
+  async mounted() {
     console.log("connect chatroom" , window.location.pathname);
     this.startSocket();
     this.getChatRoomMsgAction();
     this.setCurrChatRoomInfo();
     this.scrollToBottom();
     this.getRoomImageAction();
-
+    this.startInterval();
   },
 
   watch: {
@@ -348,6 +341,8 @@ export default {
       this.getRoomImageAction();
     },
   },
+
+
   methods: {
     ...mapActions('data', ['setCurrChatRoom']),
     ...mapActions('data', ['getRoom']),
@@ -360,11 +355,14 @@ export default {
 
 
     test(){
-      console.log(this.date)
-      console.log(this.now)
+      console.log(this.seconds, this.now);
     },
 
-
+    startInterval() {
+        var x =setInterval( function() {
+          this.now = Math.trunc((new Date()).getTime() / 1000);
+        }, 1000);
+    },
 
     async getRoomImageAction(){
 
@@ -500,7 +498,6 @@ export default {
           time:this.getToday(),
           count:1,
         });
-
         this.msg='';
         this.scrollToBottom();
         return false;
